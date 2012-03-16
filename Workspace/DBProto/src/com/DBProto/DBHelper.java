@@ -125,11 +125,11 @@ public class DBHelper extends SQLiteOpenHelper{
 		String sOut = "";
 		
 		if (sIn.size() >= 1) {
-			sOut = sIn.get(0);
+			sOut = "'" + sIn.get(0) + "'";
 			
 			if (sIn.size() > 1){
 			for(int i = 1; i < sIn.size(); i++)
-				sOut += " OR " + cName + " = " + sIn.get(i);
+				sOut += " OR " + cName + " = " + "'" + sIn.get(i) + "'";
 			}
 		}
 		return sOut;

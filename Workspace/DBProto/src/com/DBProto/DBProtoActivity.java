@@ -45,7 +45,7 @@ public class DBProtoActivity extends Activity {
         	throw sqle;
         }
         
-        toast.show();
+        
         
         RSa = db.getFloorNodes(1);											//Query DB for nodes on a given floor
         RSa.moveToFirst();
@@ -76,10 +76,12 @@ public class DBProtoActivity extends Activity {
         	
         	nodeM.addNeighbor(nodeN);										//Add neighbor node to master node
         	
+        	RSn.moveToNext();
+        	
         }
         
         
-        
+        toast.show();
         
     }
 }
