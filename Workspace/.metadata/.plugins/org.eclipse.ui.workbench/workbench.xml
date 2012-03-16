@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="26" version="2.0">
+<workbench progressCount="29" version="2.0">
 <workbenchAdvisor/>
-<window height="768" maximized="true" width="1024" x="150" y="150">
+<window height="1040" maximized="true" width="960" x="0" y="0">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -36,21 +36,25 @@
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DBProtoActivity.java" partName="DBProtoActivity.java" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DBProto/src/com/DBProto/DBProtoActivity.java" title="DBProtoActivity.java" tooltip="DBProto/src/com/DBProto/DBProtoActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DBProto/src/com/DBProto/DBProtoActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1676" selectionTopPixel="301"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2093" selectionTopPixel="495"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DBHelper.java" partName="DBHelper.java" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DBProto/src/com/DBProto/DBHelper.java" title="DBHelper.java" tooltip="DBProto/src/com/DBProto/DBHelper.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DBProto/src/com/DBProto/DBHelper.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2756" selectionTopPixel="1361"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2756" selectionTopPixel="1005"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="node.java" partName="node.java" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DBProto/src/com/DBProto/node.java" title="node.java" tooltip="DBProto/src/com/DBProto/node.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DBProto/src/com/DBProto/node.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1208" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2249" selectionTopPixel="1020"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="DBProto Manifest" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DBProto/AndroidManifest.xml" title="DBProto Manifest" tooltip="DBProto/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DBProto/AndroidManifest.xml"/>
 </editor>
 </editors>
 <views>
@@ -65,6 +69,10 @@
 </filters>
 <expanded>
 <element path="/DBProto"/>
+<element path="/DBProto/assets"/>
+<element path="/DBProto/gen"/>
+<element path="/DBProto/gen/com"/>
+<element path="/DBProto/gen/com/DBProto"/>
 <element path="/DBProto/src"/>
 <element path="/DBProto/src/com"/>
 <element path="/DBProto/src/com/DBProto"/>
@@ -74,7 +82,7 @@
 <element path="/MGHWayFinder/src/com/MGHWayFinder"/>
 </expanded>
 <selection>
-<element path="/DBProto/src/com/DBProto/node.java"/>
+<element path="/DBProto/AndroidManifest.xml"/>
 </selection>
 </viewState>
 </view>
@@ -84,8 +92,6 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (1 item)"/>
-<category IMemento.internal.id="Warnings"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
@@ -139,7 +145,7 @@
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="com.android.ide.eclipse.ddms.views.LogCatView" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -208,6 +214,7 @@
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
@@ -233,12 +240,13 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.14353064" ratioLeft="274" ratioRight="1635" relationship="2" relative="left"/>
-<info folder="true" part="bottom" ratio="0.7496136" ratioLeft="485" ratioRight="162" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<info folder="true" part="bottom" ratio="0.5482833" ratioLeft="511" ratioRight="421" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
@@ -247,6 +255,7 @@
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
@@ -329,7 +338,7 @@
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7497326" ratioLeft="701" ratioRight="234" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.6920601" ratioLeft="645" ratioRight="287" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
@@ -340,7 +349,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1b25fbd" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">&#x0A;<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">&#x0A;<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d0c448" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">&#x0A;<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">&#x0A;<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
@@ -368,160 +377,161 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/DBProtoActivity.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/DBHelper.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/node.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/DBHelper.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/DBProtoActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/node.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MGHWayFinder/src/com/MGHWayFinder/node.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/gen/com/DBProto/R.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/DBProto/AndroidManifest.xml"/>
 </editors>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="8" y="11"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="565" y="9"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="821" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="608" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="791" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1426" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="817" y="0"/>
 </item>
-<item historyLabel="node.java" index="3">
-<position info="not_deleted" x="209" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="819" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1426" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1749" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="8" y="11"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1748" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1076" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1905" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1126" y="1"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2442" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1678" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="847" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1734" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1378" y="5"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1792" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="880" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1208" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1378" y="5"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1373" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2052" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1208" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2116" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1373" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2197" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1373" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2422" y="0"/>
 </item>
-<item historyLabel="node.java" index="2">
-<position info="not_deleted" x="1208" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2284" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1373" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2422" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1341" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2376" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1372" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2616" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1397" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2489" y="5"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1704" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2616" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="662" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2552" y="5"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="699" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="2527" y="15"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1143" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position/>
 </item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="607" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3047" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3030" y="9"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3463" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3633" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3658" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
-<position info="not_deleted" x="3698" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="0">
+<item historyLabel="DBHelper.java" index="1">
 <position info="not_deleted" x="2756" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1143" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="632" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1584" y="0"/>
+<item historyLabel="node.java" index="2">
+<position info="not_deleted" x="1208" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="676" y="0"/>
+<item historyLabel="node.java" index="2">
+<position info="not_deleted" x="1208" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1497" y="0"/>
+<item historyLabel="DBHelper.java" index="1">
+<position info="not_deleted" x="2756" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="664" y="12"/>
+<item historyLabel="node.java" index="2">
+<position info="not_deleted" x="1208" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1485" y="12"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="632" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1695" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="878" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1283" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="773" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="106" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="773" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1218" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="729" y="0"/>
+<item historyLabel="DBHelper.java" index="1">
+<position info="not_deleted" x="2756" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="769" y="0"/>
+<item historyLabel="DBProtoActivity.java" index="0">
+<position info="not_deleted" x="1621" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1686" y="0"/>
+<item historyLabel="DBHelper.java" index="1">
+<position info="not_deleted" x="2756" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position/>
+<item historyLabel="node.java" index="2">
+<position info="not_deleted" x="1208" y="0"/>
 </item>
-<item historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1697" y="0"/>
+<item historyLabel="node.java" index="2">
+<position info="not_deleted" x="2238" y="0"/>
 </item>
-<item active="true" historyLabel="DBProtoActivity.java" index="1">
-<position info="not_deleted" x="1651" y="0"/>
+<item historyLabel="DBHelper.java" index="3">
+<position info="not_deleted" x="2756" y="0"/>
+</item>
+<item historyLabel="DBProtoActivity.java" index="4">
+<position info="not_deleted" x="1769" y="0"/>
+</item>
+<item historyLabel="DBHelper.java" index="3">
+<position info="not_deleted" x="2756" y="0"/>
+</item>
+<item historyLabel="DBProtoActivity.java" index="4">
+<position info="not_deleted" x="2093" y="0"/>
+</item>
+<item historyLabel="R.java" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="DBProtoActivity.java" index="4">
+<position info="not_deleted" x="2093" y="0"/>
+</item>
+<item historyLabel="DBProto Manifest" index="6"/>
+<item active="true" historyLabel="DBProtoActivity.java" index="4">
+<position info="not_deleted" x="2093" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -541,6 +551,12 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" tooltip="DBProto/AndroidManifest.xml">
+<persistable path="/DBProto/AndroidManifest.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="R.java" tooltip="DBProto/gen/com/DBProto/R.java">
+<persistable path="/DBProto/gen/com/DBProto/R.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="node.java" tooltip="DBProto/src/com/DBProto/node.java">
 <persistable path="/DBProto/src/com/DBProto/node.java"/>
 </file>

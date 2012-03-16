@@ -7,18 +7,18 @@ public class node {
 	
 	private int x, y;													//coordinates on a map
 	private int nodeFloor;												//floor that the node is on
-	private String nodeID, nodeName, nodeType;							//node ID in DB, name of node (UI purposes), type of node
+	private String nodeID, nodeDep, nodeType;							//node ID in DB, name of node (UI purposes), type of node
 	private ArrayList<node> neighbors = new ArrayList<node>();			//corresponding connections
 	private node pNode = null;											//previous node in the shortest path, initialized to null
 	private double d = INFINITY;										//d is the shortest distance from the starting point to this node, initialized to "infinity"
 	private int pNodeAngle = -1;										//once the dijkstra algorithm runs this will be set to the compass degree of the node's directionality to the previous waypoint (0 for North, valid values 0-359)
 	private double pNodeDist = INFINITY;								//distance to the previous node (stored to reduce calculations)
 	
-	public node(String nID, int x, int y, String nName, int floor, String nType){
+	public node(String nID, int x, int y, int floor, String nType, String nDep){
 		this.x = x;
 		this.y = y;
 		this.nodeID = nID;
-		this.nodeName = nName;
+		this.nodeDep = nDep;
 		this.nodeType = nType;
 		this.nodeFloor = floor;
 	}
@@ -55,8 +55,8 @@ public class node {
 		return nodeID;
 	}
 	
-	public String getNodeName(){
-		return nodeName;
+	public String getNodeDepartment(){
+		return nodeDep;
 	}
 	
 	public String getNodeType(){
@@ -88,7 +88,7 @@ public class node {
 	}
 	
 	public String toString(){
-		return nodeName;
+		return nodeID + " - " + nodeDep;
 	}
 	
 	public void reset(){
