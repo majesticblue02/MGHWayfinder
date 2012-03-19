@@ -278,3 +278,56 @@ com.android.ddmlib.ShellCommandUnresponsiveException
 
 !ENTRY org.eclipse.ui 4 4 2012-03-16 09:30:16.870
 !MESSAGE Invalid preference page path: XML Syntax
+!SESSION 2012-03-16 09:48:27.368 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.6.0_30
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.egit.core 4 0 2012-03-16 10:29:55.415
+!MESSAGE An exception occurred during push on URI git@github.com:majesticblue02/MGHWayfinder.git: An internal Exception occurred during push: git@github.com:majesticblue02/MGHWayfinder.git: java.net.UnknownHostException: github.com
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Exception caught during execution of push command
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:156)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:194)
+	at org.eclipse.egit.ui.internal.push.PushWizard$PushJob.run(PushWizard.java:295)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.jgit.errors.TransportException: git@github.com:majesticblue02/MGHWayfinder.git: java.net.UnknownHostException: github.com
+	at org.eclipse.jgit.transport.JschConfigSessionFactory.getSession(JschConfigSessionFactory.java:141)
+	at org.eclipse.jgit.transport.SshTransport.getSession(SshTransport.java:121)
+	at org.eclipse.jgit.transport.TransportGitSsh$SshPushConnection.<init>(TransportGitSsh.java:306)
+	at org.eclipse.jgit.transport.TransportGitSsh.openPush(TransportGitSsh.java:152)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1120)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:152)
+	... 3 more
+Caused by: com.jcraft.jsch.JSchException: java.net.UnknownHostException: github.com
+	at com.jcraft.jsch.Util.createSocket(Util.java:386)
+	at com.jcraft.jsch.Session.connect(Session.java:182)
+	at org.eclipse.jgit.transport.JschConfigSessionFactory.getSession(JschConfigSessionFactory.java:116)
+	... 9 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2012-03-16 10:29:55.420
+!MESSAGE Can't connect to any repository: git@github.com:majesticblue02/MGHWayfinder.git (An internal Exception occurred during push: git@github.com:majesticblue02/MGHWayfinder.git: java.net.UnknownHostException: github.com)
+
+!ENTRY org.eclipse.ui 4 4 2012-03-16 10:30:10.849
+!MESSAGE Invalid preference page path: XML Syntax
+!SESSION 2012-03-16 10:30:14.540 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.6.0_30
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.ui 4 4 2012-03-16 10:39:14.413
+!MESSAGE Invalid preference page path: XML Syntax
+!SESSION 2012-03-18 20:39:20.601 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.6.0_30
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.ui 4 4 2012-03-18 20:39:59.796
+!MESSAGE Invalid preference page path: XML Syntax

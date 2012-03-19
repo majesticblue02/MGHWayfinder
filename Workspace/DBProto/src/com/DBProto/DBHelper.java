@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper{
         this.myContext = context;
     }	
  
-    public void createDataBase() throws IOException{
+    public void createDataBase() throws IOException{										//creates the DB if it does not already exist in the application's db folder
     	
     	boolean dbExist = checkDB();
  
@@ -42,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper{
     	}
     }
  
-    private boolean checkDB(){
+    private boolean checkDB(){																//checks for the existance of the db in the program's db folder
  
     	SQLiteDatabase checkDB = null;
  
@@ -58,7 +58,7 @@ public class DBHelper extends SQLiteOpenHelper{
     	return checkDB != null ? true : false;
     }
  
-    private void copyDB() throws IOException{
+    private void copyDB() throws IOException{													//copies db from asset folder into the program's db folder
     	
     	String oFileName = DB_PATH + DB_NAME;
     	InputStream iStream = myContext.getAssets().open(DB_NAME);
@@ -99,29 +99,55 @@ public class DBHelper extends SQLiteOpenHelper{
  
 	}
  
-	public Cursor getFloorNodes(int floor){													//returns a recordset containing all nodes on a given floor
+	
+//////////////////SQL SELECT STATEMENTS/////////////////////////
+	
+	
+	public Cursor getFloorNodes(int floor){																//returns a recordset containing all nodes on a given floor
 		return db.rawQuery("SELECT * FROM tblNode WHERE nFloor = " + floor, null);
 	}
 	
-	public Cursor getNodeNeighbors(ArrayList<String> nodeIDs){										//returns a recordset containing all neighbor nodes of the string[] of node ID's
+	public Cursor getNodeNeighbors(ArrayList<String> nodeIDs){											//returns a recordset containing all neighbor nodes of the string[] of node ID's
 		String w = concatOr(nodeIDs, "mNode");
 				
 		return db.rawQuery("SELECT * FROM tblNeighbors WHERE mNode = " + w, null);
 	}
  
-	public Cursor getNodeType(int nFloor, ArrayList<String> nType){									//returns a recordset containing all nodes with a given nType[]
+	public Cursor getNodeType(int nFloor, ArrayList<String> nType){										//returns a recordset containing all nodes with a given nType[]
 		String w = concatOr(nType, "nType");
 
 		return db.rawQuery("SELECT * FROM tblNode WHERE nType = " + w, null);
 	}
 	
-	public int getNodeFloor(String nID){
+	public int getNodeFloor(String nID){																//returns the floor a given node is on
 		Cursor q = db.rawQuery("SELECT nFloor FROM tblNode WHERE nID = " + nID, null);
 		q.moveToFirst();
 		return q.getInt(4);
 	}
 	
-	private String concatOr(ArrayList<String> sIn, String cName){									//concats an array of strings into a single string seperated by OR's
+	public Cursor searchNode(String nID){																//searches for a particular node
+		return db.rawQuery("SELECT * FROM tblNode WHERE nID = " + nID, null);
+	}
+	
+	public Cursor getValidNodeTypes(int floor){															//returns valid node types in a given floor
+		return db.rawQuery("SELECT DISTINCT nType FROM tblNode WHERE nFloor = " + floor, null);
+	}
+	
+	public Cursor getDepNodes(String nDep){																//returns nodes in a given department
+		return db.rawQuery("SELECT * FROM tblNode WHERE nDep = " + nDep, null);
+	}
+	
+	public Cursor getFloorDeps(int floor){																//returns departments on a given floor
+		return db.rawQuery("SELECT DISTINCT nDep FROM tblNode WHERE nFloor = " + floor, null);
+	}
+	
+	public Cursor getDepFloors(String nDep){															//returns the floor(s) a department is on
+		return db.rawQuery("SELECT DISTINCT nFloor FROM tblNode WHERE nDep = " + nDep, null);
+	}
+	
+	
+	
+	private String concatOr(ArrayList<String> sIn, String cName){										//concats an array of strings into a single string seperated by OR's
 		String sOut = "";
 		
 		if (sIn.size() >= 1) {
