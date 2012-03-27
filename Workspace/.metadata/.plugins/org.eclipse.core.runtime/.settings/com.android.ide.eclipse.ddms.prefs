@@ -1,8 +1,14 @@
-#Fri Mar 16 09:30:18 EDT 2012
-logcat.view.colsize.Level=29
-eclipse.preferences.version=1
-logcat.view.colsize.Application=143
-logcat.view.colsize.Time=130
-logcat.view.colsize.Tag=93
+#Mon Mar 26 18:43:57 EDT 2012
 logcat.view.colsize.Text=890
+logcat.view.colsize.Level=29
+com.android.ide.eclipse.ddms.explorer.size=51
+logcat.view.colsize.Application=143
 logcat.view.colsize.PID=50
+logcat.view.colsize.Tag=93
+com.android.ide.eclipse.ddms.explorer.name=312
+com.android.ide.eclipse.ddms.explorer.info=76
+logcat.view.colsize.Time=130
+com.android.ide.eclipse.ddms.explorer.time=42
+com.android.ide.eclipse.ddms.explorer.data=73
+eclipse.preferences.version=1
+com.android.ide.eclipse.ddms.explorer.permissions=76

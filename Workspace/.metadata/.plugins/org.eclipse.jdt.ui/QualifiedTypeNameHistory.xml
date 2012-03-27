@@ -10,8 +10,20 @@
 <fullyQualifiedTypeName name="android.database.Cursor"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="android.database.SQLException"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.DBProto.R.id"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="com.larvalabs.svgandroid.SVG"/>
+<fullyQualifiedTypeName name="com.larvalabs.svgandroid.SVGParser"/>
+<fullyQualifiedTypeName name="com.nikkoaiello.mobile.android.PinchImageView"/>
+<fullyQualifiedTypeName name="android.widget.ZoomButtonsController"/>
+<fullyQualifiedTypeName name="android.widget.ZoomControls"/>
+<fullyQualifiedTypeName name="com.DrawProto.R.id"/>
+<fullyQualifiedTypeName name="android.webkit.WebView"/>
+<fullyQualifiedTypeName name="com.DrawProto.R.raw"/>
 </qualifiedTypeNameHistroy>
