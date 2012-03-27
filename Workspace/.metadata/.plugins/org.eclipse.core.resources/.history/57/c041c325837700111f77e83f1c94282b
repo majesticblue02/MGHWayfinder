@@ -1,0 +1,33 @@
+package com.DrawProto;
+
+import com.larvalabs.svgandroid.SVG;
+import com.larvalabs.svgandroid.SVGParser;
+import com.nikkoaiello.mobile.android.PinchImageView;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.widget.ImageView;
+
+public class DrawProtoActivity extends Activity {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	 super.onCreate(savedInstanceState);
+         // Create a new ImageView
+         ImageView imageView = new ImageView(this);
+         // Set the background color to white
+         imageView.setBackgroundColor(Color.WHITE);
+         // Parse the SVG file from the resource
+         SVG svg = SVGParser.getSVGFromResource(getResources(), R.raw.mapsvg);
+         // Get a drawable from the parsed SVG and set it as the drawable for the ImageView
+         
+         
+         
+         imageView.setImageDrawable(svg.createPictureDrawable());
+         // Set the ImageView as the content view for the Activity
+         PinchImageView pinch = new PinchImageView(imageView);
+         pinch.
+         setContentView(pinch);
+    }
+}
