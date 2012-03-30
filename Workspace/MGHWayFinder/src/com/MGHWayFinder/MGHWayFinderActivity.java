@@ -10,5 +10,8 @@ public class MGHWayFinderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //test git
+        //im going to make this the homepage - calum
+        
+        
     }
 }
