@@ -14,7 +14,7 @@ public class DrawProtoActivity extends Activity {
     	 WebView wv = (WebView)findViewById(R.id.wv);
   
     	// wv.loadUrl("file://android_asset/floor1.png");
-        wv.loadUrl("https://github.com/majesticblue02/MGHWayfinder/raw/master/Other%20Files/Images/floor1.jpg");
+        wv.loadURL("file:///android_asset/map.html");
          
     }
 }

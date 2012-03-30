@@ -12,9 +12,11 @@ public class DrawProtoActivity extends Activity {
     	 super.onCreate(savedInstanceState);
          
     	 WebView wv = (WebView)findViewById(R.id.wv);
-  
-    	// wv.loadUrl("file://android_asset/floor1.png");
-        wv.loadUrl("https://github.com/majesticblue02/MGHWayfinder/raw/master/Other%20Files/Images/floor1.jpg");
+    	 
+    	 //String url = "<img src = \"floor1.jpg\" />";
+         
+    	 wv.loadUrl("file://android_asset/floor1.png");
+        // wv.loadDataWithBaseURL("file:///android_asset/", url, "text/html", "utf-8", "");
          
     }
 }
