@@ -28,10 +28,8 @@ public class DBHelper extends SQLiteOpenHelper{
     }	
  
     public void createDataBase() throws IOException{										//creates the DB if it does not already exist in the application's db folder
-    	
-    	boolean dbExist = checkDB();
  
-    	if(!dbExist){
+    	if(!checkDB()){
         	this.getReadableDatabase();
  
         	try {

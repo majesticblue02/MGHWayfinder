@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="39" version="2.0">
+<workbench progressCount="38" version="2.0">
 <workbenchAdvisor/>
 <window height="1040" maximized="true" width="960" x="0" y="0">
 <fastViewData fastViewLocation="1024"/>
@@ -16,6 +16,7 @@
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="76" y="22"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="122" y="22"/>
+<coolItem id="org.eclipse.team.ui.actionSet" itemType="typeToolBarContribution" x="53" y="22"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="107" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="61" y="22"/>
@@ -24,9 +25,9 @@
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.browser.editor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="com.android.ide.eclipse.editors.layout.LayoutEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="com.android.ide.eclipse.editors.layout.LayoutEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -35,26 +36,15 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DrawProtoActivity.java" partName="DrawProtoActivity.java" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DrawProto/src/com/DrawProto/DrawProtoActivity.java" title="DrawProtoActivity.java" tooltip="DrawProto/src/com/DrawProto/DrawProtoActivity.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DrawProto/src/com/DrawProto/DrawProtoActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="89" selectionOffset="465" selectionTopPixel="0"/>
-</editor>
-<editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="main.xml" partName="main.xml" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DrawProto/res/layout/main.xml" title="main.xml" tooltip="DrawProto/res/layout/main.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DrawProto/res/layout/main.xml"/>
-</editor>
-<editor id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="DrawProto Manifest" path="C:/Users/Kevin/Documents/School/Spring 2012/CS402/FinalProject/Workspace/DrawProto/AndroidManifest.xml" title="DrawProto Manifest" tooltip="DrawProto/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/DrawProto/AndroidManifest.xml"/>
-</editor>
 </editors>
 <views>
+<view id="org.eclipse.team.ui.GenericHistoryView" partName="History">
+<viewState/>
+</view>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
 <viewState/>
 </view>
@@ -71,6 +61,9 @@
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
+<view id="org.eclipse.mylyn.tasks.ui.views.repositories" partName="Task Repositories">
+<viewState/>
+</view>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView" partName="LogCat">
 <viewState/>
 </view>
@@ -84,30 +77,28 @@
 <filter element=".*" isEnabled="false"/>
 </filters>
 <expanded>
-<element path="/DrawProto"/>
-<element path="/DrawProto/assets"/>
-<element path="/DrawProto/gen"/>
-<element path="/DrawProto/gen/com"/>
-<element path="/DrawProto/gen/com/DrawProto"/>
-<element path="/DrawProto/res"/>
-<element path="/DrawProto/res/layout"/>
-<element path="/DrawProto/res/raw"/>
-<element path="/DrawProto/res/values"/>
-<element path="/DrawProto/src"/>
-<element path="/DrawProto/src/com"/>
-<element path="/DrawProto/src/com/DrawProto"/>
+<element path="/DBProto"/>
+<element path="/DBProto/assets"/>
+<element path="/DBProto/src"/>
+<element path="/DBProto/src/com"/>
+<element path="/DBProto/src/com/DBProto"/>
+<element path="/DijkstraProtoJava"/>
+<element path="/DijkstraProtoJava/src"/>
+<element path="/MGHWayFinder"/>
+<element path="/MGHWayFinder/assets"/>
+<element path="/MGHWayFinder/res"/>
+<element path="/MGHWayFinder/res/layout"/>
+<element path="/MGHWayFinder/src"/>
+<element path="/MGHWayFinder/src/com"/>
+<element path="/MGHWayFinder/src/com/MGHWayFinder"/>
 </expanded>
 <selection>
-<element path="/DrawProto/AndroidManifest.xml"/>
+<element path="/MGHWayFinder/res/layout/test.xml"/>
 </selection>
 </viewState>
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Warnings (1 item)"/>
-<category IMemento.internal.id="Errors"/>
-</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -116,11 +107,12 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
 </view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="Aggregate for window 1331329679220">
-<customFilters userDefinedPatternsEnabled="false">
-<xmlDefinedFilters>
-<child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
+<customFilters userDefinedPatternsEnabled="false">&#x0A;<xmlDefinedFilters>&#x0A;<child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.LocalTypesFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.StaticsFilter" isEnabled="false"/>
 <child filterId="org.eclipse.pde.ui.ExternalPluginLibrariesFilter1" isEnabled="true"/>
@@ -144,9 +136,6 @@
 </xmlDefinedFilters>
 </customFilters>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
@@ -247,7 +236,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.17862755" ratioLeft="341" ratioRight="1568" relationship="2" relative="left"/>
+<info part="org.eclipse.ui.editorss" ratio="0.31691986" ratioLeft="605" ratioRight="1304" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.5482833" ratioLeft="511" ratioRight="421" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
@@ -390,155 +379,89 @@
 </mainWindow>
 </layout>
 </perspective>
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.team.internal.ui.synchronize.TeamSynchronizingPerspective" id="org.eclipse.team.ui.TeamSynchronizingPerspective" label="Team Synchronizing"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="adt.actionSet.wizards"/>
+<alwaysOnActionSet id="adt.actionSet.refactorings"/>
+<alwaysOnActionSet id="adt.actionSet.avdManager"/>
+<alwaysOnActionSet id="adt.actionSet.lint"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.team.ui.actionSet"/>
+<show_view_action id="org.eclipse.team.sync.views.SynchronizeView"/>
+<show_view_action id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.mylyn.tasks.ui.views.repositories"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.project"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<perspective_action id="org.eclipse.ui.resourcePerspective"/>
+<perspective_action id="org.eclipse.team.cvs.ui.cvsPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.team.ui.GenericHistoryView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.mylyn.tasks.ui.views.repositories"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="top">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.team.sync.views.SynchronizeView" label="LabelNotFound"/>
+<page content="org.eclipse.team.ccvs.ui.RepositoriesView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="top">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.4497908" ratioLeft="860" ratioRight="1052" relationship="2" relative="top"/>
+<info folder="true" part="top2" ratio="0.8" ratioLeft="748" ratioRight="187" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.team.ui.GenericHistoryView" appearance="2" expanded="2">
+<page content="org.eclipse.team.ui.GenericHistoryView" label="History"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@b57ca1" ratio="0.6994652" ratioLeft="654" ratioRight="281" relationship="4" relative="top">
+<folder activePageID="org.eclipse.mylyn.tasks.ui.views.repositories" appearance="2" expanded="2">
+<page content="org.eclipse.mylyn.tasks.ui.views.repositories" label="Task Repositories"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DrawProto/src/com/DrawProto/DrawProtoActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" path="/DrawProto/res/layout/main.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DBProto/src/com/DBProto/DBHelper.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DrawProto/gen/com/DrawProto/R.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/DrawProto/res/raw/Thumbs.db"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/DrawProto/AndroidManifest.xml"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=DBProto/C:\/Program Files \(x86)\/Android\/android-sdk\/platforms\/android-7\/android.jar&lt;java.lang(NullPointerException.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/DrawProto/AndroidManifest.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" path="/DrawProto/res/layout/main.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/DrawProto/src/com/DrawProto/DrawProtoActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" path="/DrawProto/res/layout/main.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/DrawProto/AndroidManifest.xml"/>
-</editors>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="468" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="468" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="342" y="7"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="620" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="468" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="2">
-<position/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position/>
-</item>
-<item historyLabel="main.xml" index="1"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position/>
-</item>
-<item historyLabel="R.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position/>
-</item>
-<item historyLabel="main.xml" index="1"/>
-<item historyLabel="Thumbs.db" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main.xml" index="1"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="464" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="469" y="0"/>
-</item>
-<item historyLabel="main.xml" index="1"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="636" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="604" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="630" y="0"/>
-</item>
-<item historyLabel="main.xml" index="1"/>
-<item historyLabel="DrawProto Manifest" index="5"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="630" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="533" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="548" y="18"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="589" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="548" y="19"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="638" y="0"/>
-</item>
-<item historyLabel="DBHelper.java" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="638" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="551" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="510" y="0"/>
-</item>
-<item historyLabel="NullPointerException.class" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="DrawProto Manifest" index="7"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="510" y="0"/>
-</item>
-<item historyLabel="main.xml" index="8"/>
-<item historyLabel="DrawProto Manifest" index="7"/>
-<item historyLabel="DrawProtoActivity.java" index="0">
-<position info="not_deleted" x="457" y="0"/>
-</item>
-<item historyLabel="DrawProto Manifest" index="7"/>
-<item historyLabel="NullPointerException.class" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main.xml" index="8"/>
-<item historyLabel="DrawProto Manifest" index="7"/>
-<item historyLabel="DrawProtoActivity.java" index="9">
-<position info="not_deleted" x="532" y="0"/>
-</item>
-<item historyLabel="main.xml" index="10"/>
-<item historyLabel="DrawProtoActivity.java" index="9">
-<position info="not_deleted" x="532" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="9">
-<position info="not_deleted" x="555" y="0"/>
-</item>
-<item historyLabel="DrawProtoActivity.java" index="9">
-<position info="not_deleted" x="554" y="0"/>
-</item>
-<item historyLabel="DrawProto Manifest" index="11"/>
-<item active="true" historyLabel="DrawProtoActivity.java" index="9">
-<position info="not_deleted" x="554" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
-<trimArea IMemento.internal.id="16384">
-<trimItem IMemento.internal.id="left"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@11fa9dd"/>
-</trimArea>
-<trimArea IMemento.internal.id="131072">
-<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
-</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 <trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
@@ -551,38 +474,26 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" tooltip="DrawProto/AndroidManifest.xml">
-<persistable path="/DrawProto/AndroidManifest.xml"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="test.xml" tooltip="MGHWayFinder/res/layout/test.xml">
+<persistable path="/MGHWayFinder/res/layout/test.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="floor1.png" tooltip="DrawProto/assets/floor1.png">
-<persistable path="/DrawProto/assets/floor1.png"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="wpAlgorithm.java" tooltip="DijkstraProtoJava/src/wpAlgorithm.java">
+<persistable path="/DijkstraProtoJava/src/wpAlgorithm.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.browser.editorSupport" name="map.html" tooltip="DrawProto/assets/map.html">
-<persistable path="/DrawProto/assets/map.html"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DBProtoActivity.java" tooltip="DBProto/src/com/DBProto/DBProtoActivity.java">
+<persistable path="/DBProto/src/com/DBProto/DBProtoActivity.java"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="NullPointerException.class" tooltip="java.lang.NullPointerException">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=DBProto/C:\/Program Files \(x86)\/Android\/android-sdk\/platforms\/android-7\/android.jar&lt;java.lang(NullPointerException.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Dijkstra.java" tooltip="MGHWayFinder/src/com/MGHWayFinder/Dijkstra.java">
+<persistable path="/MGHWayFinder/src/com/MGHWayFinder/Dijkstra.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DBHelper.java" tooltip="DBProto/src/com/DBProto/DBHelper.java">
-<persistable path="/DBProto/src/com/DBProto/DBHelper.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="MGHDB.sqlite" tooltip="MGHWayFinder/assets/MGHDB.sqlite">
+<persistable path="/MGHWayFinder/assets/MGHDB.sqlite"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="Thumbs.db" tooltip="DrawProto/res/raw/Thumbs.db">
-<persistable path="/DrawProto/res/raw/Thumbs.db"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DBHelper.java" tooltip="MGHWayFinder/src/com/MGHWayFinder/DBHelper.java">
+<persistable path="/MGHWayFinder/src/com/MGHWayFinder/DBHelper.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="R.java" tooltip="DrawProto/gen/com/DrawProto/R.java">
-<persistable path="/DrawProto/gen/com/DrawProto/R.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="main.xml" tooltip="DrawProto/res/layout/main.xml">
-<persistable path="/DrawProto/res/layout/main.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DrawProtoActivity.java" tooltip="DrawProto/src/com/DrawProto/DrawProtoActivity.java">
-<persistable path="/DrawProto/src/com/DrawProto/DrawProtoActivity.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="svg-android-1.1.jar" tooltip="MGHWayFinder/libs/svg-android-1.1.jar">
-<persistable path="/MGHWayFinder/libs/svg-android-1.1.jar"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="InvocationTargetException.class" tooltip="java.lang.reflect.InvocationTargetException">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=DBProto/C:\/Program Files \(x86)\/Android\/android-sdk\/platforms\/android-7\/android.jar&lt;java.lang.reflect(InvocationTargetException.class"/>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ClassLoader.class" tooltip="java.lang.ClassLoader">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=DBProto/C:\/Program Files \(x86)\/Android\/android-sdk\/platforms\/android-7\/android.jar&lt;java.lang(ClassLoader.class"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DijkstraProtoActivity.java" tooltip="DijkstraProto/src/com/finalProject/wpAlgorithm/DijkstraProtoActivity.java">
 <persistable path="/DijkstraProto/src/com/finalProject/wpAlgorithm/DijkstraProtoActivity.java"/>
@@ -590,8 +501,11 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="main.xml" tooltip="DijkstraProto/res/layout/main.xml">
 <persistable path="/DijkstraProto/res/layout/main.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="main.xml" tooltip="DBProto/res/layout/main.xml">
-<persistable path="/DBProto/res/layout/main.xml"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Node.java" tooltip="MGHWayFinder/src/com/MGHWayFinder/Node.java">
+<persistable path="/MGHWayFinder/src/com/MGHWayFinder/Node.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MGHWayFinderActivity.java" tooltip="MGHWayFinder/src/com/MGHWayFinder/MGHWayFinderActivity.java">
+<persistable path="/MGHWayFinder/src/com/MGHWayFinder/MGHWayFinderActivity.java"/>
 </file>
 </mruList>
 </workbench>
