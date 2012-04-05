@@ -38,7 +38,7 @@ public class PathView extends View{
 		}
 		
 		pathCanvas.drawCircle(x2, y2, 5, p);
-		
+		//test
 	}
 
 }
