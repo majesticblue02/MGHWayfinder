@@ -19,7 +19,7 @@ public class PathView extends View{
 	
 	public void drawPath(ArrayList<Node> nodes){
 		Canvas pathCanvas = new Canvas();
-		int x1,y1,x2,y2,i;
+		int x1, y1, x2 = 0, y2 = 0, i;
 		Paint p = new Paint();
 		
 		p.setColor(0);
@@ -34,9 +34,10 @@ public class PathView extends View{
 			
 			pathCanvas.drawCircle(x1, y1, 5, p);
 			pathCanvas.drawLine(x1, y1, x2, y2, p);
-			pathCanvas.drawCircle(x2, y2, 5, p);
+			
 		}
 		
+		pathCanvas.drawCircle(x2, y2, 5, p);
 		
 	}
 

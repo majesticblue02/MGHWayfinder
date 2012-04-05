@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;MGHWayFinder/src/com/MGHWayFinder/DijkstraProtoActivity.java&apos; to &apos;Dijkstra.java&apos;" description="Rename resource &apos;DijkstraProtoActivity.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/com/MGHWayFinder/DijkstraProtoActivity.java" name="Dijkstra.java" stamp="1331330190068" updateReferences="true"/>
-</session>
