@@ -9,23 +9,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose Start Node" />
-
-    <Spinner
-        android:id="@+id/startSpin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
+    
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   		 android:layout_width="fill_parent"
+  		  android:layout_height="wrap_content"
+  		  android:orientation="horizontal" >
+	    <Spinner
+	        android:id="@+id/startSpin"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />	
+	    <Button
+      	    android:id="@+id/scanStart"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Scan" />
+	 </LinearLayout>
+	 
     <TextView
         android:id="@+id/endNodeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose End Node:" />
 
-    <Spinner
-        android:id="@+id/endSpin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" >
+ 		 <Spinner
+    	    android:id="@+id/endSpin"
+    	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" />
+	     <Button
+        	android:id="@+id/setEnd"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Set" />
+	 </LinearLayout>
     <Button
         android:id="@+id/goButton"
         android:layout_width="fill_parent"
