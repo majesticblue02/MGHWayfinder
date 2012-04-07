@@ -78,7 +78,7 @@ public class MGHWayFinderActivity extends Activity {
     	//do we need an end button??
     	//no end scan, end context menu
     	//COMING SOON
-    	endSet = (Button)findViewById(R.id.scanStart);
+    	endSet = (Button)findViewById(R.id.setEnd);
         endSet.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		contextDestination();
@@ -95,7 +95,7 @@ public class MGHWayFinderActivity extends Activity {
             if (resultCode == Activity.RESULT_OK) {
                 String startnID = scanStart.getStringExtra("SCAN_RESULT");	//get the result from extra
                 //test code
-                //Log.v("QR", startnID);
+                Log.v("QR", startnID);
                 
                 //set spinner
             	for(int i=0; i < aFloor.size(); i++){
