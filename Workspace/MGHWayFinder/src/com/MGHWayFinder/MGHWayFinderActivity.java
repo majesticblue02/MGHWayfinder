@@ -16,7 +16,11 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 
 public class MGHWayFinderActivity extends Activity {
@@ -28,8 +32,9 @@ public class MGHWayFinderActivity extends Activity {
 	Button go;
 	Button startQR;
 	Button endSet;
+	String endnId;
 	String startnID;
-	
+	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
 	Dijkstra dPath;
 	String sPath;
 	ArrayAdapter<Node> aAdapter;
@@ -97,10 +102,12 @@ public class MGHWayFinderActivity extends Activity {
     	//no end scan, end context menu
     	//COMING SOON
     	endSet = (Button)findViewById(R.id.setEnd);
-        endSet.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		contextDestination();
-        	}});
+    	registerForContextMenu(endSet);	//how to make short press?
+    	
+//        endSet.setOnClickListener(new OnClickListener(){
+//        	public void onClick(View v){
+//        		contextDestination();
+//        	}});
 
         
 //////////////////MAP TAB//////////////////////
@@ -139,7 +146,42 @@ tabs.addTab(spec);
 
     }//end of oncreate
     
-    
+    //context menu
+    @Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {		
+		super.onCreateContextMenu(menu, v, menuInfo);
+		//add a couple of options to the context menu
+		menu.setHeaderTitle("Patient Destinations");
+		menu.add(0, 1, Menu.NONE, "Elevator");
+		menu.add(0, 2, Menu.NONE, "Stairs");
+		menu.add(0, 3, Menu.NONE, "Clinic Lobby");
+		menu.add(0, 4, Menu.NONE, "Bathroom");
+		menu.add(0, 5, Menu.NONE, "Hospital Exit");
+		
+    }
+
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		super.onContextItemSelected(item);
+		String title = item.getTitle().toString(); //get menu item title
+		int itemId = item.getItemId();             //get menu item id
+		//Toast.makeText(this, title + " " + itemId, Toast.LENGTH_LONG).show();
+		
+		endnId = contextNID[itemId - 1];
+		Log.v("context", endnId + title);
+		
+        //set spinner
+    	for(int i=0; i < aFloor.size(); i++){
+    		if(endnId.equals(aFloor.get(i).getNodeID())){
+    			end.setSelection(i);
+    		}}
+    		
+		return false;
+	}
+	
+	
     //receive scan result back from scanner intent
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent scanStart) {
