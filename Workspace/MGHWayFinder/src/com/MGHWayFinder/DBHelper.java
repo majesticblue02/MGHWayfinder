@@ -194,6 +194,7 @@ public class DBHelper extends SQLiteOpenHelper{
             	
             	cursor.moveToNext();
             }
+            cursor.close();
     	}
     }
 	
