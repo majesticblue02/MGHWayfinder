@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -50,6 +51,20 @@ public class MGHWayFinderActivity extends Activity {
         for(Node n:hash.values())
         	aFloor.add(n);
         
+        //tabs
+        TabHost tabs=(TabHost)findViewById(R.id.tabhost);
+        tabs.setup();
+        
+        TabHost.TabSpec spec;
+        
+        
+
+//////////////////DIRECTIONS TAB//////////////////////
+        //tab setup
+        spec=tabs.newTabSpec("directions");
+        spec.setContent(R.id.directionsTab);
+        spec.setIndicator("Directions");
+        tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
@@ -65,6 +80,9 @@ public class MGHWayFinderActivity extends Activity {
         	public void onClick(View v){
         		calculatePath();
         	}}); 
+        
+        //logo comented out currently
+        //ImageView logo = (ImageView)findViewById(R.id.logoView);
         
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
@@ -83,7 +101,41 @@ public class MGHWayFinderActivity extends Activity {
         	public void onClick(View v){
         		contextDestination();
         	}});
-    	
+
+        
+//////////////////MAP TAB//////////////////////
+//tab setup
+spec=tabs.newTabSpec("map");
+spec.setContent(R.id.mapTab);
+spec.setIndicator("Map");
+tabs.addTab(spec);
+///////////////////UI ELEMENTS////////////////////////
+//stuff for map tab
+
+
+
+//////////////////DIRECTORY TAB//////////////////////
+//tab setup
+spec=tabs.newTabSpec("directory");
+spec.setContent(R.id.dirTab);
+spec.setIndicator("Directory");
+tabs.addTab(spec);
+///////////////////UI ELEMENTS////////////////////////
+//stuff for directory tab
+
+
+
+//////////////////HELP TAB//////////////////////
+//tab setup
+spec=tabs.newTabSpec("help");
+spec.setContent(R.id.helpTab);
+spec.setIndicator("Help");
+tabs.addTab(spec);
+///////////////////UI ELEMENTS////////////////////////
+//help tab stuff
+
+
+
 
     }//end of oncreate
     

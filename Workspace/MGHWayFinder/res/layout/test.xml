@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tabhost" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<RelativeLayout 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		
+			<TabWidget android:id="@android:id/tabs"
+			    android:layout_alignParentBottom="true"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" />
+	    
+		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
 
+
+
+<!-- DIRECTIONS TAB -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/directionsTab"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <!--  LOGO - needs to be centered
+	    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:src="@drawable/mgh_logo" />
+	    -->
     <TextView
         android:id="@+id/startNodeLabel"
         android:layout_width="wrap_content"
@@ -43,7 +68,7 @@
         	android:id="@+id/setEnd"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="Set" />
+        	android:text=" Set " />
 	 </LinearLayout>
     <Button
         android:id="@+id/goButton"
@@ -68,9 +93,61 @@
         android:layout_height="wrap_content"
         android:text="Map Path" />
 
-    <ImageView
+</LinearLayout>
+
+<!-- MAP TAB -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mapTab"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/mapLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Map" />
+    
+	    <ImageView
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent" 
+        android:src="@drawable/basemap700" />
 
 </LinearLayout>
+<!-- DIRECTORY TAB -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dirTab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/dirLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dir" />
+    
+
+</LinearLayout>
+
+<!-- HELP TAB -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/helpTab"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/helpLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USER MANUAL" />
+
+</LinearLayout>
+
+
+<!-- closers -->
+		</FrameLayout>
+	</RelativeLayout>
+</TabHost>
