@@ -107,8 +107,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	
 	public Cursor getNodeNeighbors(String NodeID){											//returns a recordset containing all neighbor Nodes of the string[] of Node ID's
-		String w = NodeID;
-		return db.rawQuery("SELECT * FROM tblNeighbors WHERE mNode = " + w, null);
+		String w = "'" + NodeID + "'";
+		return db.rawQuery("SELECT * FROM tblNeighbors WHERE mNode = " + w, null );
 	}
  
 	public Cursor getNodeType(int nFloor, ArrayList<String> nType){										//returns a recordset containing all Nodes with a given nType[]
