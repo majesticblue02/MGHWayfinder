@@ -121,6 +121,8 @@ public class MGHWayFinderActivity extends Activity {
 		}
 		
 		tvPath.setText(sPath);
+		
+		dPath = null;
 	}
     
     private synchronized void initializeDB(){
