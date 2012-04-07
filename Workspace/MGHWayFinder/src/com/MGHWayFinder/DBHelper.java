@@ -106,9 +106,8 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.rawQuery("SELECT * FROM tblNode WHERE nFloor = " + floor, null);
 	}
 	
-	public Cursor getNodeNeighbors(ArrayList<String> NodeIDs){											//returns a recordset containing all neighbor Nodes of the string[] of Node ID's
-		String w = concatOr(NodeIDs, "mNode");
-				
+	public Cursor getNodeNeighbors(String NodeID){											//returns a recordset containing all neighbor Nodes of the string[] of Node ID's
+		String w = NodeID;
 		return db.rawQuery("SELECT * FROM tblNeighbors WHERE mNode = " + w, null);
 	}
  
@@ -177,21 +176,25 @@ public class DBHelper extends SQLiteOpenHelper{
     protected void buildNeighborNodes(Hashtable<String, Node> ht, ArrayList<String> nIDs){
     	String stringM, stringN;
     	Node NodeM, NodeN;
-    	Cursor cursor = this.getNodeNeighbors(nIDs);
+    	Cursor cursor;
     	
-    	cursor.moveToFirst();
-        
-        while(!cursor.isAfterLast()){
-        	stringM = cursor.getString(1);							//"Master" NodeID
-        	stringN = cursor.getString(2);							//"Neighbor" NodeID
-        	
-        	NodeM = ht.get(stringM);								//Retrieve master Node from hashtable
-        	NodeN = ht.get(stringN);								//Retrieve neighbor Node from hashtable
-        	
-        	NodeM.addNeighbor(NodeN);								//Add neighbor Node to master Node
-        	
-        	cursor.moveToNext();
-        }
+    	for(String it:nIDs){
+    		cursor = this.getNodeNeighbors(it);
+    		
+    		cursor.moveToFirst();
+            
+            while(!cursor.isAfterLast()){
+            	stringM = cursor.getString(1);							//"Master" NodeID
+            	stringN = cursor.getString(2);							//"Neighbor" NodeID
+            	
+            	NodeM = ht.get(stringM);								//Retrieve master Node from hashtable
+            	NodeN = ht.get(stringN);								//Retrieve neighbor Node from hashtable
+            	
+            	NodeM.addNeighbor(NodeN);								//Add neighbor Node to master Node
+            	
+            	cursor.moveToNext();
+            }
+    	}
     }
 	
 	

@@ -173,6 +173,8 @@ tabs.addTab(spec);
 		}
 		
 		tvPath.setText(sPath);
+		
+		dPath = null;
 	}
     
     private synchronized void initializeDB(){
