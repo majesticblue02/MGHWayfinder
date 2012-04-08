@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 public class DrawProtoActivity extends Activity {
-    /** Called when the activity is first created. */
+    PathView pv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	 super.onCreate(savedInstanceState);

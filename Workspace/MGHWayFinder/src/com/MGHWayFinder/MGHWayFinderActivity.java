@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,7 +26,7 @@ public class MGHWayFinderActivity extends Activity {
 	Spinner start, end;
 	TextView tvPath;
 	ImageView ivPath;
-	Button go;
+	Button go, drawPath;
 	Button startQR;
 	Button endSet;
 	String startnID;
@@ -71,6 +72,7 @@ public class MGHWayFinderActivity extends Activity {
         tvPath = (TextView)findViewById(R.id.tvNP);
         ivPath = (ImageView)findViewById(R.id.imageView);
         go = (Button)findViewById(R.id.goButton);
+        drawPath = (Button)findViewById(R.id.btnMakePath);
         
         aAdapter = new ArrayAdapter<Node>(this, android.R.layout.simple_spinner_item, aFloor);
         start.setAdapter(aAdapter);
@@ -80,6 +82,10 @@ public class MGHWayFinderActivity extends Activity {
         	public void onClick(View v){
         		calculatePath();
         	}}); 
+        drawPath.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		drawMap();
+        	}});
         
         //logo comented out currently
         //ImageView logo = (ImageView)findViewById(R.id.logoView);
@@ -171,10 +177,7 @@ tabs.addTab(spec);
 		for(int i = 1; i < aPath.size(); i++){
 			sPath += " -> " + aPath.get(i).getNodeID();
 		}
-		
 		tvPath.setText(sPath);
-		
-		dPath = null;
 	}
     
     private synchronized void initializeDB(){
@@ -191,6 +194,12 @@ tabs.addTab(spec);
         catch(SQLException sqle){
         	throw sqle;
         }
+    }
+    
+    public void drawMap(){
+    	PathView pv = new PathView(this.getApplicationContext(), aPath);
+    	pv.setBackgroundColor(Color.WHITE);
+    	setContentView(pv);
     }
     
     public void contextDestination(){

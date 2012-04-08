@@ -17,16 +17,17 @@ public final class R {
         public static final int mgh_logo=0x7f020003;
     }
     public static final class id {
-        public static final int dirLabel=0x7f05000f;
-        public static final int dirTab=0x7f05000e;
+        public static final int btnMakePath=0x7f05000b;
+        public static final int dirLabel=0x7f050010;
+        public static final int dirTab=0x7f05000f;
         public static final int directionsTab=0x7f050001;
         public static final int endNodeLabel=0x7f050005;
         public static final int endSpin=0x7f050006;
         public static final int goButton=0x7f050008;
-        public static final int helpLabel=0x7f050011;
-        public static final int helpTab=0x7f050010;
-        public static final int imageView=0x7f05000d;
-        public static final int mapLabel=0x7f05000b;
+        public static final int helpLabel=0x7f050012;
+        public static final int helpTab=0x7f050011;
+        public static final int imageView=0x7f05000e;
+        public static final int mapLabel=0x7f05000d;
         public static final int mapTab=0x7f05000c;
         public static final int nodePathLabel=0x7f050009;
         public static final int scanStart=0x7f050004;
