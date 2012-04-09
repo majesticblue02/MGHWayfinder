@@ -7,7 +7,6 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -197,10 +196,24 @@ tabs.addTab(spec);
     }
     
     public void drawMap(){
-    	PathView pv = new PathView(this.getApplicationContext(), aPath);
-    	pv.setBackgroundColor(Color.WHITE);
-    	setContentView(pv);
+    	String x,y;
+    	String delim = ",";
+    	
+    	x = Integer.toString(aPath.get(0).getX());
+    	y = Integer.toString(aPath.get(0).getY());
+    	for(int i = 1; i < aPath.size(); i++){
+    		x += delim + Integer.toString(aPath.get(i).getX());
+    		y += delim + Integer.toString(aPath.get(i).getY());
+    	}
+    	Intent drawPath = new Intent(this, pathDraw.class);
+    	drawPath.putExtra("x", x);
+    	drawPath.putExtra("y", y);
+        startActivity(drawPath);
+    	//PathView pv = new PathView(this.getApplicationContext(), aPath);
+    	//pv.setBackgroundResource(R.drawable.basemap);
+    	//setContentView(pv);
     }
+
     
     public void contextDestination(){
     	//use this and onclick leading to it to create and open context menu with
