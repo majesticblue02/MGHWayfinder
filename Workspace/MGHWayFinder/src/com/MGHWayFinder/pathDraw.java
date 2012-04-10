@@ -29,8 +29,6 @@ public class pathDraw extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);  
 		
-		iv = (ImageView)findViewById(R.id.imageView);
-		
 		DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         height = displaymetrics.heightPixels;
@@ -48,6 +46,8 @@ public class pathDraw extends Activity{
 		pv = new PathView(this.getApplicationContext(),xPoints,yPoints,width,height);
 		pv.setBackgroundColor(Color.WHITE);
 		setContentView(pv);
+		
+		
 	 }
 
 

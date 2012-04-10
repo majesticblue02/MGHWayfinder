@@ -49,43 +49,48 @@ public class PathView extends View{
 		baseMap.setBounds(bounds);
 
 		//pathWay.setBounds(bounds);
-		drawCanvas();
-		
+		//drawCanvas();
 	}
 	
-	public void drawCanvas(){
+	
+	@Override
+	public void onDraw(Canvas canvas){
+		super.onDraw(canvas);
+		canvas.save();
 		//pathBitmap = Bitmap.createBitmap(bounds.right, bounds.bottom, Bitmap.Config.ARGB_4444);
 		//pathCanvas = new Canvas();
-		baseMap.draw(pathCanvas);
+		//baseMap.draw(canvas);
 		//pathCanvas.setMatrix(scale);
-			
+		scale.postScale((nativeWidth/(float)bounds.right), (nativeHeight/(float)bounds.bottom));
+		canvas.setMatrix(scale);
+		
+		baseMap.draw(canvas);
+		
+		x1 = xArray.get(0);
+		y1 = xArray.get(0);
+		canvas.drawCircle(x1, y1, 5, p);
+		
 		for(i = 0; i < (xArray.size()-1); i++){
 			x1 = xArray.get(i);
 			y1 = yArray.get(i);
 			x2 = xArray.get(i+1);
 			y2 = yArray.get(i+1); 
 					
-			pathCanvas.drawCircle(x1, y1, 5, p);
-			pathCanvas.drawLine(x1, y1, x2, y2, p);
+			
+			canvas.drawLine(x1, y1, x2, y2, p);
 		}		
-		pathCanvas.drawCircle(x2, y2, 5, p);
-		//pathCanvas.save();
-		//pathCanvas.scale(.1f,.1f);
+		canvas.drawCircle(x2, y2, 5, p);
+		//canvas.save();
+		//canvas.scale(2f,2f);
 				
 				
-		scale.postScale((nativeWidth/(float)bounds.right), (nativeHeight/(float)bounds.bottom));
-		pathCanvas.setMatrix(scale);
+		
 		//makePath();
 		//path.transform(scale);
 		//pathCanvas.drawPath(path, p);
-	}
-	
-	
-	
-	@Override
-	public void onDraw(Canvas canvas){
+
 		
-		
+		//canvas.restore();
 	}
 	
 	private void makePath(){

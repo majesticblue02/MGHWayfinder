@@ -212,6 +212,7 @@ tabs.addTab(spec);
     	//PathView pv = new PathView(this.getApplicationContext(), aPath);
     	//pv.setBackgroundResource(R.drawable.basemap);
     	//setContentView(pv);
+        
     }
 
     
