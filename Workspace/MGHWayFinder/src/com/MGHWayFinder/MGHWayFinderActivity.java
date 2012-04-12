@@ -30,14 +30,13 @@ public class MGHWayFinderActivity extends Activity {
 	Button endSet;
 	String startnID;
 	
-	Dijkstra dPath;
+	Dijkstra dijkstra1, dijkstra2;
 	String sPath;
 	ArrayAdapter<Node> aAdapter;
 	DBHelper db;
     ArrayList<Node> aFloor = new ArrayList<Node>();
     ArrayList<Node> aPath;
     Hashtable<String, Node> hash;
-    //ArrayList<Node> bFloor = new ArrayList<Node>();
 	
 	
     @Override
@@ -83,7 +82,7 @@ public class MGHWayFinderActivity extends Activity {
         	}}); 
         drawPath.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		drawMap();
+        		drawMapPath(1);
         	}});
         
         //logo comented out currently
@@ -168,8 +167,16 @@ tabs.addTab(spec);
     
     	
     private void calculatePath() {
-		dPath = new Dijkstra((Node)start.getSelectedItem());
-		aPath = dPath.getPath((Node)end.getSelectedItem());
+    	Node b = (Node)start.getSelectedItem();
+    	
+    	if (dijkstra1 == null){
+    		dijkstra1 = new Dijkstra(b);
+    	} else if (b != dijkstra1.getStart()){
+    		dijkstra1.reset();
+    		dijkstra1.restart(b);
+    	}
+		
+		aPath = dijkstra1.getPath((Node)end.getSelectedItem());
 
 		sPath = aPath.get(0).getNodeID();
 		
@@ -195,24 +202,25 @@ tabs.addTab(spec);
         }
     }
     
-    public void drawMap(){
+    ///Called to start a new activity which draws the path over the image of the floor plan
+    public void drawMapPath(int floor){
     	String x,y;
     	String delim = ",";
     	
     	x = Integer.toString(aPath.get(0).getX());
     	y = Integer.toString(aPath.get(0).getY());
-    	for(int i = 1; i < aPath.size(); i++){
+    	for(int i = 1; i < aPath.size(); i++){											//builds the strings to pass to the activity with delimiter delim
     		x += delim + Integer.toString(aPath.get(i).getX());
     		y += delim + Integer.toString(aPath.get(i).getY());
     	}
-    	Intent drawPath = new Intent(this, pathDraw.class);
-    	drawPath.putExtra("x", x);
-    	drawPath.putExtra("y", y);
+    	
+    	Intent drawPath = new Intent(this, PathDrawActivity.class);
+    	drawPath.putExtra("xString", x);
+    	drawPath.putExtra("yString", y);
+    	drawPath.putExtra("delim", delim);
+    	drawPath.putExtra("floor", floor);
         startActivity(drawPath);
-    	//PathView pv = new PathView(this.getApplicationContext(), aPath);
-    	//pv.setBackgroundResource(R.drawable.basemap);
-    	//setContentView(pv);
-        
+
     }
 
     

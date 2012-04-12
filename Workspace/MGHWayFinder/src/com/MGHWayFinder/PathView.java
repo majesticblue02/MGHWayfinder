@@ -2,55 +2,50 @@ package com.MGHWayFinder;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
 
 public class PathView extends View{
-	Paint p = new Paint();
+	
 	ArrayList<Integer> xArray, yArray;
-	Matrix scale = new Matrix();
-
 	float nativeWidth, nativeHeight;
-	Drawable baseMap;
 	Rect bounds;
-
+	Matrix matrix1 = new Matrix();
+	Paint p = new Paint();
+	Drawable baseMap;
 	Path path = new Path();
 
-	
-	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float width, float height) {
+	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH) {
 		super(context);
+
+		this.xArray = xArray;
+		this.yArray = yArray;
+		this.nativeHeight = screenH;
+		this.nativeWidth = screenW;
+		
 		p.setColor(Color.BLACK);
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
-		this.xArray = xArray;
-		this.yArray = yArray;
-		this.nativeHeight = height;
-		this.nativeWidth = width;
 		
 		baseMap = getResources().getDrawable(R.drawable.basemap700);
 
 		bounds = new Rect(0, 0, baseMap.getIntrinsicWidth(), baseMap.getIntrinsicHeight());
 		baseMap.setBounds(bounds);
 		
+		
+		//scale view based on background image size
 		if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
-			scale.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
+			matrix1.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
 		else
-			scale.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
+			matrix1.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
 	}
 	
 	
@@ -59,7 +54,7 @@ public class PathView extends View{
 		super.onDraw(canvas);
 		canvas.save();
 
-		canvas.setMatrix(scale);
+		canvas.setMatrix(matrix1);
 		baseMap.draw(canvas);
 		makePath();
 		
@@ -70,8 +65,8 @@ public class PathView extends View{
 		int x,y;
 		x = xArray.get(0);
 		y = yArray.get(0);
-		
-		path.addCircle(x, y, 5, Path.Direction.CW);
+
+		path.addCircle(x, y, 5, Path.Direction.CW);								//adds a circle to the path start
 		path.moveTo(x, y);
 		
 		for(int i = 0; i < xArray.size(); i++){
@@ -84,4 +79,28 @@ public class PathView extends View{
 		path.close();
 	}
 	
+	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y){			//Clears the current path and updates it
+		xArray.clear();
+		yArray.clear();
+		xArray = null;															//nulled to attempt to have gc remove old array objects
+		yArray = null;
+		xArray = x;
+		yArray = y;
+		invalidate();															//invalidated to rerun onDraw call
+	}
+	
+	public void scale(float dx, float dy){
+		matrix1.postScale(dx,dy);
+		invalidate();
+	}
+	
+	public void translate(float dx, float dy){
+		matrix1.postTranslate(dx, dy);
+		invalidate();
+	}
+	
+	public void rotate(float degrees){
+		matrix1.postRotate(degrees);
+		invalidate();
+	}
 }

@@ -6,8 +6,8 @@ public class Node {
 	private static final int INFINITY = Integer.MAX_VALUE;
 	
 	private int x, y;													//coordinates on a map
-	private int NodeFloor;												//floor that the Node is on
-	private String NodeID, NodeDep, NodeType;							//Node ID in DB, name of Node (UI purposes), type of Node
+	private int nodeFloor;												//floor that the Node is on
+	private String nodeID, nodeDep, nodeType;							//Node ID in DB, name of Node (UI purposes), type of Node
 	private ArrayList<Node> neighbors = new ArrayList<Node>();			//corresponding connections
 	private Node pNode = null;											//previous Node in the shortest path, initialized to null
 	private double d = INFINITY;										//d is the shortest distance from the starting point to this Node, initialized to "infinity"
@@ -17,10 +17,10 @@ public class Node {
 	public Node(String nID, int x, int y, int floor, String nType, String nDep){
 		this.x = x;
 		this.y = y;
-		this.NodeID = nID;
-		this.NodeDep = nDep;
-		this.NodeType = nType;
-		this.NodeFloor = floor;
+		this.nodeID = nID;
+		this.nodeDep = nDep;
+		this.nodeType = nType;
+		this.nodeFloor = floor;
 	}
 	
 	public void addNeighbor(Node neighbor){
@@ -52,19 +52,19 @@ public class Node {
 	}
 	
 	public String getNodeID(){
-		return NodeID;
+		return nodeID;
 	}
 	
 	public String getNodeDepartment(){
-		return NodeDep;
+		return nodeDep;
 	}
 	
 	public String getNodeType(){
-		return NodeType;
+		return nodeType;
 	}
 	
 	public int getNodeFloor(){
-		return NodeFloor;
+		return nodeFloor;
 	}
 	
 	public double getBestDistance(){
@@ -88,11 +88,12 @@ public class Node {
 	}
 	
 	public String toString(){
-		return NodeID + " - " + NodeDep;
+		return nodeID + " - " + nodeDep;
 	}
 	
 	public void reset(){
 		d = INFINITY;
 		pNode = null;
+		pNodeAngle = -1;
 	}
 }

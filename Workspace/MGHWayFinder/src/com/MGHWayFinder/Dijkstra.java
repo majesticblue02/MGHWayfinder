@@ -16,15 +16,33 @@ public class Dijkstra {
 		dijkstraAlgorithm(START);
 		calculateNodeAngles();
 	}
+	
+	public boolean reset(){												//clears all info in the dijkstra table, prepping for a new run
+		for(Node n: S)
+			n.reset();
+		STARTNode = null;
+		S.clear();
+		Q.clear();
+		return true;
+	}
+	
+	public void restart(Node START){									//recalculates all paths from Node START
+		this.STARTNode = START;
+		dijkstraAlgorithm(START);
+		calculateNodeAngles();
+	}
 	 
     public ArrayList<Node> getPath(Node END){
     	ArrayList<Node> P = new ArrayList<Node>();
     	
     	P.add(END);														//initialize end Node
-		while(P.get(0) != STARTNode){									//loop backwards from end Node until beginning Node
-			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes
-		}		
+		while(P.get(0) != STARTNode)									//loop backwards from end Node until beginning Node
+			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes	
 		return P;
+    }
+    
+    public Node getStart(){
+    	return this.STARTNode;
     }
     
 	protected void dijkstraAlgorithm(Node START){
