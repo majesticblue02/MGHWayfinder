@@ -15,27 +15,31 @@ import android.view.View;
 
 public class PathView extends View{
 	
-	ArrayList<Integer> xArray, yArray;
-	float nativeWidth, nativeHeight;
-	Rect bounds;
+	ArrayList<Integer> xArray, yArray;															//arraylists used to hold x,y coords of node points
+	float nativeWidth, nativeHeight;															//screen width and height (used for scaling)
+	int floorInt;																				//floor number used to look up background bm to load
+	Rect bounds;																				//outer bounds of background bm
 	Matrix matrix1 = new Matrix();
-	Paint p = new Paint();
+	Paint p = new Paint();																		//paint used to stroke path
 	Drawable baseMap;
 	Path path = new Path();
+	
+	int[] images = {(int)(R.drawable.basemap700)};												//array of image locations
 
-	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH) {
+	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH, int floor) {
 		super(context);
 
 		this.xArray = xArray;
 		this.yArray = yArray;
 		this.nativeHeight = screenH;
 		this.nativeWidth = screenW;
+		this.floorInt = floor;
 		
 		p.setColor(Color.BLACK);
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
-		baseMap = getResources().getDrawable(R.drawable.basemap700);
+		baseMap = getResources().getDrawable(images[floor-1]);
 
 		bounds = new Rect(0, 0, baseMap.getIntrinsicWidth(), baseMap.getIntrinsicHeight());
 		baseMap.setBounds(bounds);
@@ -61,6 +65,7 @@ public class PathView extends View{
 		canvas.drawPath(path, p);
 	}
 	
+	//draws path using arrays
 	private void makePath(){
 		int x,y;
 		x = xArray.get(0);
@@ -79,13 +84,15 @@ public class PathView extends View{
 		path.close();
 	}
 	
-	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y){			//Clears the current path and updates it
+	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor){			//Clears the current path and updates it
 		xArray.clear();
 		yArray.clear();
 		xArray = null;															//nulled to attempt to have gc remove old array objects
 		yArray = null;
+		path.reset();
 		xArray = x;
 		yArray = y;
+		this.floorInt = floor;
 		invalidate();															//invalidated to rerun onDraw call
 	}
 	

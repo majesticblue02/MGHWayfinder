@@ -12,7 +12,7 @@ public class PathDrawActivity extends Activity{
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
 	ArrayList<Integer> yPoints = new ArrayList<Integer>();
-	int sWidth, sHeight;
+	int sWidth, sHeight, floor;
 	String delim;
 
 	@Override
@@ -26,6 +26,7 @@ public class PathDrawActivity extends Activity{
 		
 		bundle = getIntent().getExtras();													//get info passed from starting intent
 		
+		floor = bundle.getInt("floor");														//working floor number
 		delim = bundle.getString("delim");													//delimiter used to concat string of values
 
 		for(String it:bundle.getString("xString").split(delim)){							//rebuilding arrays
@@ -35,7 +36,7 @@ public class PathDrawActivity extends Activity{
 			yPoints.add(Integer.parseInt(it));
 		}
 		
-		pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight);
+		pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor);
 		pv.setBackgroundColor(Color.WHITE);
 		setContentView(pv);
 	 }
