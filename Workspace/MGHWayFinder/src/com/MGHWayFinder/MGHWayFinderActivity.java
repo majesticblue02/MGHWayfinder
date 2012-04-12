@@ -32,15 +32,11 @@ public class MGHWayFinderActivity extends Activity {
 	Button go, drawPath;
 	Button startQR;
 	Button endSet;
-	String startnID;
-<<<<<<< HEAD
-	
+	String startnID;	
 	Dijkstra dijkstra1, dijkstra2;
-=======
 	String endnId;
 	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
 	Dijkstra dPath;
->>>>>>> 45181c2eeb27436f8963d258476dba8e2e61a9c9
 	String sPath;
 	ArrayAdapter<Node> aAdapter;
 	DBHelper db;
