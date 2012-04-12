@@ -66,7 +66,7 @@ public class PathView extends View{
 	}
 	
 	//draws path using arrays
-	private void makePath(){
+	protected void makePath(){
 		int x,y;
 		x = xArray.get(0);
 		y = yArray.get(0);
@@ -84,9 +84,8 @@ public class PathView extends View{
 		path.close();
 	}
 	
+	
 	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor){			//Clears the current path and updates it
-		xArray.clear();
-		yArray.clear();
 		xArray = null;															//nulled to attempt to have gc remove old array objects
 		yArray = null;
 		path.reset();
