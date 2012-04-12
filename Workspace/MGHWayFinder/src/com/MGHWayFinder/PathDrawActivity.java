@@ -4,16 +4,29 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class PathDrawActivity extends Activity{
+public class PathDrawActivity extends Activity implements OnTouchListener{
 	PathView pv;
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
 	ArrayList<Integer> yPoints = new ArrayList<Integer>();
 	int sWidth, sHeight, floor;
 	String delim;
+	
+	Matrix m = new Matrix();
+	Matrix savedM = new Matrix();
+	static final int NONE = 0;
+	static final int DRAG = 1;
+	static final int ZOOM = 2;
+	int MODE = NONE;
+	Point sPoint = new Point();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,12 +48,8 @@ public class PathDrawActivity extends Activity{
 		
 		pv.setBackgroundColor(Color.WHITE);
 		setContentView(pv);
+		pv.setOnTouchListener(this);
 	 }
-	
-	@Override
-	public void onRestart(){
-		super.onRestart();
-	}
 
 	protected void updateBundle(){
 		bundle = getIntent().getExtras();													//get info passed from starting intent
@@ -54,6 +63,35 @@ public class PathDrawActivity extends Activity{
 		for(String it:bundle.getString("yString").split(delim)){
 			yPoints.add(Integer.parseInt(it));
 		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent e) {
+		PathView view = (PathView) v;
+		
+		switch(e.getAction() & MotionEvent.ACTION_MASK){
+			case MotionEvent.ACTION_DOWN:
+				savedM.set(m);
+				sPoint.set((int)e.getX(), (int)e.getY());
+				MODE = DRAG;
+				break;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_POINTER_UP:
+				MODE = NONE;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				if (MODE == DRAG) {
+					m.set(savedM);
+					m.postTranslate(e.getX() - sPoint.x,
+										e.getY() - sPoint.y);
+				}
+				break;
+		}
+		
+		
+		view.setMatrix(m);
+		
+		return true;
 	}
 
 }

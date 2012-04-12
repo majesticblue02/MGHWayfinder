@@ -3,13 +3,17 @@ package com.MGHWayFinder;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -19,9 +23,10 @@ public class PathView extends View{
 	float nativeWidth, nativeHeight;															//screen width and height (used for scaling)
 	int floorInt;																				//floor number used to look up background bm to load
 	Rect bounds;																				//outer bounds of background bm
-	Matrix matrix1 = new Matrix();
+	Matrix matrix = new Matrix();
 	Paint p = new Paint();																		//paint used to stroke path
 	Drawable baseMap;
+	BitmapFactory.Options op = new BitmapFactory.Options();
 	Path path = new Path();
 	
 	int[] images = {(int)(R.drawable.basemap700)};												//array of image locations
@@ -39,17 +44,18 @@ public class PathView extends View{
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
+		//baseMap.createBitmap(width, height, Bitmap.Config.RGB_565);
+		
 		baseMap = getResources().getDrawable(images[floor-1]);
-
 		bounds = new Rect(0, 0, baseMap.getIntrinsicWidth(), baseMap.getIntrinsicHeight());
 		baseMap.setBounds(bounds);
 		
 		
 		//scale view based on background image size
-		if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
-			matrix1.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
-		else
-			matrix1.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
+		//if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
+		//	matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
+		//else
+		//	matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
 	}
 	
 	
@@ -58,7 +64,7 @@ public class PathView extends View{
 		super.onDraw(canvas);
 		canvas.save();
 
-		canvas.setMatrix(matrix1);
+		canvas.setMatrix(matrix);
 		baseMap.draw(canvas);
 		makePath();
 		
@@ -95,18 +101,8 @@ public class PathView extends View{
 		invalidate();															//invalidated to rerun onDraw call
 	}
 	
-	public void scale(float dx, float dy){
-		matrix1.postScale(dx,dy);
-		invalidate();
-	}
-	
-	public void translate(float dx, float dy){
-		matrix1.postTranslate(dx, dy);
-		invalidate();
-	}
-	
-	public void rotate(float degrees){
-		matrix1.postRotate(degrees);
+	public void setMatrix(Matrix m){
+		matrix = m;
 		invalidate();
 	}
 }
