@@ -24,8 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class MGHWayFinderActivity extends Activity {
-    /** Called when the activity is first created. */
-	//hello git
 	Spinner start, end;
 	TextView tvPath;
 	ImageView ivPath;

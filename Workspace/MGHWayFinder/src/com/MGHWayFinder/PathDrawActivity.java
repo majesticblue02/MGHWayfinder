@@ -24,6 +24,25 @@ public class PathDrawActivity extends Activity{
         sHeight = displaymetrics.heightPixels;
         sWidth = displaymetrics.widthPixels;
 		
+		updateBundle();
+		if(pv == null){
+			pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor);
+		} else {
+			bundle.clear();
+			updateBundle();
+			pv.updatePath(xPoints, yPoints, floor);	
+		}
+		
+		pv.setBackgroundColor(Color.WHITE);
+		setContentView(pv);
+	 }
+	
+	@Override
+	public void onRestart(){
+		super.onRestart();
+	}
+
+	protected void updateBundle(){
 		bundle = getIntent().getExtras();													//get info passed from starting intent
 		
 		floor = bundle.getInt("floor");														//working floor number
@@ -35,12 +54,6 @@ public class PathDrawActivity extends Activity{
 		for(String it:bundle.getString("yString").split(delim)){
 			yPoints.add(Integer.parseInt(it));
 		}
-		
-		pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor);
-		pv.setBackgroundColor(Color.WHITE);
-		setContentView(pv);
-	 }
-
-
+	}
 
 }
