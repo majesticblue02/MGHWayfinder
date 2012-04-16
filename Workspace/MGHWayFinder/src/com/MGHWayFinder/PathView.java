@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,16 +22,19 @@ public class PathView extends View{
 	
 	ArrayList<Integer> xArray, yArray;															//arraylists used to hold x,y coords of node points
 	float nativeWidth, nativeHeight;															//screen width and height (used for scaling)
-	int floorInt;																				//floor number used to look up background bm to load
+	int floorInt, mapHeight, mapWidth;																				//floor number used to look up background bm to load
 	Rect bounds;																				//outer bounds of background bm
 	Matrix matrix = new Matrix();
 	Paint p = new Paint();																		//paint used to stroke path
-	Drawable baseMap;
+	BitmapDrawable dMap;
+	Bitmap bMap, nullMap;
+	BitmapFactory bmf = new BitmapFactory();
 	BitmapFactory.Options op = new BitmapFactory.Options();
 	Path path = new Path();
 	
 	int[] images = {(int)(R.drawable.basemap700)};												//array of image locations
 
+	@SuppressWarnings("static-access")
 	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH, int floor) {
 		super(context);
 
@@ -44,11 +48,13 @@ public class PathView extends View{
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
-		//baseMap.createBitmap(width, height, Bitmap.Config.RGB_565);
+		op.inPreferredConfig = Bitmap.Config.RGB_565;
+		bMap = bmf.decodeResource(this.getResources(), R.drawable.basemap700, op);
 		
-		baseMap = getResources().getDrawable(images[floor-1]);
-		bounds = new Rect(0, 0, baseMap.getIntrinsicWidth(), baseMap.getIntrinsicHeight());
-		baseMap.setBounds(bounds);
+		dMap = new BitmapDrawable(this.getResources(), bMap);
+		//dMap = getResources().getDrawable(images[floor-1]);
+		bounds = new Rect(0, 0, dMap.getIntrinsicWidth(), dMap.getIntrinsicHeight());
+		dMap.setBounds(bounds);
 		
 		
 		//scale view based on background image size
@@ -65,7 +71,7 @@ public class PathView extends View{
 		canvas.save();
 
 		canvas.setMatrix(matrix);
-		baseMap.draw(canvas);
+		dMap.draw(canvas);
 		makePath();
 		
 		canvas.drawPath(path, p);
