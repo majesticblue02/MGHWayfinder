@@ -3,6 +3,7 @@ package com.MGHWayFinder;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -12,7 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-public class PathDrawActivity extends Activity implements OnTouchListener{
+public class PathDrawActivity extends Activity{// implements OnTouchListener{
 	PathView pv;
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
@@ -38,8 +39,10 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         sWidth = displaymetrics.widthPixels;
 		
 		updateBundle();
+		AssetManager am = getAssets();
+		
 		if(pv == null){
-			pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor);
+			pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor,am);
 		} else {
 			bundle.clear();
 			updateBundle();
@@ -48,7 +51,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		
 		pv.setBackgroundColor(Color.WHITE);
 		setContentView(pv);
-		pv.setOnTouchListener(this);
+		//pv.setOnTouchListener(this);
 	 }
 
 	protected void updateBundle(){
@@ -65,8 +68,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		}
 	}
 
-	@Override
-	public boolean onTouch(View v, MotionEvent e) {
+	/*public boolean onTouch(View v, MotionEvent e) {
 		PathView view = (PathView) v;
 		
 		switch(e.getAction() & MotionEvent.ACTION_MASK){
@@ -93,5 +95,5 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		
 		return true;
 	}
-
+	*/
 }

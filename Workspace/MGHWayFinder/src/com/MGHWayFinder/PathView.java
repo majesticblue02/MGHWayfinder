@@ -1,21 +1,21 @@
 package com.MGHWayFinder;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.BitmapFactory.Options;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 public class PathView extends View{
@@ -25,17 +25,15 @@ public class PathView extends View{
 	int floorInt, mapHeight, mapWidth;																				//floor number used to look up background bm to load
 	Rect bounds;																				//outer bounds of background bm
 	Matrix matrix = new Matrix();
+	Matrix pMatrix = new Matrix();
 	Paint p = new Paint();																		//paint used to stroke path
+	Bitmap bMap;
 	BitmapDrawable dMap;
-	Bitmap bMap, nullMap;
-	BitmapFactory bmf = new BitmapFactory();
 	BitmapFactory.Options op = new BitmapFactory.Options();
 	Path path = new Path();
-	
-	int[] images = {(int)(R.drawable.basemap700)};												//array of image locations
+	InputStream is;
 
-	@SuppressWarnings("static-access")
-	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH, int floor) {
+	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH, int floor, AssetManager am) {
 		super(context);
 
 		this.xArray = xArray;
@@ -48,33 +46,41 @@ public class PathView extends View{
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
+		try{
+			is = am.open("basemap700.png");					//TODO change to open specific floor
+		} catch(IOException e){
+			
+		}
+
 		op.inPreferredConfig = Bitmap.Config.RGB_565;
-		bMap = bmf.decodeResource(this.getResources(), R.drawable.basemap700, op);
+		op.inPurgeable = true;
 		
+		bMap = BitmapFactory.decodeStream(is, null, op);
 		dMap = new BitmapDrawable(this.getResources(), bMap);
-		//dMap = getResources().getDrawable(images[floor-1]);
 		bounds = new Rect(0, 0, dMap.getIntrinsicWidth(), dMap.getIntrinsicHeight());
 		dMap.setBounds(bounds);
 		
-		
 		//scale view based on background image size
-		//if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
-		//	matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
-		//else
-		//	matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
+		if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
+			matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
+		else
+			matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
+		
+		pMatrix.postScale(700f/1434f, 2148f/4400f);
 	}
 	
 	
 	@Override
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
-		canvas.save();
 
 		canvas.setMatrix(matrix);
 		dMap.draw(canvas);
-		makePath();
 		
+		makePath();
+		path.transform(pMatrix);
 		canvas.drawPath(path, p);
+		
 	}
 	
 	//draws path using arrays
@@ -94,6 +100,7 @@ public class PathView extends View{
 		
 		path.addCircle(x, y, 5, Path.Direction.CW);
 		path.close();
+		
 	}
 	
 	
@@ -110,5 +117,11 @@ public class PathView extends View{
 	public void setMatrix(Matrix m){
 		matrix = m;
 		invalidate();
+	}
+	
+	public void recycleImage(){
+		dMap = null;
+		bMap.recycle();
+		System.gc();
 	}
 }
