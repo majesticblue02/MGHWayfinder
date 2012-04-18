@@ -7,13 +7,15 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
-public class PathDrawActivity extends Activity{// implements OnTouchListener{
+public class PathDrawActivity extends Activity implements OnTouchListener{
 	PathView pv;
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
@@ -28,6 +30,11 @@ public class PathDrawActivity extends Activity{// implements OnTouchListener{
 	static final int ZOOM = 2;
 	int MODE = NONE;
 	Point sPoint = new Point();
+	Rect imageBounds;
+	static final float offset = 10f;
+	static final float minX = 0f - offset;
+	static final float minY = 0f - offset;
+	float maxX, maxY, tranX, tranY;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +58,26 @@ public class PathDrawActivity extends Activity{// implements OnTouchListener{
 		
 		pv.setBackgroundColor(Color.WHITE);
 		setContentView(pv);
-		//pv.setOnTouchListener(this);
+		pv.setOnTouchListener(this);
+		
+		imageBounds = pv.getImageBounds();
+		maxX = imageBounds.right + offset;
+		maxY = imageBounds.bottom + offset;
 	 }
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		Toast.makeText(getApplicationContext(), "PAUSED", 1000).show();
+		pv.recycleImage();
+		System.gc();
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		Toast.makeText(getApplicationContext(), "RESUMED", 1000).show();
+	}
 
 	protected void updateBundle(){
 		bundle = getIntent().getExtras();													//get info passed from starting intent
@@ -67,8 +92,8 @@ public class PathDrawActivity extends Activity{// implements OnTouchListener{
 			yPoints.add(Integer.parseInt(it));
 		}
 	}
-
-	/*public boolean onTouch(View v, MotionEvent e) {
+	
+	public boolean onTouch(View v, MotionEvent e) {
 		PathView view = (PathView) v;
 		
 		switch(e.getAction() & MotionEvent.ACTION_MASK){
@@ -84,8 +109,7 @@ public class PathDrawActivity extends Activity{// implements OnTouchListener{
 			case MotionEvent.ACTION_MOVE:
 				if (MODE == DRAG) {
 					m.set(savedM);
-					m.postTranslate(e.getX() - sPoint.x,
-										e.getY() - sPoint.y);
+					m.postTranslate(e.getX() - sPoint.x, e.getY() - sPoint.y);
 				}
 				break;
 		}
@@ -95,5 +119,6 @@ public class PathDrawActivity extends Activity{// implements OnTouchListener{
 		
 		return true;
 	}
-	*/
+	
+	
 }

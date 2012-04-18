@@ -25,7 +25,7 @@ public class PathView extends View{
 	int floorInt, mapHeight, mapWidth;																				//floor number used to look up background bm to load
 	Rect bounds;																				//outer bounds of background bm
 	Matrix matrix = new Matrix();
-	Matrix pMatrix = new Matrix();
+	Matrix pMatrix = new Matrix();														//TODO remove after map scaling is fixed
 	Paint p = new Paint();																		//paint used to stroke path
 	Bitmap bMap;
 	BitmapDrawable dMap;
@@ -61,12 +61,12 @@ public class PathView extends View{
 		dMap.setBounds(bounds);
 		
 		//scale view based on background image size
-		if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
-			matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
-		else
-			matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
+		//if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
+		//	matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
+		//else
+		//	matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
 		
-		pMatrix.postScale(700f/1434f, 2148f/4400f);
+		pMatrix.postScale(700f/1434f, 2148f/4400f);								//TODO remove after map scaling is fixed
 	}
 	
 	
@@ -77,8 +77,9 @@ public class PathView extends View{
 		canvas.setMatrix(matrix);
 		dMap.draw(canvas);
 		
+		path.reset();
 		makePath();
-		path.transform(pMatrix);
+		path.transform(pMatrix);												//TODO remove after map scaling is fixed
 		canvas.drawPath(path, p);
 		
 	}
@@ -122,6 +123,10 @@ public class PathView extends View{
 	public void recycleImage(){
 		dMap = null;
 		bMap.recycle();
-		System.gc();
+		path.reset();
+	}
+	
+	public Rect getImageBounds(){
+		return bounds;
 	}
 }
