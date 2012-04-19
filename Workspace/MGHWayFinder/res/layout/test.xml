@@ -107,7 +107,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="@id/mapTab"
-        android:text="           Select a floor" />
+        android:text="                          Select a floor" />
     
         <Button
         android:id="@+id/btnMapFirst"
@@ -128,7 +128,7 @@
 
     
 	    <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/mapView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         

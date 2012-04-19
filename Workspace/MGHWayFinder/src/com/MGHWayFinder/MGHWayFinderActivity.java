@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +44,7 @@ public class MGHWayFinderActivity extends Activity {
     Hashtable<String, Node> hash;
     Button mapFirst;
     Button mapSec;
-	
+	ImageView viewMap;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,6 @@ public class MGHWayFinderActivity extends Activity {
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
         tvPath = (TextView)findViewById(R.id.tvNP);
-        ivPath = (ImageView)findViewById(R.id.imageView);
         go = (Button)findViewById(R.id.goButton);
         drawPath = (Button)findViewById(R.id.btnMakePath);
         
@@ -118,9 +118,20 @@ spec.setIndicator("Map");
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for map tab
+		viewMap = (ImageView)findViewById(R.id.mapView);
 		mapFirst = (Button)findViewById(R.id.btnMapFirst);
 		mapSec = (Button)findViewById(R.id.btnMapSec);
 		
+        mapFirst.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		viewMap.setImageResource(R.drawable.floor1map);
+        	}});
+        
+        mapSec.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		viewMap.setImageResource(R.drawable.floor2map);
+        	}});
+        
 
 
 //////////////////DIRECTORY TAB//////////////////////

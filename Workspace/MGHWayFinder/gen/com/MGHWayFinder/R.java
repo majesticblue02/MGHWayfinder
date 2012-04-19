@@ -13,8 +13,10 @@ public final class R {
     public static final class drawable {
         public static final int basemap=0x7f020000;
         public static final int basemap700=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int mgh_logo=0x7f020003;
+        public static final int floor1map=0x7f020002;
+        public static final int floor2map=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int mgh_logo=0x7f020005;
     }
     public static final class id {
         public static final int btnMakePath=0x7f05000b;
@@ -28,9 +30,9 @@ public final class R {
         public static final int goButton=0x7f050008;
         public static final int helpLabel=0x7f050014;
         public static final int helpTab=0x7f050013;
-        public static final int imageView=0x7f050010;
         public static final int mapLabel=0x7f05000d;
         public static final int mapTab=0x7f05000c;
+        public static final int mapView=0x7f050010;
         public static final int nodePathLabel=0x7f050009;
         public static final int scanStart=0x7f050004;
         public static final int setEnd=0x7f050007;
