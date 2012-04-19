@@ -73,11 +73,11 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		System.gc();
 	}
 	
-	@Override
-	public void onResume(){
-		super.onResume();
-		Toast.makeText(getApplicationContext(), "RESUMED", 1000).show();
-	}
+//	@Override
+//	public void onResume(){
+//		super.onResume();
+//		Toast.makeText(getApplicationContext(), "RESUMED", 1000).show();
+//	}
 
 	protected void updateBundle(){
 		bundle = getIntent().getExtras();													//get info passed from starting intent

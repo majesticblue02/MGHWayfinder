@@ -41,6 +41,8 @@ public class MGHWayFinderActivity extends Activity {
     ArrayList<Node> aFloor = new ArrayList<Node>();
     ArrayList<Node> aPath;
     Hashtable<String, Node> hash;
+    Button mapFirst;
+    Button mapSec;
 	
 	
     @Override
@@ -116,8 +118,9 @@ spec.setIndicator("Map");
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for map tab
-
-
+		mapFirst = (Button)findViewById(R.id.btnMapFirst);
+		mapSec = (Button)findViewById(R.id.btnMapSec);
+		
 
 
 //////////////////DIRECTORY TAB//////////////////////

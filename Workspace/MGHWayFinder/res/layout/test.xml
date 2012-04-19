@@ -96,25 +96,47 @@
 </LinearLayout>
 
 <!-- MAP TAB -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mapTab"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
     
-    <TextView
+        <TextView
         android:id="@+id/mapLabel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="@id/mapTab"
+        android:text="           Select a floor" />
+    
+        <Button
+        android:id="@+id/btnMapFirst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/mapLabel"
+        android:text="First Floor" />
+        
+            <Button
+        android:id="@+id/btnMapSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mapLabel"
+        android:layout_alignParentRight="true"
+        android:text="Second Floor" />
+    
+
     
 	    <ImageView
         android:id="@+id/imageView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:src="@drawable/basemap700" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        
+        android:layout_centerInParent="true"
+        android:src="@drawable/mgh_logo"
+         />
 
-</LinearLayout>
+</RelativeLayout>
 <!-- DIRECTORY TAB -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dirTab"
