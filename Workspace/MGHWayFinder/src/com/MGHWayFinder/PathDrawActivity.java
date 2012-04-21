@@ -39,30 +39,19 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.map);
 		
-		DisplayMetrics displaymetrics = new DisplayMetrics();								//used to retrieve screen size for proper scaling
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        sHeight = displaymetrics.heightPixels;
-        sWidth = displaymetrics.widthPixels;
-		
+        pv = (PathView)findViewById(R.id.pathView);
+        
 		updateBundle();
 		AssetManager am = getAssets();
 		
-		if(pv == null){
-			pv = new PathView(this.getApplicationContext(),xPoints,yPoints,sWidth,sHeight,floor,am);
-		} else {
-			bundle.clear();
-			updateBundle();
-			pv.updatePath(xPoints, yPoints, floor);	
-		}
+		pv.updatePathView(xPoints, yPoints, floor, am);
 		
 		pv.setBackgroundColor(Color.WHITE);
-		setContentView(pv);
-		pv.setOnTouchListener(this);
 		
-		imageBounds = pv.getImageBounds();
-		maxX = imageBounds.right + offset;
-		maxY = imageBounds.bottom + offset;
+		pv.setOnTouchListener(this);
+	
 	 }
 	
 	@Override

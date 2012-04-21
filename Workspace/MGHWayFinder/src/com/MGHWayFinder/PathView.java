@@ -16,71 +16,121 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Layout;
+import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
 
 public class PathView extends View{
 	
-	ArrayList<Integer> xArray, yArray;															//arraylists used to hold x,y coords of node points
-	float nativeWidth, nativeHeight;															//screen width and height (used for scaling)
-	int floorInt, mapHeight, mapWidth;																				//floor number used to look up background bm to load
-	Rect bounds;																				//outer bounds of background bm
-	Matrix matrix = new Matrix();
-	Matrix pMatrix = new Matrix();														//TODO remove after map scaling is fixed
-	Paint p = new Paint();																		//paint used to stroke path
-	Bitmap bMap;
-	BitmapDrawable dMap;
-	BitmapFactory.Options op = new BitmapFactory.Options();
-	Path path = new Path();
-	InputStream is;
-
-	public PathView(Context context, ArrayList<Integer> xArray, ArrayList<Integer> yArray, float screenW, float screenH, int floor, AssetManager am) {
+	private ArrayList<Integer> xArray, yArray;							//arraylists used to hold x,y coords of node points
+	private int nativeWidth, nativeHeight;								//screen width and height (used for scaling)
+	
+	private Paint p = new Paint();										//paint used to stroke path
+	private Path path = new Path();										//diplay path
+	
+	private BitmapDrawable dMap;										//bitmap drawable used to draw to canvas
+	private Bitmap bMap;												//bitmap background
+	private BitmapFactory.Options op = new BitmapFactory.Options();;	//options used to define inputstream creation of bitmap
+	private InputStream is;
+	private Rect bounds;												//outer bounds of background bm
+	private Matrix matrix= new Matrix();								//matrix used to scale canvas
+	
+	
+	private final String[] source = {"","floor1color.png","floor2color.png"};
+	
+	private boolean isnull;										//boolean
+	
+	
+	public PathView(Context context){
 		super(context);
-
-		this.xArray = xArray;
-		this.yArray = yArray;
-		this.nativeHeight = screenH;
-		this.nativeWidth = screenW;
-		this.floorInt = floor;
+		iniPV();
+	}
+	
+	//Called when XML is inflated
+	public PathView(Context context, AttributeSet attrs, int defaultStyle){
+		super(context, attrs, defaultStyle);
+		iniPV();
+	}
+	
+	//Called when XML is inflated
+	public PathView(Context context, AttributeSet attrs){
+		super(context, attrs);
+		iniPV();
+	}
+	
+	//Used to determine view size
+	@Override
+	protected void onMeasure(int wMeasureSpec, int hMeasureSpec){
+		super.onMeasure(wMeasureSpec, hMeasureSpec);
+		int w = MeasureSpec.getSize(wMeasureSpec);
+		int h = MeasureSpec.getSize(hMeasureSpec);
+		setMeasuredDimension(w,h);
+	}
+	
+	//initialize pathview object
+	protected void iniPV(){
+		setFocusable(true);
 		
 		p.setColor(Color.BLACK);
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
-		try{
-			is = am.open("basemap700.png");					//TODO change to open specific floor
-		} catch(IOException e){
-			
-		}
-
 		op.inPreferredConfig = Bitmap.Config.RGB_565;
 		op.inPurgeable = true;
 		
-		bMap = BitmapFactory.decodeStream(is, null, op);
-		dMap = new BitmapDrawable(this.getResources(), bMap);
-		bounds = new Rect(0, 0, dMap.getIntrinsicWidth(), dMap.getIntrinsicHeight());
-		dMap.setBounds(bounds);
-		
-		//scale view based on background image size
-		//if((nativeWidth/(float)bounds.right) > (nativeHeight/(float)bounds.bottom))
-		//	matrix.postScale((nativeHeight/(float)bounds.bottom), (nativeHeight/(float)bounds.bottom));
-		//else
-		//	matrix.postScale((nativeWidth/(float)bounds.right), (nativeWidth/(float)bounds.right));
-		
-		pMatrix.postScale(700f/1434f, 2148f/4400f);								//TODO remove after map scaling is fixed
+		isnull = false;
 	}
 	
+	
+	
+	public void updatePathView(ArrayList<Integer> xArray, ArrayList<Integer> yArray, int floor, AssetManager am) {
+
+		this.xArray = xArray;
+		this.yArray = yArray;
+		
+		loadFloorMap(floor,am);
+	
+		invalidate();
+	}
+	
+	private void loadFloorMap(int floor, AssetManager am){
+		
+		try{
+			is = am.open(source[floor]);
+			bMap = BitmapFactory.decodeStream(is, null, op);
+			dMap = new BitmapDrawable(this.getResources(), bMap);
+			bounds = new Rect(0, 0, dMap.getIntrinsicWidth(), dMap.getIntrinsicHeight());
+			dMap.setBounds(bounds);
+		} catch(IOException e){
+			Toast.makeText(getContext(), "ERROR LOADING FLOOR MAP", 2000).show();
+		}
+	}
+	
+	/*
+	private void scale(){
+		if(((float)nativeWidth/(float)bounds.right) > ((float)nativeHeight/(float)bounds.bottom))
+			matrix.postScale(((float)nativeHeight/(float)bounds.bottom), ((float)nativeHeight/(float)bounds.bottom));
+		else
+			matrix.postScale(((float)nativeWidth/(float)bounds.right), ((float)nativeWidth/(float)bounds.right));		
+	}
+	*/
 	
 	@Override
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
-
-		canvas.setMatrix(matrix);
-		dMap.draw(canvas);
 		
-		path.reset();
-		makePath();
-		path.transform(pMatrix);												//TODO remove after map scaling is fixed
-		canvas.drawPath(path, p);
+		nativeWidth = getMeasuredWidth();
+		nativeHeight = getMeasuredHeight();
+		
+		if(!isnull){
+			canvas.setMatrix(matrix);
+			dMap.draw(canvas);
+		
+			path.reset();
+			makePath();
+			canvas.drawPath(path, p);
+		}
 		
 	}
 	
@@ -111,7 +161,6 @@ public class PathView extends View{
 		path.reset();
 		xArray = x;
 		yArray = y;
-		this.floorInt = floor;
 		invalidate();															//invalidated to rerun onDraw call
 	}
 	
@@ -121,12 +170,13 @@ public class PathView extends View{
 	}
 	
 	public void recycleImage(){
-		dMap = null;
 		bMap.recycle();
+		dMap = null;
 		path.reset();
 	}
 	
 	public Rect getImageBounds(){
 		return bounds;
 	}
+
 }
