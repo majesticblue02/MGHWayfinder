@@ -19,6 +19,13 @@ CREATE TABLE tblNeighbors (
 	FOREIGN KEY(mNode) REFERENCES tblNode(nID),
 	FOREIGN KEY(nNode) REFERENCES tblNode(nID));
 	
+CREATE TABLE tblInterFloor	(
+	_id INTEGER PRIMARY KEY,
+	mNode TEXT NOT NULL,
+	nNode TEXT NOT NULL,
+	FOREIGN KEY(mNode) REFERENCES tblNode(nID),
+	FOREIGN KEY(nNode) REFERENCES tblNode(nID));
+	
 INSERT INTO tblNode VALUES (1, 'F1-EL', 245, 109, 1, 'Elevator', 'Walk-In Clinic');
 INSERT INTO tblNode VALUES (2, 'F1-C2_0', 245, 387, 1, 'Waypoint', 'Walk-In Clinic');
 INSERT INTO tblNode VALUES (3, 'F1-C2_1', 245, 583, 1, 'Waypoint', 'Walk-In Clinic');
@@ -91,8 +98,6 @@ INSERT INTO tblNode VALUES (69, 'F2-LAB_R', 346, 1003, 2, 'Lab', 'Clinical Labs'
 INSERT INTO tblNode VALUES (70, 'F2-R2', 346, 1136, 2, 'Restroom', 'Clinical Labs');
 INSERT INTO tblNode VALUES (71, 'F2-CL2', 94, 1213, 2, 'Closet', 'Clinical Labs');
 INSERT INTO tblNode VALUES (72, 'F2-CL1', 94, 736, 2, 'Closet', 'Clinical Labs');
-
-
 
 INSERT INTO tblNeighbors VALUES (1, 'F1-EL', 'F1-C2_0');
 INSERT INTO tblNeighbors VALUES (2, 'F1-C2_0', 'F1-EL');
@@ -189,25 +194,55 @@ INSERT INTO tblNeighbors VALUES (92, 'F1-108A_7', 'F1-108A_8');
 INSERT INTO tblNeighbors VALUES (93, 'F1-108A_8', 'F1-108A_9');
 INSERT INTO tblNeighbors VALUES (94, 'F1-108A_9', 'F1-108A_10');
 INSERT INTO tblNeighbors VALUES (95, 'F1-108A_10', 'F1-108I');
-INSERT INTO tblNeighbors VALUES (96, 'F1-C2_0', 'F1-C1_0');
-INSERT INTO tblNeighbors VALUES (97, 'F1-C1_0', 'F1-108');
-INSERT INTO tblNeighbors VALUES (98, 'F1-C1_2', 'F1-C1_4');
-INSERT INTO tblNeighbors VALUES (99, 'F1-C1_3', 'F1-RX');
-INSERT INTO tblNeighbors VALUES (100, 'F1-C1_4', 'F1-RN');
-INSERT INTO tblNeighbors VALUES (101, 'F1-108_0', 'F1-108_1');
-INSERT INTO tblNeighbors VALUES (102, 'F1-108A_0', 'F1-108A_1');
-INSERT INTO tblNeighbors VALUES (103, 'F1-108A_1', 'F1-108B');
-INSERT INTO tblNeighbors VALUES (104, 'F1-108A_2', 'F1-108C');
-INSERT INTO tblNeighbors VALUES (105, 'F1-108A_3', 'F1-T1');
-INSERT INTO tblNeighbors VALUES (106, 'F1-108A_4', 'F1-108D');
-INSERT INTO tblNeighbors VALUES (107, 'F1-108A_5', 'F1-108E');
-INSERT INTO tblNeighbors VALUES (108, 'F1-108A_6', 'F1-108L');
-INSERT INTO tblNeighbors VALUES (109, 'F1-108A_7', 'F1-108F');
-INSERT INTO tblNeighbors VALUES (110, 'F1-108A_8', 'F1-108K');
-INSERT INTO tblNeighbors VALUES (111, 'F1-108A_9', 'F1-108J');
-INSERT INTO tblNeighbors VALUES (112, 'F1-108A_10', 'F1-108H');
-INSERT INTO tblNeighbors VALUES (113, 'F1-C2_0', 'F1-C2_1');
-INSERT INTO tblNeighbors VALUES (114, 'F1-108A_2', 'F1-108O');
-INSERT INTO tblNeighbors VALUES (115, 'F1-108A_4', 'F1-T2');
-INSERT INTO tblNeighbors VALUES (116, 'F1-108A_9', 'F1-108G');
-INSERT INTO tblNeighbors VALUES (117, 'F2-C1_1', 'F2-XR');
+INSERT INTO tblNeighbors VALUES (96, 'F1-108P', 'F1-108P_0');
+INSERT INTO tblNeighbors VALUES (97, 'F1-108P_0', 'F1-108Q');
+INSERT INTO tblNeighbors VALUES (98, 'F2-C1_1', 'F2-C1_0');
+INSERT INTO tblNeighbors VALUES (99, 'F2-C1_0', 'F2-S2');
+INSERT INTO tblNeighbors VALUES (100, 'F2-LAB', 'F2-LAB_0');
+INSERT INTO tblNeighbors VALUES (101, 'F2-LAB_0', 'F2-LAB_1');
+INSERT INTO tblNeighbors VALUES (102, 'F2-LAB_1', 'F2-LAB_2');
+INSERT INTO tblNeighbors VALUES (103, 'F2-LAB_2', 'F2-LAB_3');
+INSERT INTO tblNeighbors VALUES (104, 'F2-LAB_3', 'F2-LAB_E');
+INSERT INTO tblNeighbors VALUES (105, 'F2-LAB_4', 'F2-LAB_5');
+INSERT INTO tblNeighbors VALUES (106, 'F2-LAB_5', 'F2-LAB_A');
+INSERT INTO tblNeighbors VALUES (107, 'F2-LAB_A', 'F2-LAB_B');
+INSERT INTO tblNeighbors VALUES (108, 'F2-LAB_B', 'F2-LAB_B0');
+INSERT INTO tblNeighbors VALUES (109, 'F2-LAB_E', 'F2-LAB_3');
+INSERT INTO tblNeighbors VALUES (110, 'F2-LAB_F', 'F2-CL1');
+INSERT INTO tblNeighbors VALUES (111, 'F2-LAB_B0', 'F2-LAB_C');
+INSERT INTO tblNeighbors VALUES (112, 'F2-LAB_R', 'F2-R2');
+INSERT INTO tblNeighbors VALUES (113, 'F2-R2', 'F2-LAB_R');
+INSERT INTO tblNeighbors VALUES (114, 'F1-C2_0', 'F1-C1_0');
+INSERT INTO tblNeighbors VALUES (115, 'F1-C1_0', 'F1-108');
+INSERT INTO tblNeighbors VALUES (116, 'F1-C1_2', 'F1-C1_4');
+INSERT INTO tblNeighbors VALUES (117, 'F1-C1_3', 'F1-RX');
+INSERT INTO tblNeighbors VALUES (118, 'F1-C1_4', 'F1-RN');
+INSERT INTO tblNeighbors VALUES (119, 'F1-108_0', 'F1-108_1');
+INSERT INTO tblNeighbors VALUES (120, 'F1-108A_0', 'F1-108A_1');
+INSERT INTO tblNeighbors VALUES (121, 'F1-108A_1', 'F1-108B');
+INSERT INTO tblNeighbors VALUES (122, 'F1-108A_2', 'F1-108C');
+INSERT INTO tblNeighbors VALUES (123, 'F1-108A_3', 'F1-T1');
+INSERT INTO tblNeighbors VALUES (124, 'F1-108A_4', 'F1-108D');
+INSERT INTO tblNeighbors VALUES (125, 'F1-108A_5', 'F1-108E');
+INSERT INTO tblNeighbors VALUES (126, 'F1-108A_6', 'F1-108L');
+INSERT INTO tblNeighbors VALUES (127, 'F1-108A_7', 'F1-108F');
+INSERT INTO tblNeighbors VALUES (128, 'F1-108A_8', 'F1-108K');
+INSERT INTO tblNeighbors VALUES (129, 'F1-108A_9', 'F1-108J');
+INSERT INTO tblNeighbors VALUES (130, 'F1-108A_10', 'F1-108H');
+INSERT INTO tblNeighbors VALUES (131, 'F2-C1_1', 'F2-LAB');
+INSERT INTO tblNeighbors VALUES (132, 'F2-C1_0', 'F2-C1_1');
+INSERT INTO tblNeighbors VALUES (133, 'F2-LAB_2', 'F2-LAB_R');
+INSERT INTO tblNeighbors VALUES (134, 'F2-LAB_3', 'F2-LAB_F');
+INSERT INTO tblNeighbors VALUES (135, 'F2-LAB_4', 'F2-CL2');
+INSERT INTO tblNeighbors VALUES (136, 'F2-LAB_5', 'F2-R2');
+INSERT INTO tblNeighbors VALUES (137, 'F2-LAB_B0', 'F2-LAB_D');
+INSERT INTO tblNeighbors VALUES (138, 'F1-C2_0', 'F1-C2_1');
+INSERT INTO tblNeighbors VALUES (139, 'F1-108A_2', 'F1-108O');
+INSERT INTO tblNeighbors VALUES (140, 'F1-108A_4', 'F1-T2');
+INSERT INTO tblNeighbors VALUES (141, 'F1-108A_9', 'F1-108G');
+INSERT INTO tblNeighbors VALUES (142, 'F2-C1_1', 'F2-XR');
+
+INSERT INTO tblInterFloor VALUES (1, 'F1-EL', 'F2-EL');
+INSERT INTO tblInterFloor VALUES (2, 'F2-EL', 'F1-EL');
+INSERT INTO tblInterFloor VALUES (3, 'F1-S2', 'F2-S2');
+INSERT INTO tblInterFloor VALUES (4, 'F2-S2', 'F1-S2');

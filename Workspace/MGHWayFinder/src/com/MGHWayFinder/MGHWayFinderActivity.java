@@ -37,11 +37,14 @@ public class MGHWayFinderActivity extends Activity {
 	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
 	Dijkstra dPath;
 	String sPath;
-	ArrayAdapter<Node> aAdapter;
+	ArrayAdapter<String> aAdapter;
 	DBHelper db;
-    ArrayList<Node> aFloor = new ArrayList<Node>();
+	ArrayList<String> validNodeIds;
+    ArrayList<Node> startFloor = new ArrayList<Node>();
+    ArrayList<Node> endFloor = new ArrayList<Node>();
     ArrayList<Node> aPath;
-    Hashtable<String, Node> hash;
+    Hashtable<String, Node> startHash, endHash;
+    Hashtable<String, Node> masterHash = new Hashtable<String,Node>();
     Button mapFirst;
     Button mapSec;
 	ImageView viewMap;
@@ -53,9 +56,8 @@ public class MGHWayFinderActivity extends Activity {
         
         db = new DBHelper(this.getApplicationContext());
         initializeDB();
-        hash = db.buildFloorNodes(1);
-        for(Node n:hash.values())
-        	aFloor.add(n);
+        
+        validNodeIds = db.getAllNids();
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -78,7 +80,7 @@ public class MGHWayFinderActivity extends Activity {
         go = (Button)findViewById(R.id.goButton);
         drawPath = (Button)findViewById(R.id.btnMakePath);
         
-        aAdapter = new ArrayAdapter<Node>(this, android.R.layout.simple_spinner_item, aFloor);
+        aAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validNodeIds);
         start.setAdapter(aAdapter);
         end.setAdapter(aAdapter);
         
@@ -187,11 +189,12 @@ public boolean onContextItemSelected(MenuItem item) {
 	Log.v("context", endnId + title);
 	
     //set spinner
+	/*
 	for(int i=0; i < aFloor.size(); i++){
 		if(endnId.equals(aFloor.get(i).getNodeID())){
 			end.setSelection(i);
 		}}
-		
+		*/
 	return false;
 }
     
@@ -206,12 +209,13 @@ public boolean onContextItemSelected(MenuItem item) {
                 //test code
                 Log.v("QR", startnID);
                 
+                /*
                 //set spinner
             	for(int i=0; i < aFloor.size(); i++){
             		if(startnID.equals(aFloor.get(i).getNodeID())){
             			start.setSelection(i);
             		}
-            	} 
+            	} */
             } else if (resultCode == Activity.RESULT_CANCELED) {
             	Toast.makeText(this, "Scan Cancelled", Toast.LENGTH_LONG).show();
             }
@@ -220,8 +224,40 @@ public boolean onContextItemSelected(MenuItem item) {
     
     	
     private void calculatePath() {
-    	Node b = (Node)start.getSelectedItem();
+    	String startNid = (String)start.getSelectedItem();
+    	String endNid = (String)end.getSelectedItem();
+    	Node sNode, eNode;
+    	int startFloor = db.getNodeFloor(startNid);
+    	int endFloor = db.getNodeFloor(endNid);
     	
+    	if(startFloor != endFloor){
+    		startHash = db.buildFloorNodes(startFloor);
+    		sNode = startHash.get(startNid);
+    		endHash = db.buildFloorNodes(endFloor);
+    		eNode = endHash.get(endNid);
+    		
+    		masterHash.putAll(startHash);
+    		masterHash.putAll(endHash);
+    		
+    		db.buildInterFloor(startFloor, endFloor, masterHash);
+    		
+    		if (dijkstra1 == null){
+        		dijkstra1 = new Dijkstra(sNode);
+        	} else if (sNode != dijkstra1.getStart()){
+        		dijkstra1.reset();
+        		dijkstra1.restart(sNode);
+        	}
+    		
+    		aPath = dijkstra1.getPath(eNode);
+
+    		sPath = aPath.get(0).getNodeID();
+    		
+    		for(int i = 1; i < aPath.size(); i++){
+    			sPath += " -> " + aPath.get(i).getNodeID();
+    		}
+    		tvPath.setText(sPath);
+    	}
+    	/*
     	if (dijkstra1 == null){
     		dijkstra1 = new Dijkstra(b);
     	} else if (b != dijkstra1.getStart()){
@@ -236,7 +272,7 @@ public boolean onContextItemSelected(MenuItem item) {
 		for(int i = 1; i < aPath.size(); i++){
 			sPath += " -> " + aPath.get(i).getNodeID();
 		}
-		tvPath.setText(sPath);
+		tvPath.setText(sPath); */
 	}
     
     private synchronized void initializeDB(){

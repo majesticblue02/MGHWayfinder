@@ -64,14 +64,18 @@ public class Dijkstra {
 		
 		for(int i = 0; i < v.getNeighbors().size(); i++){						//loop through neighbors of Node v
 			o = v.getNeighbors().get(i);
-			if(!S.contains(o)) { 												//only look at neighbors NOT in S
-				dist = cDistance(v, o);											//calculate distance between v and o
+			if(!S.contains(o)) {												//only look at neighbors NOT in S
+				if(o.getNodeFloor() != v.getNodeFloor())						//connections between floors are treated as the same node on different floors
+					dist = 0;
+				else
+					dist = cDistance(v, o);										//calculate distance between v and o
 				if(o.getBestDistance() > (v.getBestDistance() + dist)){			//shorter distance found
 					o.setBestDistance(dist + v.getBestDistance());				//set best distance of Node o from start
 					o.setPNode(v);												//set best previous Node to v
 					o.setPNodeDistance(dist);									//set intermediate distance from o-v
 					Q.add(o);													//add Node o to Q
 				}
+				
 			}
 		}
 	}

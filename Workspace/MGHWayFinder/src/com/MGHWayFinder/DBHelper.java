@@ -101,49 +101,84 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 //////////////////SQL SELECT STATEMENTS/////////////////////////
 	
+	public Cursor selectAllNids(){
+		return db.rawQuery("SELECT nID FROM tblNode", null);
+	}
 	
-	public Cursor getFloorNodes(int floor){																//returns a recordset containing all Nodes on a given floor
+	public Cursor selectFloorNodes(int floor){																//returns a recordset containing all Nodes on a given floor
 		return db.rawQuery("SELECT * FROM tblNode WHERE nFloor = " + floor, null);
 	}
 	
-	public Cursor getNodeNeighbors(String NodeID){											//returns a recordset containing all neighbor Nodes of the string[] of Node ID's
+	public Cursor selectNodeNeighbors(String NodeID){											//returns a recordset containing all neighbor Nodes of the string[] of Node ID's
 		String w = "'" + NodeID + "'";
 		return db.rawQuery("SELECT * FROM tblNeighbors WHERE mNode = " + w, null );
 	}
  
-	public Cursor getNodeType(int nFloor, ArrayList<String> nType){										//returns a recordset containing all Nodes with a given nType[]
+	public Cursor selectNodeType(int nFloor, ArrayList<String> nType){										//returns a recordset containing all Nodes with a given nType[]
 		String w = concatOr(nType, "nType");
 
 		return db.rawQuery("SELECT * FROM tblNode WHERE nType = " + w, null);
 	}
 	
 	public int getNodeFloor(String nID){																//returns the floor a given Node is on
-		Cursor q = db.rawQuery("SELECT nFloor FROM tblNode WHERE nID = " + nID, null);
+		int out;
+		Cursor q = db.rawQuery("SELECT nFloor FROM tblNode WHERE nID = '" + nID + "'", null);
 		q.moveToFirst();
-		return q.getInt(4);
+		out = q.getInt(0);
+		q.close();
+		return out;
 	}
 	
-	public Cursor searchNode(String nID){																//searches for a particular Node
-		return db.rawQuery("SELECT * FROM tblNode WHERE nID = " + nID, null);
+	public Cursor selectNode(String nID){																//searches for a particular Node
+		return db.rawQuery("SELECT * FROM tblNode WHERE nID = '" + nID + "'", null);
 	}
 	
-	public Cursor getValidNodeTypes(int floor){															//returns valid Node types in a given floor
+	public Cursor selectValidNodeTypes(int floor){															//returns valid Node types in a given floor
 		return db.rawQuery("SELECT DISTINCT nType FROM tblNode WHERE nFloor = " + floor, null);
 	}
 	
-	public Cursor getDepNodes(String nDep){																//returns Nodes in a given department
-		return db.rawQuery("SELECT * FROM tblNode WHERE nDep = " + nDep, null);
+	public Cursor selectDepNodes(String nDep){																//returns Nodes in a given department
+		return db.rawQuery("SELECT * FROM tblNode WHERE nDep = '" + nDep + "'", null);
 	}
 	
-	public Cursor getFloorDeps(int floor){																//returns departments on a given floor
+	public Cursor selectFloorDeps(int floor){																//returns departments on a given floor
 		return db.rawQuery("SELECT DISTINCT nDep FROM tblNode WHERE nFloor = " + floor, null);
 	}
 	
-	public Cursor getDepFloors(String nDep){															//returns the floor(s) a department is on
-		return db.rawQuery("SELECT DISTINCT nFloor FROM tblNode WHERE nDep = " + nDep, null);
+	public Cursor selectDepFloors(String nDep){															//returns the floor(s) a department is on
+		return db.rawQuery("SELECT DISTINCT nFloor FROM tblNode WHERE nDep = '" + nDep + "'", null);
+	}
+	
+	public Cursor selectInterFloor(int floorA, int floorB){												//returns connecting relationships between floors A and B										
+		return db.rawQuery(	"SELECT mNode, nNode " +
+							"FROM tblInterFloor " +
+							"INNER JOIN tblNode AS tblmNode " +
+								"ON tblmNode.nID = tblInterFloor.mNode " +
+							"INNER JOIN tblNode AS tblnNode " +
+								"ON tblnNode.nID = tblInterFloor.nNode " +
+							"WHERE (tblmNode.nFloor = " + floorA + " OR tblmNode.nFloor = " + floorB + ")" + 
+								"AND (tblnNode.nFloor = " + floorA + " OR tblnNode.nFloor = " + floorB + ")", null);
 	}
 	
 ////////////////////////////////PROGRAM METHODS////////////////////////////////////
+	
+	public ArrayList<String> getAllNids(){
+		ArrayList<String> out = new ArrayList<String>();
+		Cursor cursor;
+		
+		cursor = this.selectAllNids();
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast()){
+			out.add(cursor.getString(0));
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		
+		return out;
+	}
+	
 	
 	public Hashtable<String, Node> buildFloorNodes(int floor){					//Constructs and returns a hashtable of Nodes, keyed by their nID's
     	Node NodeM;
@@ -151,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper{
     	ArrayList<String> NodeIDs = new ArrayList<String>();
     	Cursor cursor;
     	
-    	cursor = this.getFloorNodes(floor);										//Query DB for Nodes on a given floor
+    	cursor = this.selectFloorNodes(floor);										//Query DB for Nodes on a given floor
         cursor.moveToFirst();
         
         while(!cursor.isAfterLast()){											//Fill Hashtable for given floor
@@ -169,7 +204,7 @@ public class DBHelper extends SQLiteOpenHelper{
         }
         
         buildNeighborNodes(ht, NodeIDs);
-
+        cursor.close();
         return ht;
     }
     
@@ -179,7 +214,7 @@ public class DBHelper extends SQLiteOpenHelper{
     	Cursor cursor;
     	
     	for(String it:nIDs){
-    		cursor = this.getNodeNeighbors(it);
+    		cursor = this.selectNodeNeighbors(it);
     		
     		cursor.moveToFirst();
             
@@ -196,6 +231,29 @@ public class DBHelper extends SQLiteOpenHelper{
             }
             cursor.close();
     	}
+    }
+    
+    public void buildInterFloor(int floorA, int floorB, Hashtable<String, Node> ht){
+    	String stringM, stringN;
+    	Node nodeM, nodeN;
+    	Cursor cursor = selectInterFloor(floorA, floorB);
+    	
+    	cursor.moveToFirst();
+    	
+    	while(!cursor.isAfterLast()){
+    		stringM = cursor.getString(0);
+    		stringN = cursor.getString(1);
+    		
+    		nodeM = ht.get(stringM);								//Retrieve master Node from hashtable
+        	nodeN = ht.get(stringN);								//Retrieve neighbor Node from hashtable
+        	
+        	nodeM.addNeighbor(nodeN);								//Add neighbor Node to master Node
+        	
+        	cursor.moveToNext();
+    	}
+    	
+    	cursor.close();
+    	
     }
 	
 	
