@@ -10,6 +10,7 @@ public class Dijkstra {
 	
 	private Node STARTNode;												//ALL POTENTIAL PATHS ARE BUILT FROM THE ORIGIN Node
 	private static final int OFFSET = 90;								//MAP "ORIGIN" of Y+ = 0*, INSTEAD OF X+
+	private String nID = null;
 
 	public Dijkstra(Node START){
 		this.STARTNode = START;
@@ -65,8 +66,10 @@ public class Dijkstra {
 		for(int i = 0; i < v.getNeighbors().size(); i++){						//loop through neighbors of Node v
 			o = v.getNeighbors().get(i);
 			if(!S.contains(o)) {												//only look at neighbors NOT in S
-				if(o.getNodeFloor() != v.getNodeFloor())						//connections between floors are treated as the same node on different floors
+				if(o.getNodeFloor() != v.getNodeFloor()){						//connections between floors are treated as the same node on different floors
 					dist = 0;
+					
+				}
 				else
 					dist = cDistance(v, o);										//calculate distance between v and o
 				if(o.getBestDistance() > (v.getBestDistance() + dist)){			//shorter distance found

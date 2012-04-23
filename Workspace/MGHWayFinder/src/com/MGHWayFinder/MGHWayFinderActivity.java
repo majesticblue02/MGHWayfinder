@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,7 +36,6 @@ public class MGHWayFinderActivity extends Activity {
 	Dijkstra dijkstra1, dijkstra2;
 	String endnId;
 	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
-	Dijkstra dPath;
 	String sPath;
 	ArrayAdapter<String> aAdapter;
 	DBHelper db;
@@ -90,7 +90,7 @@ public class MGHWayFinderActivity extends Activity {
         	}}); 
         drawPath.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		drawMapPath(1);
+        		//drawMapPath(1);
         	}});
         
         //logo comented out currently
@@ -257,6 +257,8 @@ public boolean onContextItemSelected(MenuItem item) {
     		}
     		tvPath.setText(sPath);
     	}
+    	
+    	masterHash.clear();
     	/*
     	if (dijkstra1 == null){
     		dijkstra1 = new Dijkstra(b);
@@ -292,10 +294,11 @@ public boolean onContextItemSelected(MenuItem item) {
     }
     
     ///Called to start a new activity which draws the path over the image of the floor plan
-    public void drawMapPath(int floor){
+    public void drawMapPath(int floor, ArrayList<Point> coords){
     	String x,y;
     	String delim = ",";
     	
+    	x = Integer.toString(coords.get(0).x);
     	x = Integer.toString(aPath.get(0).getX());
     	y = Integer.toString(aPath.get(0).getY());
     	for(int i = 1; i < aPath.size(); i++){											//builds the strings to pass to the activity with delimiter delim
@@ -308,6 +311,7 @@ public boolean onContextItemSelected(MenuItem item) {
     	drawPath.putExtra("yString", y);
     	drawPath.putExtra("delim", delim);
     	drawPath.putExtra("floor", floor);
+    	
         startActivity(drawPath);
 
     }
