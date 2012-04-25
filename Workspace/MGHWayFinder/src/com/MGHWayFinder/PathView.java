@@ -14,17 +14,22 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Layout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 public class PathView extends View{
 	
 	private ArrayList<Integer> xArray, yArray;							//arraylists used to hold x,y coords of node points
-	private int nativeWidth, nativeHeight;								//screen width and height (used for scaling)
+	private int vWidth, vHeight;										//screen width and height (used for scaling)
 	
 	private Paint p = new Paint();										//paint used to stroke path
 	private Path path = new Path();										//diplay path
@@ -33,9 +38,14 @@ public class PathView extends View{
 	private Bitmap bMap;												//bitmap background
 	private BitmapFactory.Options op = new BitmapFactory.Options();;	//options used to define inputstream creation of bitmap
 	private InputStream is;
-	private Rect bounds;												//outer bounds of background bm
-	private Matrix matrix= new Matrix();								//matrix used to scale canvas
+	private Rect bounds;
+	private RectF boundsF;												//outer bounds of background bm
+	public Matrix matrix= new Matrix();								//matrix used to scale canvas
+	public Matrix savedMatrix = new Matrix();
 	
+	final int ANIMATIONSTEP = 25;										//used for animation
+	final int ANIMATIONTOTAL = 500;
+	int transX, transY;
 	
 	private final String[] source = {"","floor1color.png","floor2color.png"};
 	
@@ -65,7 +75,7 @@ public class PathView extends View{
 		super.onMeasure(wMeasureSpec, hMeasureSpec);
 		int w = MeasureSpec.getSize(wMeasureSpec);
 		int h = MeasureSpec.getSize(hMeasureSpec);
-		setMeasuredDimension(w,h);
+		setMeasuredDimension(w,h/2);
 	}
 	
 	//initialize pathview object
@@ -80,6 +90,8 @@ public class PathView extends View{
 		op.inPurgeable = true;
 		
 		isnull = false;
+		
+		this.requestLayout();
 	}
 	
 	
@@ -90,7 +102,6 @@ public class PathView extends View{
 		this.yArray = yArray;
 		
 		loadFloorMap(floor,am);
-	
 		invalidate();
 	}
 	
@@ -107,23 +118,22 @@ public class PathView extends View{
 		}
 	}
 	
-	/*
+
 	private void scale(){
-		if(((float)nativeWidth/(float)bounds.right) > ((float)nativeHeight/(float)bounds.bottom))
-			matrix.postScale(((float)nativeHeight/(float)bounds.bottom), ((float)nativeHeight/(float)bounds.bottom));
+		if(((float)vWidth/boundsF.right) > ((float)vHeight/boundsF.bottom))
+			matrix.postScale(((float)vHeight/boundsF.bottom), ((float)vHeight/boundsF.bottom));
 		else
-			matrix.postScale(((float)nativeWidth/(float)bounds.right), ((float)nativeWidth/(float)bounds.right));		
+			matrix.postScale(((float)vWidth/boundsF.right), ((float)vWidth/boundsF.right));		
 	}
-	*/
 	
 	@Override
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
 		
-		nativeWidth = getMeasuredWidth();
-		nativeHeight = getMeasuredHeight();
+		vWidth = getMeasuredWidth();
+		vHeight = getMeasuredHeight();
 		
-		if(!isnull){
+		if(!isnull){															//TODO REMOVE IF BLOCK & isnull
 			canvas.setMatrix(matrix);
 			dMap.draw(canvas);
 		
@@ -131,6 +141,7 @@ public class PathView extends View{
 			makePath();
 			canvas.drawPath(path, p);
 		}
+		
 		
 	}
 	
@@ -164,11 +175,6 @@ public class PathView extends View{
 		invalidate();															//invalidated to rerun onDraw call
 	}
 	
-	public void setMatrix(Matrix m){
-		matrix = m;
-		invalidate();
-	}
-	
 	public void recycleImage(){
 		bMap.recycle();
 		dMap = null;
@@ -178,5 +184,62 @@ public class PathView extends View{
 	public Rect getImageBounds(){
 		return bounds;
 	}
+	
+	public Point getCenterPoint(){
+		Point out = new Point();
+		
+		if(vWidth == 0 || vHeight ==0)
+			out = null;
+		else
+			out.set(vWidth/2, vHeight/2);
+		
+		return out;
+	}
+	
+	public synchronized void setCenterPoint(Node n){
+		Point centerPoint;
+		if(getCenterPoint() != null){
+			centerPoint= getCenterPoint();
+			
+			float[] center = new float[]{(float)centerPoint.x, (float)centerPoint.y};
+			
+			matrix.mapPoints(center);
+			
+			transX = -1*(int)(n.getX() - center[0]);// (ANIMATIONTOTAL/ANIMATIONSTEP);
+			transY = -1*(int)(n.getY() - center[1]);// (ANIMATIONTOTAL/ANIMATIONSTEP);
+			//Thread ani = new Thread(animate, "translation animation");
+			//ani.start();
+			
+			matrix.postTranslate(transX, transY);
+		}
+		
+		
+	}
+	
+	private void step(){
+		matrix.postTranslate(transX, transY);
+		invalidate();
+	}
+	
+	private Handler handler = new Handler() {
+		 @Override
+		 public void handleMessage(Message msg) {
+		     step();
+		 }
+	};
+	
+	Runnable animate = new Runnable(){
+    	private int i = 0;
+    	public void run(){
+    		try {
+    			for(int i = 0; i <= (ANIMATIONTOTAL/ANIMATIONSTEP); i++){
+    				Thread.sleep(ANIMATIONSTEP);
+    				handler.sendEmptyMessage(i);
+    			}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+    };
 
 }

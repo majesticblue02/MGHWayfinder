@@ -10,7 +10,7 @@ public class Dijkstra {
 	
 	private Node STARTNode;												//ALL POTENTIAL PATHS ARE BUILT FROM THE ORIGIN Node
 	private static final int OFFSET = 90;								//MAP "ORIGIN" of Y+ = 0*, INSTEAD OF X+
-	private String nID = null;
+	private Node breakNode = null;
 
 	public Dijkstra(Node START){
 		this.STARTNode = START;
@@ -22,6 +22,7 @@ public class Dijkstra {
 		for(Node n: S)
 			n.reset();
 		STARTNode = null;
+		breakNode = null;
 		S.clear();
 		Q.clear();
 		return true;
@@ -46,6 +47,10 @@ public class Dijkstra {
     	return this.STARTNode;
     }
     
+    public Node getBreakNode(){
+		return breakNode;
+	}
+    
 	protected void dijkstraAlgorithm(Node START){
 		Node u;															//Node place holder in the loop
 		
@@ -68,7 +73,7 @@ public class Dijkstra {
 			if(!S.contains(o)) {												//only look at neighbors NOT in S
 				if(o.getNodeFloor() != v.getNodeFloor()){						//connections between floors are treated as the same node on different floors
 					dist = 0;
-					
+					breakNode = o;
 				}
 				else
 					dist = cDistance(v, o);										//calculate distance between v and o

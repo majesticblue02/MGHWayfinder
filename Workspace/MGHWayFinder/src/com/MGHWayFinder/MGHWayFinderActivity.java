@@ -26,25 +26,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class MGHWayFinderActivity extends Activity {
+	
+	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();
+	Dijkstra dijkstra;
+	
 	Spinner start, end;
 	TextView tvPath;
 	ImageView ivPath;
 	Button go, drawPath;
 	Button startQR;
 	Button endSet;
-	String startnID;	
-	Dijkstra dijkstra1, dijkstra2;
-	String endnId;
+	String startnID;
+	String endnID;
 	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
 	String sPath;
 	ArrayAdapter<String> aAdapter;
 	DBHelper db;
 	ArrayList<String> validNodeIds;
-    ArrayList<Node> startFloor = new ArrayList<Node>();
-    ArrayList<Node> endFloor = new ArrayList<Node>();
-    ArrayList<Node> aPath;
-    Hashtable<String, Node> startHash, endHash;
-    Hashtable<String, Node> masterHash = new Hashtable<String,Node>();
+    
     Button mapFirst;
     Button mapSec;
 	ImageView viewMap;
@@ -86,12 +85,14 @@ public class MGHWayFinderActivity extends Activity {
         
         go.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		calculatePath();
+        		startPathDraw();
         	}}); 
+        
+        /*TODO DELETE
         drawPath.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		//drawMapPath(1);
-        	}});
+        	}}); */
         
         //logo comented out currently
         //ImageView logo = (ImageView)findViewById(R.id.logoView);
@@ -185,8 +186,8 @@ public boolean onContextItemSelected(MenuItem item) {
 	int itemId = item.getItemId();             //get menu item id
 	//Toast.makeText(this, title + " " + itemId, Toast.LENGTH_LONG).show();
 	
-	endnId = contextNID[itemId - 1];
-	Log.v("context", endnId + title);
+	endnID = contextNID[itemId - 1];
+	Log.v("context", endnID + title);
 	
     //set spinner
 	/*
@@ -223,58 +224,30 @@ public boolean onContextItemSelected(MenuItem item) {
     }
     
     	
-    private void calculatePath() {
-    	String startNid = (String)start.getSelectedItem();
-    	String endNid = (String)end.getSelectedItem();
-    	Node sNode, eNode;
-    	int startFloor = db.getNodeFloor(startNid);
-    	int endFloor = db.getNodeFloor(endNid);
+    private void startPathDraw() {
+    	startnID = (String)start.getSelectedItem();
+    	endnID = (String)end.getSelectedItem();
     	
-    	if(startFloor != endFloor){
-    		startHash = db.buildFloorNodes(startFloor);
-    		sNode = startHash.get(startNid);
-    		endHash = db.buildFloorNodes(endFloor);
-    		eNode = endHash.get(endNid);
-    		
-    		masterHash.putAll(startHash);
-    		masterHash.putAll(endHash);
-    		
-    		db.buildInterFloor(startFloor, endFloor, masterHash);
-    		
-    		if (dijkstra1 == null){
-        		dijkstra1 = new Dijkstra(sNode);
-        	} else if (sNode != dijkstra1.getStart()){
-        		dijkstra1.reset();
-        		dijkstra1.restart(sNode);
-        	}
-    		
-    		aPath = dijkstra1.getPath(eNode);
-
-    		sPath = aPath.get(0).getNodeID();
-    		
-    		for(int i = 1; i < aPath.size(); i++){
-    			sPath += " -> " + aPath.get(i).getNodeID();
-    		}
-    		tvPath.setText(sPath);
-    	}
+    	int startFloor = db.getNodeFloor(startnID);
+    	int endFloor = db.getNodeFloor(endnID);
     	
-    	masterHash.clear();
-    	/*
-    	if (dijkstra1 == null){
-    		dijkstra1 = new Dijkstra(b);
-    	} else if (b != dijkstra1.getStart()){
-    		dijkstra1.reset();
-    		dijkstra1.restart(b);
+    	
+    //BUILD NODE SET
+    	if(startFloor != endFloor){																	//If start and end are on different floors, build master node set of both floors
+    		masterHash.putAll(db.buildFloorNodes(startFloor));
+    		masterHash.putAll(db.buildFloorNodes(endFloor));										
+   
+    		db.buildInterFloor(startFloor, endFloor, masterHash);									//Create interconnections between these two floors only
+    	} else {
+    		masterHash.putAll(db.buildFloorNodes(startFloor));
     	}
 		
-		aPath = dijkstra1.getPath((Node)end.getSelectedItem());
-
-		sPath = aPath.get(0).getNodeID();
-		
-		for(int i = 1; i < aPath.size(); i++){
-			sPath += " -> " + aPath.get(i).getNodeID();
-		}
-		tvPath.setText(sPath); */
+	//START PATHDRAWACTIVITY
+		Intent drawPath = new Intent(this, PathDrawActivity.class);
+		drawPath.putExtra("StartnID", startnID);
+		drawPath.putExtra("EndnID", endnID);
+        startActivity(drawPath);
+    	
 	}
     
     private synchronized void initializeDB(){
@@ -293,6 +266,8 @@ public boolean onContextItemSelected(MenuItem item) {
         }
     }
     
+    
+    /* TODO DELETE
     ///Called to start a new activity which draws the path over the image of the floor plan
     public void drawMapPath(int floor, ArrayList<Point> coords){
     	String x,y;
@@ -315,7 +290,7 @@ public boolean onContextItemSelected(MenuItem item) {
         startActivity(drawPath);
 
     }
-
+	*/
     
     public void contextDestination(){
     	//use this and onclick leading to it to create and open context menu with

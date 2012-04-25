@@ -8,5 +8,11 @@
         android:id="@+id/pathView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
-
+    
+    <Button 
+        android:id="@+id/buttonCenter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Center on Node 1" />
+    
 </LinearLayout>
