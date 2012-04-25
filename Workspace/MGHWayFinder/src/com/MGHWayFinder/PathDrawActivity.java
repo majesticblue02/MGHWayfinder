@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PathDrawActivity extends Activity implements OnTouchListener{
@@ -42,6 +43,9 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	int MODE = NONE;
 	Point sPoint = new Point();
 	Rect imageBounds;
+	
+	TextView tvX, tvY;
+	float[] mValues = new float[9];
 
 	@Override
 	public synchronized void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		setContentView(R.layout.map);
 		
 		center = (Button)findViewById(R.id.buttonCenter);
+		tvX = (TextView)findViewById(R.id.tvX);
+		tvY = (TextView)findViewById(R.id.tvY);
 		
 		
         pv = (PathView)findViewById(R.id.pathView);
@@ -108,36 +114,6 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		}
 	}
 	
-	@Override
-	public void onPause(){
-		super.onPause();
-		Toast.makeText(getApplicationContext(), "PAUSED", 1000).show();
-		pv.recycleImage();
-		System.gc();
-	}
-	
-	@Override
-	public void onResume(){
-		super.onResume();
-		Toast.makeText(getApplicationContext(), "RESUMED", 1000).show();
-	}
-
-	/* TODO DELETE
-	
-	protected void updateBundle(){
-		bundle = getIntent().getExtras();													//get info passed from starting intent
-		
-		floor = bundle.getInt("floor");														//working floor number
-		delim = bundle.getString("delim");													//delimiter used to concat string of values
-
-		for(String it:bundle.getString("xString").split(delim)){							//rebuilding arrays
-			xPoints.add(Integer.parseInt(it));
-		}
-		for(String it:bundle.getString("yString").split(delim)){
-			yPoints.add(Integer.parseInt(it));
-		}
-	} */
-	
 	public boolean onTouch(View v, MotionEvent e) {
 		PathView view = (PathView) v;
 		m = view.matrix;
@@ -162,6 +138,11 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 				}
 				break;
 		}
+		
+	//TESTING PURPOSES
+		m.getValues(mValues);
+		tvX.setText(Float.toString(mValues[Matrix.MTRANS_X]));
+		tvY.setText(Float.toString(mValues[Matrix.MTRANS_Y]));
 		
 		return true;
 	}

@@ -42,6 +42,7 @@ public class PathView extends View{
 	private RectF boundsF;												//outer bounds of background bm
 	public Matrix matrix= new Matrix();								//matrix used to scale canvas
 	public Matrix savedMatrix = new Matrix();
+	private float[] mValues = new float[9];
 	
 	final int ANIMATIONSTEP = 25;										//used for animation
 	final int ANIMATIONTOTAL = 500;
@@ -113,9 +114,11 @@ public class PathView extends View{
 			dMap = new BitmapDrawable(this.getResources(), bMap);
 			bounds = new Rect(0, 0, dMap.getIntrinsicWidth(), dMap.getIntrinsicHeight());
 			dMap.setBounds(bounds);
+			is.close();
 		} catch(IOException e){
 			Toast.makeText(getContext(), "ERROR LOADING FLOOR MAP", 2000).show();
 		}
+		
 	}
 	
 
@@ -198,19 +201,30 @@ public class PathView extends View{
 	
 	public synchronized void setCenterPoint(Node n){
 		Point centerPoint;
+		float currentX, currentY;
+		int nodeX = -1*n.getX();
+		int nodeY = -1*n.getY();
+		savedMatrix.set(matrix);
+		
 		if(getCenterPoint() != null){
 			centerPoint= getCenterPoint();
 			
-			float[] center = new float[]{(float)centerPoint.x, (float)centerPoint.y};
+			matrix.getValues(mValues);
+			currentX = mValues[Matrix.MTRANS_X];
+			currentY = mValues[Matrix.MTRANS_Y];
 			
-			matrix.mapPoints(center);
+			currentX -= centerPoint.x;
+			currentY -= centerPoint.y;
 			
-			transX = -1*(int)(n.getX() - center[0]);// (ANIMATIONTOTAL/ANIMATIONSTEP);
-			transY = -1*(int)(n.getY() - center[1]);// (ANIMATIONTOTAL/ANIMATIONSTEP);
+			
+			
+			transX = (int)(nodeX - currentX);// (ANIMATIONTOTAL/ANIMATIONSTEP);
+			transY = (int)(nodeY - currentY);// (ANIMATIONTOTAL/ANIMATIONSTEP);
 			//Thread ani = new Thread(animate, "translation animation");
 			//ani.start();
 			
 			matrix.postTranslate(transX, transY);
+			invalidate();
 		}
 		
 		
