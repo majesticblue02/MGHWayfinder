@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +35,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
 	ArrayList<Node> fullNodePath;
-	ArrayList<Node> walkNodePath;
+	ArrayList<Node> walkNodePath = new ArrayList<Node>();
 	
 	//IMAGEVIEW - TOUCH EVENT VARIABLES
 	Matrix m;
@@ -82,6 +83,8 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         	calcPath();
         	fullNodePath = dijkstra.getPath(eNode);
         }
+        
+        buildWalkNodePath();
         
         for(Node n:fullNodePath){
         	xPoints.add(0, n.getX());
@@ -146,24 +149,31 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		return true;
 	}
 	
-	private void nextStep(int currentStep){
-		Node currentNode, previousNode, nextNode;
-		boolean done = false;
-		
-		while(!done){
-			currentNode = fullNodePath.get(currentStep);
-			if(currentStep != 0){
-				previousNode = currentNode.getPreviousNode();
-				if(currentStep < fullNodePath.size())
-					nextNode = fullNodePath.get(currentStep + 1);
-			}
-				
-			else {
-				previousNode = null;
-				
-			}
-		}
-			
-	}
 	
+	public void buildWalkNodePath(){
+		Node currentNode, nextNode;
+		double runningDist = 0;
+		int i;
+		
+		walkNodePath.add(fullNodePath.get(0));													//INITIALIZE FIRST NODE
+		
+		for(i = 0; i < fullNodePath.size()-1; i++){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
+			currentNode = fullNodePath.get(i);
+			nextNode = fullNodePath.get(i+1);
+			
+			runningDist += currentNode.getNNodeDistance();
+			
+			if(currentNode.getNNodeAngle() != nextNode.getNNodeAngle()) {
+				nextNode.setStepDist(runningDist);
+				walkNodePath.add(nextNode);
+				runningDist = 0;
+			} 
+			
+			Log.i("step ", Integer.toString(i));
+		}
+		
+		walkNodePath.add(fullNodePath.get(i+1));												//ADD THE LAST NODE
+		
+		
+	}
 }

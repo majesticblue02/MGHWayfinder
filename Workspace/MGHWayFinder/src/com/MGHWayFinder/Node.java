@@ -13,8 +13,9 @@ public class Node {
 	private double d = INFINITY;										//d is the shortest distance from the starting point to this Node, initialized to "infinity"
 	private double pNodeDist = INFINITY;								//distance to the previous Node (stored to reduce calculations)
 	
-	private double nNodeAngle;											//once a path has been built (start to end) the angle to the next step is stored here
-	private double nNodeDist;											//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT NODE IS STORED HERE
+	private double nNodeAngle = -1;										//ONCE A PATH HAS BEEN BUILT (START TO END) THE ANGLE TO THE NEXT NODE IS STORED HERE
+	private double nNodeDist = -1;										//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT NODE IS STORED HERE
+	private double stepDist = -1;										//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT STEP NODE IS STORED HERE
 	
 	public Node(String nID, int x, int y, int floor, String nType, String nDep){
 		this.x = x;
@@ -105,5 +106,15 @@ public class Node {
 		d = INFINITY;
 		pNode = null;
 		pNodeDist = INFINITY;
+		nNodeDist = -1;
+		nNodeAngle = -1;
+	}
+
+	public double getStepDist() {
+		return stepDist;
+	}
+
+	public void setStepDist(double stepDist) {
+		this.stepDist = stepDist;
 	}
 }
