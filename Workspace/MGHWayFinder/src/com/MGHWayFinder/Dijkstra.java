@@ -122,7 +122,7 @@ public class Dijkstra {
 			dy = (path.get(i).getY() - path.get(i+1).getY());						//DELTA Y
 			
 			dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));					//DISTANCE CALCULATION
-			path.get(i).setBestDistance(dist);
+			path.get(i).setNNodeDistance(dist);
 			
 			angle = Math.toDegrees(Math.atan2(dy, dx));								//ATAN FUNCTION CALCULATES ANGLE
 			path.get(i).setNNodeAngle(angle);

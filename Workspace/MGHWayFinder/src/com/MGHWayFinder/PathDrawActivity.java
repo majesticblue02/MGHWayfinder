@@ -155,7 +155,8 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		double runningDist = 0;
 		int i;
 		
-		walkNodePath.add(fullNodePath.get(0));													//INITIALIZE FIRST NODE
+		currentNode = fullNodePath.get(0);
+		walkNodePath.add(currentNode);															//INITIALIZE FIRST NODE
 		
 		for(i = 0; i < fullNodePath.size()-1; i++){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
 			currentNode = fullNodePath.get(i);
@@ -164,7 +165,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 			runningDist += currentNode.getNNodeDistance();
 			
 			if(currentNode.getNNodeAngle() != nextNode.getNNodeAngle()) {
-				nextNode.setStepDist(runningDist);
+				currentNode.setStepDist(runningDist);
 				walkNodePath.add(nextNode);
 				runningDist = 0;
 			} 
@@ -172,7 +173,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 			Log.i("step ", Integer.toString(i));
 		}
 		
-		walkNodePath.add(fullNodePath.get(i+1));												//ADD THE LAST NODE
+		//walkNodePath.add(fullNodePath.get(i));												//ADD THE LAST NODE
 		
 		
 	}
