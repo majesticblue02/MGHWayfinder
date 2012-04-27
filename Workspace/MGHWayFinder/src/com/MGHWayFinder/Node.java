@@ -11,8 +11,10 @@ public class Node {
 	private ArrayList<Node> neighbors = new ArrayList<Node>();			//corresponding connections
 	private Node pNode = null;											//previous Node in the shortest path, initialized to null
 	private double d = INFINITY;										//d is the shortest distance from the starting point to this Node, initialized to "infinity"
-	private int pNodeAngle = -1;										//once the dijkstra algorithm runs this will be set to the compass degree of the Node's directionality to the previous waypoint (0 for North, valid values 0-359)
 	private double pNodeDist = INFINITY;								//distance to the previous Node (stored to reduce calculations)
+	
+	private double nNodeAngle;											//once a path has been built (start to end) the angle to the next step is stored here
+	private double nNodeDist;											//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT NODE IS STORED HERE
 	
 	public Node(String nID, int x, int y, int floor, String nType, String nDep){
 		this.x = x;
@@ -35,8 +37,12 @@ public class Node {
 		d = dist;
 	}
 	
-	public void setPNodeAngle(int degree){
-		pNodeAngle = degree;
+	public void setNNodeAngle(double degree){
+		nNodeAngle = degree;
+	}
+	
+	public void setNNodeDistance(double dist){
+		nNodeDist = dist;
 	}
 	
 	public void setPNodeDistance(double dist){
@@ -79,8 +85,12 @@ public class Node {
 		return pNodeDist;
 	}
 	
-	public double getPNodeAngle(){
-		return pNodeAngle;
+	public double getNNodeDistance(){
+		return nNodeDist;
+	}
+	
+	public double getNNodeAngle(){
+		return nNodeAngle;
 	}
 	
 	public ArrayList<Node> getNeighbors(){
@@ -94,6 +104,6 @@ public class Node {
 	public void reset(){
 		d = INFINITY;
 		pNode = null;
-		pNodeAngle = -1;
+		pNodeDist = INFINITY;
 	}
 }

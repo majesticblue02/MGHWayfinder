@@ -33,9 +33,10 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	Dijkstra dijkstra;
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
-	ArrayList<Node> nodePath;
+	ArrayList<Node> fullNodePath;
+	ArrayList<Node> walkNodePath;
 	
-	//IMAGEVIEW VARIABLES
+	//IMAGEVIEW - TOUCH EVENT VARIABLES
 	Matrix m;
 	Matrix savedM;
 	static final int NONE = 0;
@@ -76,21 +77,19 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         	calcPath();
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	
-        	nodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
+        	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
         } else {
         	calcPath();
-        	nodePath = dijkstra.getPath(eNode);
+        	fullNodePath = dijkstra.getPath(eNode);
         }
         
-        for(Node n:nodePath){
+        for(Node n:fullNodePath){
         	xPoints.add(0, n.getX());
         	yPoints.add(0, n.getY());
         }
         
 		pv.makePathView(xPoints, yPoints, floor, am);
-		
 		pv.setBackgroundColor(Color.WHITE);
-		
 		pv.setOnTouchListener(this);
 		
 		center.setOnClickListener(
@@ -145,6 +144,26 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		tvY.setText(Float.toString(mValues[Matrix.MTRANS_Y]));
 		
 		return true;
+	}
+	
+	private void nextStep(int currentStep){
+		Node currentNode, previousNode, nextNode;
+		boolean done = false;
+		
+		while(!done){
+			currentNode = fullNodePath.get(currentStep);
+			if(currentStep != 0){
+				previousNode = currentNode.getPreviousNode();
+				if(currentStep < fullNodePath.size())
+					nextNode = fullNodePath.get(currentStep + 1);
+			}
+				
+			else {
+				previousNode = null;
+				
+			}
+		}
+			
 	}
 	
 }

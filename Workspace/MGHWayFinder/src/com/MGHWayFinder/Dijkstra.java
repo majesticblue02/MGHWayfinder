@@ -9,13 +9,11 @@ public class Dijkstra {
 	private ArrayList<Node> Q = new ArrayList<Node>();					//list of unsettled Nodes	(distances not yet found)
 	
 	private Node STARTNode;												//ALL POTENTIAL PATHS ARE BUILT FROM THE ORIGIN Node
-	private static final int OFFSET = 90;								//MAP "ORIGIN" of Y+ = 0*, INSTEAD OF X+
-	private Node breakNode = null;
+	private Node breakNode = null;										//BREAKNODE USED FOR INTERFLOOR CALCULATIONS / PATHS
 
 	public Dijkstra(Node START){
 		this.STARTNode = START;
 		dijkstraAlgorithm(START);
-		calculateNodeAngles();
 	}
 	
 	public boolean reset(){												//clears all info in the dijkstra table, prepping for a new run
@@ -31,15 +29,18 @@ public class Dijkstra {
 	public void restart(Node START){									//recalculates all paths from Node START
 		this.STARTNode = START;
 		dijkstraAlgorithm(START);
-		calculateNodeAngles();
 	}
 	 
+	//RETURNS AN ARRAYLIST OF THE PATH FROM START TO END IN ORDER OF 0 -> END
     public ArrayList<Node> getPath(Node END){
     	ArrayList<Node> P = new ArrayList<Node>();
     	
     	P.add(END);														//initialize end Node
 		while(P.get(0) != STARTNode)									//loop backwards from end Node until beginning Node
 			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes	
+		
+		calculatePathAngleDist(P);											//CALCULATES NODE ANGLES
+		
 		return P;
     }
     
@@ -64,6 +65,7 @@ public class Dijkstra {
 		}
 	}
 	
+	//ALGORITHIM USED TO EXPLORE THE NEIGHBORS OF NODE V
 	protected void relaxNeighbors(Node v){
 		Node o = null;
 		double dist;
@@ -88,13 +90,15 @@ public class Dijkstra {
 		}
 	}
 	
-	protected double cDistance(Node a, Node b){									//calculates distances between Nodes
+	//CALCULATES DISTANCE BETWEEN TWO NODES
+	protected double cDistance(Node a, Node b){	
 		double x = a.getX()-b.getX();
 		double y = a.getY()-b.getY();
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
 	
-	protected Node getMinimumNode(){												//returns the Node from the arrayList Q with the smallest distance from the starting point
+	//RETURNS THE NODE FROM THE ARRAYLIST Q WITH THE SMALLEST DISTANCE FROM THE STARTING POINT
+	protected Node getMinimumNode(){												
 		Node out = null;
 		double min = INFINITY;
 		
@@ -108,19 +112,21 @@ public class Dijkstra {
 		return out;
 	}
 	
-	protected void calculateNodeAngles(){											//called after full table is built, calculates all of the Nodes angles to their previous Node in the shortest path.
-		int angle;
-		int x, y;
-    	for(Node it:S){
-    		if(it != STARTNode){
-    			x = (it.getX() - it.getPreviousNode().getX());
-    			y = (it.getY() - it.getPreviousNode().getY());
-    			
-    			angle = (int)Math.round(Math.toDegrees(Math.atan2(y, x)));
-    			angle += OFFSET;
-    			it.setPNodeAngle(angle);
-    		}
-    	}
+	//CALLED AFTER PATH (START TO FINISH) IS CREATED - CALCULATES NODE -> NODE ANGLES & DISTANCE
+	protected void calculatePathAngleDist(ArrayList<Node> path){				
+		double angle, dist;
+		int dx, dy;
+		
+		for(int i = 0; i < path.size()-1; i++){
+			dx = (path.get(i).getX() - path.get(i+1).getX());						//DELTA X
+			dy = (path.get(i).getY() - path.get(i+1).getY());						//DELTA Y
+			
+			dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));					//DISTANCE CALCULATION
+			path.get(i).setBestDistance(dist);
+			
+			angle = Math.toDegrees(Math.atan2(dy, dx));								//ATAN FUNCTION CALCULATES ANGLE
+			path.get(i).setNNodeAngle(angle);
+		}
     }
 	
 }

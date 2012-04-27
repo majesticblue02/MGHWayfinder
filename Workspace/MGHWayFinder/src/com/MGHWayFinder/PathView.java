@@ -16,13 +16,10 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +29,6 @@ public class PathView extends View{
 	private int vWidth, vHeight;												//screen width and height (used for scaling)
 	
 	private Paint p = new Paint();												//paint used to stroke path
-	private Paint b = new Paint();
 	private Path path = new Path();												//display path
 	
 	private BitmapDrawable dMap;												//bitmap drawable used to draw to canvas
