@@ -28,13 +28,14 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	AssetManager am;
 	Button center;
 	
+	//PATH CALCULATION VARIABLES
 	Hashtable<String, Node> localHash = MGHWayFinderActivity.masterHash;
 	Dijkstra dijkstra;
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
 	ArrayList<Node> nodePath;
 	
-	
+	//IMAGEVIEW VARIABLES
 	Matrix m;
 	Matrix savedM;
 	static final int NONE = 0;
@@ -59,8 +60,6 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
-        
-		//updateBundle(); TODO Delete
       
     //GET START AND END NODEID FROM BUNDLE
         bundle = getIntent().getExtras();
@@ -73,11 +72,11 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         
 		floor = sNode.getNodeFloor();
 		
-        if(sNode.getNodeFloor() != eNode.getNodeFloor()){
+        if(sNode.getNodeFloor() != eNode.getNodeFloor()){							//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS FIRST
         	calcPath();
-        	bNode = dijkstra.getBreakNode().getPreviousNode();										//set bNode to the last node on the first floor of travel
+        	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	
-        	nodePath = dijkstra.getPath(bNode);										//calculate path from start node to intermediate node bNode
+        	nodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
         } else {
         	calcPath();
         	nodePath = dijkstra.getPath(eNode);
@@ -88,7 +87,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         	yPoints.add(0, n.getY());
         }
         
-		pv.updatePathView(xPoints, yPoints, floor, am);
+		pv.makePathView(xPoints, yPoints, floor, am);
 		
 		pv.setBackgroundColor(Color.WHITE);
 		
@@ -103,9 +102,9 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		);	
 	
 	 }
-	
-	private void calcPath(){
+
 	//CALCULATE ALL PATHS FROM START NODE
+	private void calcPath(){
 		if(dijkstra == null){
 			dijkstra = new Dijkstra(sNode);
 		} else{
@@ -114,6 +113,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		}
 	}
 	
+	//HANDLES TOUCH EVENTS - TRANSLATING AND SCALING PATHVIEW OBJECT
 	public boolean onTouch(View v, MotionEvent e) {
 		PathView view = (PathView) v;
 		m = view.matrix;

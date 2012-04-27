@@ -28,30 +28,27 @@ import android.widget.Toast;
 
 public class PathView extends View{
 	
-	private ArrayList<Integer> xArray, yArray;							//arraylists used to hold x,y coords of node points
-	private int vWidth, vHeight;										//screen width and height (used for scaling)
+	private ArrayList<Integer> xArray, yArray;									//arraylists used to hold x,y coords of node points
+	private int vWidth, vHeight;												//screen width and height (used for scaling)
 	
-	private Paint p = new Paint();										//paint used to stroke path
-	private Path path = new Path();										//diplay path
+	private Paint p = new Paint();												//paint used to stroke path
+	private Paint b = new Paint();
+	private Path path = new Path();												//display path
 	
-	private BitmapDrawable dMap;										//bitmap drawable used to draw to canvas
-	private Bitmap bMap;												//bitmap background
-	private BitmapFactory.Options op = new BitmapFactory.Options();;	//options used to define inputstream creation of bitmap
+	private BitmapDrawable dMap;												//bitmap drawable used to draw to canvas
+	private Bitmap bMap;														//bitmap background
+	private BitmapFactory.Options op = new BitmapFactory.Options();;			//options used to define inputstream creation of bitmap
 	private InputStream is;
-	private Rect bounds;
-	private RectF boundsF;												//outer bounds of background bm
-	public Matrix matrix= new Matrix();								//matrix used to scale canvas
+	private Rect bounds;														//outer bounds of background bm
+	public Matrix matrix= new Matrix();											//matrix used to scale canvas
 	public Matrix savedMatrix = new Matrix();
 	private float[] mValues = new float[9];
 	
-	final int ANIMATIONSTEP = 25;										//used for animation
+	final int ANIMATIONSTEP = 25;													//used for animation
 	final int ANIMATIONTOTAL = 500;
 	int transX, transY;
 	
-	private final String[] source = {"","floor1color.png","floor2color.png"};
-	
-	private boolean isnull;										//boolean
-	
+	private final String[] source = {"","floor1color.png","floor2color.png"};		//String[] of floor plan locations	
 	
 	public PathView(Context context){
 		super(context);
@@ -70,42 +67,48 @@ public class PathView extends View{
 		iniPV();
 	}
 	
-	//Used to determine view size
+	//Used to determine view size (called during onDraw)
 	@Override
 	protected void onMeasure(int wMeasureSpec, int hMeasureSpec){
 		super.onMeasure(wMeasureSpec, hMeasureSpec);
 		int w = MeasureSpec.getSize(wMeasureSpec);
 		int h = MeasureSpec.getSize(hMeasureSpec);
-		setMeasuredDimension(w,h/2);
+
+			if(w < h)
+				setMeasuredDimension(w,w);														//SETS PATHVIEW TO AS TALL AS IT IS WIDE
+			else
+				setMeasuredDimension(h,h);
+		
 	}
 	
-	//initialize pathview object
+	//INITIALIZE PATHVIEW OBJECT
 	protected void iniPV(){
 		setFocusable(true);
 		
-		p.setColor(Color.BLACK);
+		p.setColor(Color.BLACK);																//PAINT USED TO STROKE PATHWAY
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
 		
-		op.inPreferredConfig = Bitmap.Config.RGB_565;
+		op.inPreferredConfig = Bitmap.Config.RGB_565;											//BITMAP FACTORY OPTIONS FOR PULLING IN FLOOR PLAN
+		op.inDensity = 0;
 		op.inPurgeable = true;
 		
-		isnull = false;
+		matrix.setTranslate(0, 67);																//OFFSET TO COMPENSATE FOR ODD 67 PIXEL BUG
 		
-		this.requestLayout();
 	}
 	
 	
-	
-	public void updatePathView(ArrayList<Integer> xArray, ArrayList<Integer> yArray, int floor, AssetManager am) {
+	//SETS INSTANCE ARRAYS, ASSET MANAGER, AND DRAWS THE VIEW
+	public void makePathView(ArrayList<Integer> xArray, ArrayList<Integer> yArray, int floor, AssetManager am) {
 
-		this.xArray = xArray;
+		this.xArray = xArray;																	
 		this.yArray = yArray;
 		
 		loadFloorMap(floor,am);
 		invalidate();
 	}
 	
+	//LOAD FLOOR PLAN BASED ON FLOOR NUMBER
 	private void loadFloorMap(int floor, AssetManager am){
 		
 		try{
@@ -121,12 +124,12 @@ public class PathView extends View{
 		
 	}
 	
-
-	private void scale(){
-		if(((float)vWidth/boundsF.right) > ((float)vHeight/boundsF.bottom))
-			matrix.postScale(((float)vHeight/boundsF.bottom), ((float)vHeight/boundsF.bottom));
+	//INITIALIZATION SCALE (FIT TO VIEWABLE AREA)
+	private void iniScale(){
+		if(((float)vWidth/(float)bounds.right) > ((float)vHeight/(float)bounds.bottom))
+			matrix.postScale(((float)vHeight/(float)bounds.bottom), ((float)vHeight/(float)bounds.bottom));
 		else
-			matrix.postScale(((float)vWidth/boundsF.right), ((float)vWidth/boundsF.right));		
+			matrix.postScale(((float)vWidth/(float)bounds.right), ((float)vWidth/(float)bounds.right));		
 	}
 	
 	@Override
@@ -136,16 +139,12 @@ public class PathView extends View{
 		vWidth = getMeasuredWidth();
 		vHeight = getMeasuredHeight();
 		
-		if(!isnull){															//TODO REMOVE IF BLOCK & isnull
-			canvas.setMatrix(matrix);
-			dMap.draw(canvas);
+		canvas.setMatrix(matrix);
 		
-			path.reset();
-			makePath();
-			canvas.drawPath(path, p);
-		}
-		
-		
+		dMap.draw(canvas);														//draw the floor plan to the canvas
+		path.reset();															//reset the path
+		makePath();																//redraw the path
+		canvas.drawPath(path, p);
 	}
 	
 	//draws path using arrays
@@ -154,41 +153,43 @@ public class PathView extends View{
 		x = xArray.get(0);
 		y = yArray.get(0);
 
-		path.addCircle(x, y, 5, Path.Direction.CW);								//adds a circle to the path start
+		path.addCircle(x, y, 5, Path.Direction.CW);											//ADD A CIRCLE TO THE START NODE
 		path.moveTo(x, y);
 		
-		for(int i = 0; i < xArray.size(); i++){
+		for(int i = 0; i < xArray.size(); i++){												//LOOP THROUGH ARRAY OF COORDINATES AND DRAW LINES BETWEEN THEM
 			x = xArray.get(i);
 			y = yArray.get(i);
 			path.lineTo(x, y);
 		}
 		
-		path.addCircle(x, y, 5, Path.Direction.CW);
+		path.addCircle(x, y, 5, Path.Direction.CW);											//ADD A CIRCLE TO THE END NODE
 		path.close();
-		
 	}
 	
-	
-	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor){			//Clears the current path and updates it
-		xArray = null;															//nulled to attempt to have gc remove old array objects
+	//CLEARS THE CURRENT PATH AND UPDATES IT
+	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor){			
+		xArray = null;																		//nulled to attempt to have gc remove old array objects
 		yArray = null;
 		path.reset();
 		xArray = x;
 		yArray = y;
-		invalidate();															//invalidated to rerun onDraw call
+		invalidate();										
 	}
 	
+	//RECYCLE IMAGE OBJECTS
 	public void recycleImage(){
 		bMap.recycle();
 		dMap = null;
 		path.reset();
 	}
 	
+	//GET IMAGE BOUNDS
 	public Rect getImageBounds(){
 		return bounds;
 	}
 	
-	public Point getCenterPoint(){
+	//GET CENTER POINT OF PHYSICAL VIEW
+	private Point getCenterPoint(){
 		Point out = new Point();
 		
 		if(vWidth == 0 || vHeight ==0)
@@ -199,6 +200,7 @@ public class PathView extends View{
 		return out;
 	}
 	
+	//MOVE VIEW TO CENTER OVER NODE n
 	public synchronized void setCenterPoint(Node n){
 		Point centerPoint;
 		float currentX, currentY;
@@ -214,22 +216,23 @@ public class PathView extends View{
 			currentY = mValues[Matrix.MTRANS_Y];
 			
 			currentX -= centerPoint.x;
-			currentY -= centerPoint.y;
+			currentY -= (centerPoint.y + 67);
 			
 			
 			
-			transX = (int)(nodeX - currentX);// (ANIMATIONTOTAL/ANIMATIONSTEP);
-			transY = (int)(nodeY - currentY);// (ANIMATIONTOTAL/ANIMATIONSTEP);
-			//Thread ani = new Thread(animate, "translation animation");
-			//ani.start();
+			transX = (int)(nodeX - currentX) / (ANIMATIONTOTAL/ANIMATIONSTEP);
+			transY = (int)(nodeY - currentY) / (ANIMATIONTOTAL/ANIMATIONSTEP);
+			Thread ani = new Thread(animate, "translation animation");
+			ani.start();
 			
-			matrix.postTranslate(transX, transY);
-			invalidate();
+			//matrix.postTranslate(transX, transY);
+			//invalidate();
 		}
 		
 		
 	}
 	
+	//USED TO ANIMATE MOVEMENT
 	private void step(){
 		matrix.postTranslate(transX, transY);
 		invalidate();
