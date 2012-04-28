@@ -70,7 +70,7 @@ public class PathView extends View{
 		int w = MeasureSpec.getSize(wMeasureSpec);
 		int h = MeasureSpec.getSize(hMeasureSpec);
 		
-		setMeasuredDimension(w,h);
+		setMeasuredDimension(w,h/2);
 		
 //			if(w < h)
 //				setMeasuredDimension(w,w);														//SETS PATHVIEW TO AS TALL AS IT IS WIDE

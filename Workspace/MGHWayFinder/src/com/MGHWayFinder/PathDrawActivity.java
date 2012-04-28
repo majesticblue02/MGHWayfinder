@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -16,11 +17,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PathDrawActivity extends Activity implements OnTouchListener{
+public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	PathView pv;
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
@@ -35,6 +38,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
 	ArrayList<Node> fullNodePath;
+	ArrayList<Node> secondNodePath;
 	ArrayList<Node> walkNodePath = new ArrayList<Node>();
 	
 	//IMAGEVIEW - TOUCH EVENT VARIABLES
@@ -53,18 +57,34 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	//ui things from calum
 		Button next;
 		Button prev;
+		Button list;
+		Button help;
 		int index = 0;
+		ArrayList<String> nodeList = new ArrayList<String>();
+		private ArrayAdapter<Node> adapt;
 
 	@Override
 	public synchronized void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-		
+        //tabs
+        TabHost tabs=(TabHost)findViewById(R.id.tabhost);
+        tabs.setup();
+        TabHost.TabSpec spec;
+        
+        //tab setup
+        spec=tabs.newTabSpec("map");
+        spec.setContent(R.id.pathTab);
+        spec.setIndicator("Map Path");
+        tabs.addTab(spec);
+        
 		//center = (Button)findViewById(R.id.buttonCenter);
 		tvX = (TextView)findViewById(R.id.tvX);
 		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
 		prev = (Button)findViewById(R.id.btnPrev);
+		list = (Button)findViewById(R.id.btnList);
+		help = (Button)findViewById(R.id.btnHelp);
 		
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
@@ -85,6 +105,10 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	
         	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
+        	
+        	Dijkstra second = new Dijkstra(bNode);									//ADDING SUPPORT FOR SECOND FLOOR DRAWING
+        	secondNodePath = second.getPath(eNode);
+        	
         } else {
         	calcPath();
         	fullNodePath = dijkstra.getPath(eNode);
@@ -102,7 +126,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		pv.setOnTouchListener(this);
 		
 		//buttons for movement
-		buildWalkNodePath();
+		//buildWalkNodePath();
 		
 //		center.setOnClickListener(
 //				new OnClickListener(){
@@ -135,8 +159,40 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 					}
 				}
 		);	
+		
+		list.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+
+					}
+				}
+		);
+		
+		help.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+						
+					}
+				}
+		);
 	
-	 }
+		
+        //tab setup
+        spec=tabs.newTabSpec("List");
+        spec.setContent(R.id.listTab);
+        spec.setIndicator("List View");
+        tabs.addTab(spec);
+		//LIST VIEW TAB------------------------------------------------------------
+        
+        //nuts and bolts
+        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
+        setListAdapter(adapt);
+        
+        
+        
+        
+        
+	 }//end oncreate
 
 	//CALCULATE ALL PATHS FROM START NODE
 	private void calcPath(){
