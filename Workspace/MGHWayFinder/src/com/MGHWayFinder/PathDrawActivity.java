@@ -43,6 +43,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	ArrayList<Node> fullNodePath;
 	ArrayList<Node> secondNodePath;
 	ArrayList<Node> walkNodePath = new ArrayList<Node>();
+	boolean multifloor;
 	
 	//IMAGEVIEW - TOUCH EVENT VARIABLES
 	Matrix m;
@@ -111,20 +112,24 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		floor = sNode.getNodeFloor();
 		
         if(sNode.getNodeFloor() != eNode.getNodeFloor()){							//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS FIRST
-        	calcPath();
+        	calcPath(sNode);
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	
-        	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
+        	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());				//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
         	
-        	Dijkstra second = new Dijkstra(bNode);									//ADDING SUPPORT FOR SECOND FLOOR DRAWING
-        	secondNodePath = second.getPath(eNode);
+        	multifloor = true;
+        	
+        	//Dijkstra second = new Dijkstra(bNode);									//ADDING SUPPORT FOR SECOND FLOOR DRAWING
+        	//secondNodePath = second.getPath(eNode);
         	
         } else {
-        	calcPath();
+        	calcPath(sNode);
         	fullNodePath = dijkstra.getPath(eNode);
+        	multifloor = false;
         }
         
-        buildWalkNodePath();
+        stripIntermediateSteps(fullNodePath);
+        
         
         for(Node n:fullNodePath){
         	xPoints.add(0, n.getX());
@@ -210,12 +215,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 
 
 	//CALCULATE ALL PATHS FROM START NODE
-	private void calcPath(){
+	private void calcPath(Node start){
 		if(dijkstra == null){
-			dijkstra = new Dijkstra(sNode);
+			dijkstra = new Dijkstra(start);
 		} else{
 			dijkstra.reset();
-			dijkstra.restart(sNode);
+			dijkstra.restart(start);
 		}
 	}
 	
@@ -253,33 +258,58 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		return true;
 	}
 	
-	
-	public void buildWalkNodePath(){
+	/*
+	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
+	public ArrayList<Node> stripIntermediateSteps(ArrayList<Node> listIn){
+		ArrayList<Node> out = new ArrayList<Node>();
 		Node currentNode, nextNode;
 		double runningDist = 0;
 		int i;
 		
-		currentNode = fullNodePath.get(0);
-		walkNodePath.add(currentNode);															//INITIALIZE FIRST NODE
+		currentNode = listIn.get(0);
+		out.add(currentNode);																//INITIALIZE FIRST NODE
 		
-		for(i = 0; i < fullNodePath.size()-1; i++){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
-			currentNode = fullNodePath.get(i);
-			nextNode = fullNodePath.get(i+1);
+		for(i = 0; i < listIn.size()-1; i++){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
+			currentNode = listIn.get(i);
+			nextNode = listIn.get(i+1);
 			
 			runningDist += currentNode.getNNodeDistance();
 			
 			if(currentNode.getNNodeAngle() != nextNode.getNNodeAngle()) {
 				currentNode.setStepDist(runningDist);
-				walkNodePath.add(nextNode);
+				out.add(nextNode);
 				runningDist = 0;
 			} 
-			
-			Log.i("step ", Integer.toString(i));
 		}
 		
-		//walkNodePath.add(fullNodePath.get(i));												//ADD THE LAST NODE
-	}
+		return out;
+		
+	} */
 	
+	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
+	public void stripIntermediateSteps(ArrayList<Node> listIn){
+		Node currentNode, nextNode;
+		double runningDist = 0;
+		int i;
+		
+		for(i = listIn.size()-2; i > 0; i--){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
+			currentNode = listIn.get(i);
+			nextNode = listIn.get(i+1);
+			
+			runningDist += currentNode.getNNodeDistance();
+			
+			if(currentNode.getNNodeAngle() == nextNode.getNNodeAngle()) {
+				listIn.remove(i+1);
+				
+			} else {
+				currentNode.setStepDist(runningDist);
+				runningDist = 0;
+			}
+			
+		}
+			
+	}
+
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Log.v("list pos", Integer.toString(position));
