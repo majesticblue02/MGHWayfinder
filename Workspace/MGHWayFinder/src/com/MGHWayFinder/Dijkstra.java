@@ -1,6 +1,7 @@
 package com.MGHWayFinder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Dijkstra {
     
@@ -40,7 +41,7 @@ public class Dijkstra {
 			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes	
 		
 		calculatePathAngleDist(P);											//CALCULATES NODE ANGLES
-		
+		stripIntermediateSteps(P);
 		return P;
     }
     
@@ -129,4 +130,26 @@ public class Dijkstra {
 		}
     }
 	
+	protected void stripIntermediateSteps(ArrayList<Node> listIn){
+		Node currentNode, nextNode;
+		double runningDist = 0;
+		int i;
+		
+		for(i = listIn.size()-2; i > 0; i--){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
+			currentNode = listIn.get(i);
+			nextNode = listIn.get(i+1);
+			
+			runningDist += currentNode.getNNodeDistance();
+			
+			if(currentNode.getNNodeAngle() == nextNode.getNNodeAngle()) {
+				listIn.remove(i+1);
+				
+			} else {
+				currentNode.setStepDist(runningDist);
+				runningDist = 0;
+			}
+		}
+
+		listIn.removeAll(Collections.singletonList(null));
+	}
 }

@@ -111,25 +111,20 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         
 		floor = sNode.getNodeFloor();
 		
+		calcPath(sNode);
+		
+		fullNodePath = dijkstra.getPath(eNode);
+		
         if(sNode.getNodeFloor() != eNode.getNodeFloor()){							//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS FIRST
-        	calcPath(sNode);
+
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
-        	
-        	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());				//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
         	
         	multifloor = true;
         	
-        	//Dijkstra second = new Dijkstra(bNode);									//ADDING SUPPORT FOR SECOND FLOOR DRAWING
-        	//secondNodePath = second.getPath(eNode);
-        	
         } else {
-        	calcPath(sNode);
-        	fullNodePath = dijkstra.getPath(eNode);
+
         	multifloor = false;
         }
-        
-        stripIntermediateSteps(fullNodePath);
-        
         
         for(Node n:fullNodePath){
         	xPoints.add(0, n.getX());
