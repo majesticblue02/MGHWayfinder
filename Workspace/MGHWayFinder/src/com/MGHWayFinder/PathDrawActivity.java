@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -71,6 +72,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	public synchronized void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+		
+		Resources res = getResources();
+		
         //tabs
         tabs=(TabHost)findViewById(R.id.tabhost);
         tabs.setup();
@@ -79,7 +83,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         //tab setup
         spec=tabs.newTabSpec("map");
         spec.setContent(R.id.pathTab);
-        spec.setIndicator("Map Path");
+        spec.setIndicator("Map Path", res.getDrawable(R.drawable.ic_tab_map));
         tabs.addTab(spec);
         
 		//center = (Button)findViewById(R.id.buttonCenter);
@@ -179,7 +183,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         //tab setup
         spec=tabs.newTabSpec("List");
         spec.setContent(R.id.listTab);
-        spec.setIndicator("List View");
+        spec.setIndicator("List View", res.getDrawable(R.drawable.ic_tab_list));
         tabs.addTab(spec);
 		//LIST VIEW TAB------------------------------------------------------------
         

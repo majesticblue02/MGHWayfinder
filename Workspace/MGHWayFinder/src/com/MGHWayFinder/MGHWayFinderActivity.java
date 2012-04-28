@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,9 +77,12 @@ public class MGHWayFinderActivity extends Activity {
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
-        tvPath = (TextView)findViewById(R.id.tvNP);
         go = (Button)findViewById(R.id.goButton);
-        drawPath = (Button)findViewById(R.id.btnMakePath);
+        
+        
+        //tvPath = (TextView)findViewById(R.id.tvNP);	//dont need
+        
+        //drawPath = (Button)findViewById(R.id.btnMakePath); //dont need
         
         aAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validNodeIds);
         start.setAdapter(aAdapter);
@@ -131,12 +135,14 @@ tabs.addTab(spec);
 		
         mapFirst.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		//viewMap.setImageResource(R.drawable.floor1map);
+        		viewMap.setImageResource(R.drawable.floor1color);
+        		//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
         	}});
         
         mapSec.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		//viewMap.setImageResource(R.drawable.floor2map);
+        		viewMap.setImageResource(R.drawable.floor2color);
+        		//viewMap.setImageDrawable(Drawable.createFromPath("floor2color.png"));
         	}});
         
 
