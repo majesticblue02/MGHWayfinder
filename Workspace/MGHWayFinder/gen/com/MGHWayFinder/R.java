@@ -31,7 +31,13 @@ public final class R {
         public static final int ic_tab_navigate=0x7f020011;
         public static final int ic_tab_navigate_selected=0x7f020012;
         public static final int ic_tab_navigate_unselected=0x7f020013;
-        public static final int mgh_logo=0x7f020014;
+        public static final int ic_tab_next=0x7f020014;
+        public static final int ic_tab_next_selected=0x7f020015;
+        public static final int ic_tab_next_unselected=0x7f020016;
+        public static final int ic_tab_prev=0x7f020017;
+        public static final int ic_tab_prev_selected=0x7f020018;
+        public static final int ic_tab_prev_unselected=0x7f020019;
+        public static final int mgh_logo=0x7f02001a;
     }
     public static final class id {
         public static final int btnHelp=0x7f050008;

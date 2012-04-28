@@ -90,7 +90,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		tvX = (TextView)findViewById(R.id.tvX);
 		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
+		next.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_next));
 		prev = (Button)findViewById(R.id.btnPrev);
+		prev.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_prev));
 		//list = (Button)findViewById(R.id.btnList);
 		help = (Button)findViewById(R.id.btnHelp);
 		
