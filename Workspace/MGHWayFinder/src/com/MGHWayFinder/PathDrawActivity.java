@@ -49,16 +49,22 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	
 	TextView tvX, tvY;
 	float[] mValues = new float[9];
+	
+	//ui things from calum
+		Button next;
+		Button prev;
+		int index = 0;
 
 	@Override
 	public synchronized void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		
-		center = (Button)findViewById(R.id.buttonCenter);
+		//center = (Button)findViewById(R.id.buttonCenter);
 		tvX = (TextView)findViewById(R.id.tvX);
 		tvY = (TextView)findViewById(R.id.tvY);
-		
+		next = (Button)findViewById(R.id.btnNext);
+		prev = (Button)findViewById(R.id.btnPrev);
 		
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
@@ -95,10 +101,37 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		pv.setBackgroundColor(Color.WHITE);
 		pv.setOnTouchListener(this);
 		
-		center.setOnClickListener(
+		//buttons for movement
+		buildWalkNodePath();
+		
+//		center.setOnClickListener(
+//				new OnClickListener(){
+//					public void onClick(View v){
+//						pv.setCenterPoint(sNode);
+//					}
+//				}
+//		);	
+		
+		next.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
-						pv.setCenterPoint(sNode);
+						if( index < (walkNodePath.size() - 1)){
+							index += 1;
+							Node nextNode = walkNodePath.get(index);
+							pv.setCenterPoint(nextNode);
+						}
+					}
+				}
+		);	
+		
+		prev.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+						if( index  > 0){
+							index -= 1;
+							Node prevNode = walkNodePath.get(index);
+							pv.setCenterPoint(prevNode);
+						}
 					}
 				}
 		);	

@@ -111,6 +111,9 @@ public class MGHWayFinderActivity extends Activity {
     	//COMING SOON
     	endSet = (Button)findViewById(R.id.setEnd);
     	registerForContextMenu(endSet);	//how to make short press?
+    	
+    	//auto set end point FOR TESTING
+    	end.setSelection(12);
 
         
 //////////////////MAP TAB//////////////////////
@@ -210,13 +213,13 @@ public boolean onContextItemSelected(MenuItem item) {
                 //test code
                 Log.v("QR", startnID);
                 
-                /*
+                
                 //set spinner
-            	for(int i=0; i < aFloor.size(); i++){
-            		if(startnID.equals(aFloor.get(i).getNodeID())){
+            	for(int i=0; i < validNodeIds.size(); i++){
+            		if(startnID.equals(validNodeIds.get(i))){
             			start.setSelection(i);
             		}
-            	} */
+            	} 
             } else if (resultCode == Activity.RESULT_CANCELED) {
             	Toast.makeText(this, "Scan Cancelled", Toast.LENGTH_LONG).show();
             }
