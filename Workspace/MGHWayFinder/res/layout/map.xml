@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tabhost" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<RelativeLayout 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		
+			<TabWidget android:id="@android:id/tabs"
+			    android:layout_alignParentBottom="true"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" />
+	    
+		<FrameLayout android:id="@android:id/tabcontent"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_above="@android:id/tabs">
+			
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pathTab"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -10,19 +27,24 @@
         android:layout_height="fill_parent" />
     
    
-   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/buttons"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_alignParentBottom="true" >
+    android:layout_alignParentTop="true" >
     <!--
     <Button 
         android:id="@+id/buttonCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Node 1" />
-    -->
+           	     <Button
+        android:id="@+id/btnList"
+      	android:layout_width="60dp"
+       	android:layout_height="wrap_content"
+       	android:text="List" /> 
+    -->   
      <Button
         android:id="@+id/btnPrev"
       	android:layout_width="60dp"
@@ -32,22 +54,81 @@
        android:id="@+id/btnNext"
       	android:layout_width="60dp"
       	android:layout_height="wrap_content"
+      	android:layout_toRightOf="@id/btnPrev"
        	android:text="Next"
-       	android:layout_marginLeft="20dp" />
-   	
+       	 />
+        	
  	     <TextView
        android:id="@+id/tvX"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:layout_toRightOf="@id/btnNext"
        android:textColor="#000000" />
+ 	     
     	<TextView
        android:id="@+id/tvY"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:layout_toRightOf="@id/tvX"
        android:textColor="#000000" />
-    	
-
-    	
-    </LinearLayout>
+ 	
+    	 <Button
+        android:id="@+id/btnHelp"
+      	android:layout_width="60dp"
+       	android:layout_height="wrap_content"
+       	android:layout_alignParentRight="true"
+       	android:text="Help" />	
+    </RelativeLayout>
      
 </RelativeLayout>
+<!-- tab2 list view -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listTab"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+   
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttons2"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    	    	<TextView
+       android:id="@+id/tvLVTitle"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="#ffffff"
+       android:textSize="30sp"
+       android:text="Directions List:" />
+    	    	
+       	<Button
+        android:id="@+id/btnHelpList"
+      	android:layout_width="60dp"
+       	android:layout_height="wrap_content"
+       	android:layout_alignParentRight="true"
+       	android:text="Help" /> 
+		</RelativeLayout>
+
+    	       <ListView 
+   		android:id="@+id/listNum"
+        android:layout_width="25px" 
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:layout_below="@id/buttons2"
+  		  />
+       <ListView 
+   		android:id="@android:id/list"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:layout_below="@id/buttons2"
+        android:layout_toRightOf="@id/listNum"
+  		  />
+
+       </RelativeLayout>
+   
+
+<!-- closers -->
+		</FrameLayout>
+	</RelativeLayout>
+</TabHost>

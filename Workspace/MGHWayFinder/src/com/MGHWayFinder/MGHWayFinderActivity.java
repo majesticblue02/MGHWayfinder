@@ -6,8 +6,10 @@ import java.util.Hashtable;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -64,20 +66,23 @@ public class MGHWayFinderActivity extends Activity {
         
         TabHost.TabSpec spec;
         
-        
+        Resources res = getResources();
 
 //////////////////DIRECTIONS TAB//////////////////////
         //tab setup
         spec=tabs.newTabSpec("directions");
         spec.setContent(R.id.directionsTab);
-        spec.setIndicator("Directions");
+        spec.setIndicator("Navigation", res.getDrawable(R.drawable.ic_tab_navigate));
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
-        tvPath = (TextView)findViewById(R.id.tvNP);
         go = (Button)findViewById(R.id.goButton);
-        drawPath = (Button)findViewById(R.id.btnMakePath);
+        
+        
+        //tvPath = (TextView)findViewById(R.id.tvNP);	//dont need
+        
+        //drawPath = (Button)findViewById(R.id.btnMakePath); //dont need
         
         aAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validNodeIds);
         start.setAdapter(aAdapter);
@@ -120,7 +125,7 @@ public class MGHWayFinderActivity extends Activity {
 //tab setup
 spec=tabs.newTabSpec("map");
 spec.setContent(R.id.mapTab);
-spec.setIndicator("Map");
+spec.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_map));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for map tab
@@ -130,12 +135,14 @@ tabs.addTab(spec);
 		
         mapFirst.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		//viewMap.setImageResource(R.drawable.floor1map);
+        		viewMap.setImageResource(R.drawable.floor1color);
+        		//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
         	}});
         
         mapSec.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		//viewMap.setImageResource(R.drawable.floor2map);
+        		viewMap.setImageResource(R.drawable.floor2color);
+        		//viewMap.setImageDrawable(Drawable.createFromPath("floor2color.png"));
         	}});
         
 
@@ -144,7 +151,7 @@ tabs.addTab(spec);
 //tab setup
 spec=tabs.newTabSpec("directory");
 spec.setContent(R.id.dirTab);
-spec.setIndicator("Directory");
+spec.setIndicator("Directory", res.getDrawable(R.drawable.ic_tab_directory));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for directory tab
@@ -155,7 +162,7 @@ tabs.addTab(spec);
 //tab setup
 spec=tabs.newTabSpec("help");
 spec.setContent(R.id.helpTab);
-spec.setIndicator("Help");
+spec.setIndicator("Help", res.getDrawable(R.drawable.ic_tab_help));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //help tab stuff

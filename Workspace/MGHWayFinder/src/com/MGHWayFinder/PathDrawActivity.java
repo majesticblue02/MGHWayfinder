@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -16,11 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PathDrawActivity extends Activity implements OnTouchListener{
+public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	PathView pv;
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
@@ -35,6 +41,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
 	ArrayList<Node> fullNodePath;
+	ArrayList<Node> secondNodePath;
 	ArrayList<Node> walkNodePath = new ArrayList<Node>();
 	
 	//IMAGEVIEW - TOUCH EVENT VARIABLES
@@ -53,18 +60,41 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 	//ui things from calum
 		Button next;
 		Button prev;
+		Button list;
+		Button help;
 		int index = 0;
+		ArrayList<String> nodeList = new ArrayList<String>();
+		private ArrayAdapter<Node> adapt;
+		TabHost tabs;
+		ListView lvNum;
 
 	@Override
 	public synchronized void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		
+		Resources res = getResources();
+		
+        //tabs
+        tabs=(TabHost)findViewById(R.id.tabhost);
+        tabs.setup();
+        TabHost.TabSpec spec;
+        
+        //tab setup
+        spec=tabs.newTabSpec("map");
+        spec.setContent(R.id.pathTab);
+        spec.setIndicator("Map Path", res.getDrawable(R.drawable.ic_tab_map));
+        tabs.addTab(spec);
+        
 		//center = (Button)findViewById(R.id.buttonCenter);
 		tvX = (TextView)findViewById(R.id.tvX);
 		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
+		next.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_next));
 		prev = (Button)findViewById(R.id.btnPrev);
+		prev.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_prev));
+		//list = (Button)findViewById(R.id.btnList);
+		help = (Button)findViewById(R.id.btnHelp);
 		
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
@@ -85,6 +115,10 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	
         	fullNodePath = dijkstra.getPath(bNode.getPreviousNode());					//CALCULATE PATH FROM START NODE TO FINAL NODE ON FIRST FLOOR
+        	
+        	Dijkstra second = new Dijkstra(bNode);									//ADDING SUPPORT FOR SECOND FLOOR DRAWING
+        	secondNodePath = second.getPath(eNode);
+        	
         } else {
         	calcPath();
         	fullNodePath = dijkstra.getPath(eNode);
@@ -102,7 +136,7 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		pv.setOnTouchListener(this);
 		
 		//buttons for movement
-		buildWalkNodePath();
+		//buildWalkNodePath();
 		
 //		center.setOnClickListener(
 //				new OnClickListener(){
@@ -119,6 +153,8 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 							index += 1;
 							Node nextNode = walkNodePath.get(index);
 							pv.setCenterPoint(nextNode);
+							//lvNum.setSelection(index);
+							
 						}
 					}
 				}
@@ -135,8 +171,43 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 					}
 				}
 		);	
+		
+		
+		help.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+						
+					}
+				}
+		);
 	
-	 }
+		
+        //tab setup
+        spec=tabs.newTabSpec("List");
+        spec.setContent(R.id.listTab);
+        spec.setIndicator("List View", res.getDrawable(R.drawable.ic_tab_list));
+        tabs.addTab(spec);
+		//LIST VIEW TAB------------------------------------------------------------
+        
+        //list stuff
+        //rebuild the list into nodeList
+        for(int i=1; i <= walkNodePath.size(); i++){
+        	
+        	nodeList.add(Integer.toString(i) + ". ");
+        }
+        lvNum = (ListView)findViewById(R.id.listNum);
+        
+        lvNum.setAdapter(new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, nodeList));
+        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
+        setListAdapter(adapt);
+        
+        
+        
+        
+        
+	 }//end oncreate
+	
+
 
 	//CALCULATE ALL PATHS FROM START NODE
 	private void calcPath(){
@@ -176,8 +247,8 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		
 	//TESTING PURPOSES
 		m.getValues(mValues);
-		tvX.setText(Float.toString(mValues[Matrix.MTRANS_X]));
-		tvY.setText(Float.toString(mValues[Matrix.MTRANS_Y]));
+		tvX.setText("X: " + Float.toString(mValues[Matrix.MTRANS_X]) + " ");
+		tvY.setText("Y: " + Float.toString(mValues[Matrix.MTRANS_Y]));
 		
 		return true;
 	}
@@ -207,7 +278,18 @@ public class PathDrawActivity extends Activity implements OnTouchListener{
 		}
 		
 		//walkNodePath.add(fullNodePath.get(i));												//ADD THE LAST NODE
-		
-		
 	}
+	
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Log.v("list pos", Integer.toString(position));
+		index = position;
+		pv.setCenterPoint(walkNodePath.get(index));
+		tabs.setCurrentTab(0);
+	}
+	
+	
+	
+	
+	
 }
