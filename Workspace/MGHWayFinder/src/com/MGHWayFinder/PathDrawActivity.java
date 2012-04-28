@@ -126,7 +126,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	multifloor = false;
         }
         
-        for(Node n:fullNodePath){
+        walkNodePath = stripIntermediateSteps(fullNodePath);
+        
+        for(Node n:walkNodePath){
         	xPoints.add(0, n.getX());
         	yPoints.add(0, n.getY());
         }
@@ -253,7 +255,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		return true;
 	}
 	
-	/*
 	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
 	public ArrayList<Node> stripIntermediateSteps(ArrayList<Node> listIn){
 		ArrayList<Node> out = new ArrayList<Node>();
@@ -279,7 +280,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		
 		return out;
 		
-	} */
+	}
+	
+	/*
 	
 	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
 	public void stripIntermediateSteps(ArrayList<Node> listIn){
@@ -303,7 +306,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 			
 		}
 			
-	}
+	}*/
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
