@@ -6,6 +6,7 @@ import java.util.Hashtable;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -64,13 +65,13 @@ public class MGHWayFinderActivity extends Activity {
         
         TabHost.TabSpec spec;
         
-        
+        Resources res = getResources();
 
 //////////////////DIRECTIONS TAB//////////////////////
         //tab setup
         spec=tabs.newTabSpec("directions");
         spec.setContent(R.id.directionsTab);
-        spec.setIndicator("Directions");
+        spec.setIndicator("Directions", res.getDrawable(R.drawable.ic_tab_navigate));
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
@@ -120,7 +121,7 @@ public class MGHWayFinderActivity extends Activity {
 //tab setup
 spec=tabs.newTabSpec("map");
 spec.setContent(R.id.mapTab);
-spec.setIndicator("Map");
+spec.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_map));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for map tab
@@ -144,7 +145,7 @@ tabs.addTab(spec);
 //tab setup
 spec=tabs.newTabSpec("directory");
 spec.setContent(R.id.dirTab);
-spec.setIndicator("Directory");
+spec.setIndicator("Directory", res.getDrawable(R.drawable.ic_tab_directory));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for directory tab
@@ -155,7 +156,7 @@ tabs.addTab(spec);
 //tab setup
 spec=tabs.newTabSpec("help");
 spec.setContent(R.id.helpTab);
-spec.setIndicator("Help");
+spec.setIndicator("Help", res.getDrawable(R.drawable.ic_tab_help));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //help tab stuff
