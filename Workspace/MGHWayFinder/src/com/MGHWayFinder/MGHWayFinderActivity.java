@@ -72,7 +72,7 @@ public class MGHWayFinderActivity extends Activity {
         //tab setup
         spec=tabs.newTabSpec("directions");
         spec.setContent(R.id.directionsTab);
-        spec.setIndicator("Directions", res.getDrawable(R.drawable.ic_tab_navigate));
+        spec.setIndicator("Navigation", res.getDrawable(R.drawable.ic_tab_navigate));
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);

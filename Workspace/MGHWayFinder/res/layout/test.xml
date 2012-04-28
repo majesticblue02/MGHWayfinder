@@ -20,7 +20,7 @@
 <!-- DIRECTIONS TAB -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/directionsTab"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
@@ -30,50 +30,79 @@
         android:layout_height="wrap_content" 
         android:src="@drawable/mgh_logo" />
 	    
-    <TextView
-        android:id="@+id/startNodeLabel"
+	        <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Start Node" />
+        android:textSize="25sp"
+        android:text="WANG WAYFINDER" />
+	    
     
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
    		 android:layout_width="fill_parent"
   		  android:layout_height="wrap_content"
   		  android:orientation="horizontal" >
+  		  <TextView
+        android:id="@+id/startNodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Start Point" />
 	    <Spinner
 	        android:id="@+id/startSpin"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" />	
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/startNodeLabel" />	
 	    <Button
       	    android:id="@+id/scanStart"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
+        	android:layout_below="@id/startNodeLabel"
+        	android:layout_toRightOf="@id/startSpin"
         	android:text="Scan" />
-	 </LinearLayout>
+	    <Button
+      	    android:id="@+id/startAll"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/startNodeLabel"
+        	android:layout_toRightOf="@id/scanStart"
+        	android:text="All" />
+	 </RelativeLayout>
 	 
-    <TextView
-        android:id="@+id/endNodeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose End Node:" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:orientation="horizontal" >
+	        <TextView
+        android:id="@+id/endNodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose End Point:" />
  		 <Spinner
     	    android:id="@+id/endSpin"
     	    android:layout_width="wrap_content"
-        	android:layout_height="wrap_content" />
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/endNodeLabel" />
 	     <Button
         	android:id="@+id/setEnd"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
+        	android:layout_below="@id/endNodeLabel"
+        	android:layout_toRightOf="@id/endSpin"
         	android:text=" Set " />
-	 </LinearLayout>
+	       <Button
+        	android:id="@+id/endAll"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/endNodeLabel"
+        	android:layout_toRightOf="@id/setEnd"
+        	android:text="All" />
+	 </RelativeLayout>
     <Button
         android:id="@+id/goButton"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="75dp"
         android:text="Go!" />
     
