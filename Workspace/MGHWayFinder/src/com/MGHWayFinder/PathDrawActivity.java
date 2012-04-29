@@ -12,6 +12,8 @@ import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -70,7 +72,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		ListView lvNum;
 
 	@Override
-	public synchronized void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		
@@ -116,7 +118,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		fullNodePath = dijkstra.getPath(eNode);
 		walkNodePath = stripIntermediateSteps(fullNodePath);
 		
-        if(sNode.getNodeFloor() != eNode.getNodeFloor()){							//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS FIRST
+	//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS
+        if(sNode.getNodeFloor() != eNode.getNodeFloor()){							
 
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	bNodeIndex = walkNodePath.indexOf(bNode.getPreviousNode());
@@ -138,22 +141,13 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         		yPoints.add(it.getY());
         	}
         }
-
+     
+     //SETUP PATHVIEW OBJECT AND DISPLAY
 		pv.makePathView(xPoints, yPoints, floor, am);
 		pv.setBackgroundColor(Color.WHITE);
 		pv.setOnTouchListener(this);
-		
-		//buttons for movement
-		//buildWalkNodePath();
-		
-//		center.setOnClickListener(
-//				new OnClickListener(){
-//					public void onClick(View v){
-//						pv.setCenterPoint(sNode);
-//					}
-//				}
-//		);	
-		
+
+	//BUTTON LISTENERS
 		next.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
@@ -181,6 +175,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				}
 		);
 	
+		Thread c1 = new Thread(centerOnLoad, "onCreate Centering Thread");
+		c1.start();
 		
         //tab setup
         spec=tabs.newTabSpec("List");
@@ -210,7 +206,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 
 
 	//CALCULATE ALL PATHS FROM START NODE
-	private void calcPath(Node start){
+	protected void calcPath(Node start){
 		if(dijkstra == null){
 			dijkstra = new Dijkstra(start);
 		} else{
@@ -254,7 +250,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	}
 	
 	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
-	public ArrayList<Node> stripIntermediateSteps(ArrayList<Node> listIn){
+	protected ArrayList<Node> stripIntermediateSteps(ArrayList<Node> listIn){
 		ArrayList<Node> out = new ArrayList<Node>();
 		Node currentNode, nextNode;
 		double runningDist = 0;
@@ -325,11 +321,29 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		super.onListItemClick(l, v, position, id);
 		Log.v("list pos", Integer.toString(position));
 		index = position;
-		pv.setCenterPoint(walkNodePath.get(index));
+		step();
 		tabs.setCurrentTab(0);
 	}
 	
+
+///////////METHOD TO CENTER VIEW ON LOAD///////////////
+	protected Handler handler = new Handler() {
+		 @Override
+		 public void handleMessage(Message msg) {
+		     step();
+		 }
+	};
 	
+	Runnable centerOnLoad = new Runnable(){
+   	public void run(){
+   		try {
+   				Thread.sleep(100);
+   				handler.sendEmptyMessage(0);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+   	}
+   };
 	
 	
 	
