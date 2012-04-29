@@ -2,6 +2,12 @@ package com.MGHWayFinder;
 
 import java.util.ArrayList;
 
+/*
+ * This class defines an object representing a position on the map, a "Node".
+ * It stores it's coordinates on the map, floor, a unique ID, department it is located in, and a type.
+ * It also stores an ArrayList of its neighbor Nodes and other values used to calculate pathways in Dijkstra
+ */
+
 public class Node {
 	private static final int INFINITY = Integer.MAX_VALUE;
 	
@@ -17,6 +23,7 @@ public class Node {
 	private double nNodeDist = -1;										//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT NODE IS STORED HERE
 	private double stepDist = -1;										//ONCE A PATH HAS BEEN BUILT (START TO END) THE DISTANCE TO THE NEXT STEP NODE IS STORED HERE
 	
+	//CONSTRUCTOR
 	public Node(String nID, int x, int y, int floor, String nType, String nDep){
 		this.x = x;
 		this.y = y;
@@ -26,6 +33,7 @@ public class Node {
 		this.nodeFloor = floor;
 	}
 	
+	//GETTERS AND SETTERS
 	public void addNeighbor(Node neighbor){
 		neighbors.add(neighbor);
 	}
@@ -102,19 +110,21 @@ public class Node {
 		return nodeID + " - " + nodeDep;
 	}
 	
-	public void reset(){
-		d = INFINITY;
-		pNode = null;
-		pNodeDist = INFINITY;
-		nNodeDist = -1;
-		nNodeAngle = -1;
-	}
-
 	public double getStepDist() {
 		return stepDist;
 	}
 
 	public void setStepDist(double stepDist) {
 		this.stepDist = stepDist;
+	}
+	
+	//NODE FUNCTIONS
+	public void reset(){													//USED TO RESET NODE VALUES RELATING TO DIJKSTRA CALCULATIONS
+		d = INFINITY;
+		pNode = null;
+		pNodeDist = INFINITY;
+		nNodeDist = -1;
+		nNodeAngle = -1;
+		stepDist = -1;
 	}
 }
