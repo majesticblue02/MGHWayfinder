@@ -1,13 +1,19 @@
 package com.MGHWayFinder;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
+/*
+ * This class defines an object which calculates all possible paths from STARTNode, through all of it's corresponding neighbor relationships.
+ * It stores this "table" by setting the "shortest step" node previous to the current node as a variable in the Node class.
+ * Paths are then queried by stepping backwards from Node to Node until the STARTNode is reached.
+ */
+
 
 public class Dijkstra {
     
 	private static final int INFINITY = Integer.MAX_VALUE;
-	private ArrayList<Node> S = new ArrayList<Node>();					//list of settled Nodes		(shortest distance found)
-	private ArrayList<Node> Q = new ArrayList<Node>();					//list of unsettled Nodes	(distances not yet found)
+	private ArrayList<Node> S = new ArrayList<Node>();					//LIST OF SETTLED NODES		(SHORTEST DISTANCE FROM STARTNODE FOUND)
+	private ArrayList<Node> Q = new ArrayList<Node>();					//LIST OF UNSETTLED NDOES	(SHORTEST DISTANCES NOT YET FOUND)
 	
 	private Node STARTNode;												//ALL POTENTIAL PATHS ARE BUILT FROM THE ORIGIN Node
 	private Node breakNode = null;										//BREAKNODE USED FOR INTERFLOOR CALCULATIONS / PATHS
@@ -17,7 +23,8 @@ public class Dijkstra {
 		dijkstraAlgorithm(START);
 	}
 	
-	public boolean reset(){												//clears all info in the dijkstra table, prepping for a new run
+	//RESETS ALL OF THE VARIABLES IN THE DIJKSTRA TABLES, PREPPING FOR A NEW RUN
+	public boolean reset(){
 		for(Node n: S)
 			n.reset();
 		STARTNode = null;
@@ -27,7 +34,10 @@ public class Dijkstra {
 		return true;
 	}
 	
-	public void restart(Node START){									//recalculates all paths from Node START
+	//RECALCULATES ALL PATHS FROM THE NEW START NODE
+	public void restart(Node START){
+		if(STARTNode != null)
+			reset();
 		this.STARTNode = START;
 		dijkstraAlgorithm(START);
 	}
@@ -36,20 +46,18 @@ public class Dijkstra {
     public ArrayList<Node> getPath(Node END){
     	ArrayList<Node> P = new ArrayList<Node>();
     	
-    	P.add(END);														//initialize end Node
-		while(P.get(0) != STARTNode)									//loop backwards from end Node until beginning Node
-			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes	
+    	P.add(END);																		//initialize end Node
+		while(P.get(0) != STARTNode)													//loop backwards from end Node until beginning Node
+			P.add(0, P.get(0).getPreviousNode());										//reverse stacking of Nodes	
 		
-		calculatePathAngleDist(P);											//CALCULATES NODE ANGLES
+		calculatePathAngleDist(P);														//CALCULATES NODE ANGLES
 		
-		if(STARTNode.getNodeFloor() != END.getNodeFloor()){
+		if(STARTNode.getNodeFloor() != END.getNodeFloor()){								//SET BREAKNODE IN THIS CURRENT PATH
 			for(int i = P.indexOf(STARTNode)+1; i <= P.indexOf(END); i++){
 				if(P.get(i).getNodeFloor() != P.get(i).getPreviousNode().getNodeFloor())
 					this.breakNode = P.get(i);
 			}
 		}
-		
-		
 		return P;
     }
     
@@ -61,6 +69,7 @@ public class Dijkstra {
 		return breakNode;
 	}
     
+    //MAIN DIJKSTRA LOOP
 	protected void dijkstraAlgorithm(Node START){
 		Node u;															//Node place holder in the loop
 		
@@ -83,7 +92,7 @@ public class Dijkstra {
 			o = v.getNeighbors().get(i);
 			if(!S.contains(o)) {												//only look at neighbors NOT in S
 				if(o.getNodeFloor() != v.getNodeFloor()){						//connections between floors are treated as the same node on different floors
-					dist = 0;
+				dist = 0;														//THEREFOR, THE DISTANCE BETWEEN THEM IS EXPRESSED AS 0
 				}
 				else
 					dist = cDistance(v, o);										//calculate distance between v and o
