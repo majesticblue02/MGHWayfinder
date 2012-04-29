@@ -93,15 +93,6 @@ public class MGHWayFinderActivity extends Activity {
         		startPathDraw();
         	}}); 
         
-        /*TODO DELETE
-        drawPath.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		//drawMapPath(1);
-        	}}); */
-        
-        //logo comented out currently
-        //ImageView logo = (ImageView)findViewById(R.id.logoView);
-        
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
     	startQR.setOnClickListener(new OnClickListener(){
@@ -123,19 +114,19 @@ public class MGHWayFinderActivity extends Activity {
         
 //////////////////MAP TAB//////////////////////
 //tab setup
-spec=tabs.newTabSpec("map");
-spec.setContent(R.id.mapTab);
-spec.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_map));
-tabs.addTab(spec);
-///////////////////UI ELEMENTS////////////////////////
-//stuff for map tab
-		viewMap = (ImageView)findViewById(R.id.mapView);
-		mapFirst = (Button)findViewById(R.id.btnMapFirst);
-		mapSec = (Button)findViewById(R.id.btnMapSec);
-		
-        mapFirst.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		viewMap.setImageResource(R.drawable.floor1color);
+    spec=tabs.newTabSpec("map");
+    spec.setContent(R.id.mapTab);
+    spec.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_map));
+    tabs.addTab(spec);
+
+    //stuff for map tab
+	viewMap = (ImageView)findViewById(R.id.mapView);
+	mapFirst = (Button)findViewById(R.id.btnMapFirst);
+	mapSec = (Button)findViewById(R.id.btnMapSec);
+	
+	mapFirst.setOnClickListener(new OnClickListener(){
+        public void onClick(View v){
+        	viewMap.setImageResource(R.drawable.floor1color);
         		//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
         	}});
         
@@ -233,8 +224,8 @@ public boolean onContextItemSelected(MenuItem item) {
         }
     }
     
-    	
-    private void startPathDraw() {
+    //BUILDS THE NODE SET FROM THE SELECTED NODES, THEN STARTS THE PATHDRAWACTIVITY	
+    protected void startPathDraw() {
     	startnID = (String)start.getSelectedItem();
     	endnID = (String)end.getSelectedItem();
     	
@@ -260,6 +251,7 @@ public boolean onContextItemSelected(MenuItem item) {
     	
 	}
     
+    //INITIALIZE DB
     private synchronized void initializeDB(){
     	try { 
         	db.createDataBase();
@@ -276,37 +268,22 @@ public boolean onContextItemSelected(MenuItem item) {
         }
     }
     
-    
-    /* TODO DELETE
-    ///Called to start a new activity which draws the path over the image of the floor plan
-    public void drawMapPath(int floor, ArrayList<Point> coords){
-    	String x,y;
-    	String delim = ",";
-    	
-    	x = Integer.toString(coords.get(0).x);
-    	x = Integer.toString(aPath.get(0).getX());
-    	y = Integer.toString(aPath.get(0).getY());
-    	for(int i = 1; i < aPath.size(); i++){											//builds the strings to pass to the activity with delimiter delim
-    		x += delim + Integer.toString(aPath.get(i).getX());
-    		y += delim + Integer.toString(aPath.get(i).getY());
-    	}
-    	
-    	Intent drawPath = new Intent(this, PathDrawActivity.class);
-    	drawPath.putExtra("xString", x);
-    	drawPath.putExtra("yString", y);
-    	drawPath.putExtra("delim", delim);
-    	drawPath.putExtra("floor", floor);
-    	
-        startActivity(drawPath);
-
-    }
-	*/
-    
     public void contextDestination(){
     	//use this and onclick leading to it to create and open context menu with
     	//end destinations
     	Toast.makeText(this, "Context Menu", Toast.LENGTH_LONG).show();
     }
+    
+    /*TODO 
+  //INITIALIZATION SCALE (FIT TO VIEWABLE AREA)
+  	private void iniScale(){
+  		if(((float)vWidth/(float)bounds.right) > ((float)vHeight/(float)bounds.bottom))
+  			matrix.postScale(((float)vHeight/(float)bounds.bottom), ((float)vHeight/(float)bounds.bottom));
+  		else
+  			matrix.postScale(((float)vWidth/(float)bounds.right), ((float)vWidth/(float)bounds.right));		
+  	}
+    */
+    
     
     
 }//end of class

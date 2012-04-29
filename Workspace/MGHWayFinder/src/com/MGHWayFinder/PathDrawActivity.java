@@ -291,8 +291,16 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		int cNodeFloor = cNode.getNodeFloor();
 		
 		if(multifloor){
-			if(index <= bNodeIndex && floor == cNodeFloor){
-				pv.setCenterPoint(walkNodePath.get(index));				
+			if(index <= bNodeIndex && floor != cNodeFloor){
+				xPoints.clear();
+				yPoints.clear();
+				for(int i = 0; i <= bNodeIndex; i++){
+					xPoints.add(walkNodePath.get(i).getX());
+					yPoints.add(walkNodePath.get(i).getY());
+				}
+				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				floor = cNodeFloor;
+				pv.setCenterPoint(cNode);			
 			} else if(index > bNodeIndex && floor != cNodeFloor){
 				xPoints.clear();
 				yPoints.clear();
@@ -301,17 +309,13 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					yPoints.add(walkNodePath.get(i).getY());
 				}
 				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				floor = cNodeFloor;
 				pv.setCenterPoint(cNode);
-			} else if(index <= bNodeIndex && floor != cNodeFloor){
-				xPoints.clear();
-				yPoints.clear();
-				for(int i = 0; i < bNodeIndex; i++){
-					xPoints.add(walkNodePath.get(i).getX());
-					yPoints.add(walkNodePath.get(i).getY());
-				}
-				pv.updatePath(xPoints, yPoints, cNodeFloor);
-				pv.setCenterPoint(cNode);
+			} else if(floor == cNodeFloor){
+				pv.setCenterPoint(cNode);	
 			}
+		} else {
+			pv.setCenterPoint(cNode);
 		}
 		
 		return true;
