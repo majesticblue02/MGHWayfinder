@@ -41,9 +41,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	Node sNode, eNode, bNode;
 	String startnID, endnID;
 	ArrayList<Node> fullNodePath;
-	ArrayList<Node> secondNodePath;
 	ArrayList<Node> walkNodePath = new ArrayList<Node>();
 	boolean multifloor;
+	int bNodeIndex;
 	
 	//IMAGEVIEW - TOUCH EVENT VARIABLES
 	Matrix m;
@@ -114,25 +114,31 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		calcPath(sNode);
 		
 		fullNodePath = dijkstra.getPath(eNode);
+		walkNodePath = stripIntermediateSteps(fullNodePath);
 		
         if(sNode.getNodeFloor() != eNode.getNodeFloor()){							//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS FIRST
 
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
+        	bNodeIndex = walkNodePath.indexOf(bNode.getPreviousNode());
         	
         	multifloor = true;
+        	floor = sNode.getNodeFloor();
+        	
+        	for(int i = 0; i <= bNodeIndex; i++){
+        		xPoints.add(walkNodePath.get(i).getX());
+        		yPoints.add(walkNodePath.get(i).getY());
+        	}
         	
         } else {
 
         	multifloor = false;
+        	
+        	for(Node it:walkNodePath){
+        		xPoints.add(it.getX());
+        		yPoints.add(it.getY());
+        	}
         }
-        
-        walkNodePath = stripIntermediateSteps(fullNodePath);
-        
-        for(Node n:walkNodePath){
-        	xPoints.add(0, n.getX());
-        	yPoints.add(0, n.getY());
-        }
-        
+
 		pv.makePathView(xPoints, yPoints, floor, am);
 		pv.setBackgroundColor(Color.WHITE);
 		pv.setOnTouchListener(this);
@@ -151,13 +157,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		next.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
-						if( index < (walkNodePath.size() - 1)){
-							index += 1;
-							Node nextNode = walkNodePath.get(index);
-							pv.setCenterPoint(nextNode);
-							//lvNum.setSelection(index);
-							
-						}
+						index++;
+						step();
 					}
 				}
 		);	
@@ -165,11 +166,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		prev.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
-						if( index  > 0){
-							index -= 1;
-							Node prevNode = walkNodePath.get(index);
-							pv.setCenterPoint(prevNode);
-						}
+						index--;
+						step();
 					}
 				}
 		);	
@@ -282,31 +280,42 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		
 	}
 	
-	/*
-	
-	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
-	public void stripIntermediateSteps(ArrayList<Node> listIn){
-		Node currentNode, nextNode;
-		double runningDist = 0;
-		int i;
-		
-		for(i = listIn.size()-2; i > 0; i--){												//LOOP THROUGH UP TO SECOND TO LAST NODE, ONLY ADDING CHANGES IN DIRECTION
-			currentNode = listIn.get(i);
-			nextNode = listIn.get(i+1);
-			
-			runningDist += currentNode.getNNodeDistance();
-			
-			if(currentNode.getNNodeAngle() == nextNode.getNNodeAngle()) {
-				listIn.remove(i+1);
-				
-			} else {
-				currentNode.setStepDist(runningDist);
-				runningDist = 0;
-			}
-			
+	public boolean step(){
+		if(index < 0) {
+			index = 0;
+		} else if(index >= walkNodePath.size()) {
+			index = walkNodePath.size()-1;
 		}
-			
-	}*/
+		
+		Node cNode = walkNodePath.get(index);
+		int cNodeFloor = cNode.getNodeFloor();
+		
+		if(multifloor){
+			if(index <= bNodeIndex && floor == cNodeFloor){
+				pv.setCenterPoint(walkNodePath.get(index));				
+			} else if(index > bNodeIndex && floor != cNodeFloor){
+				xPoints.clear();
+				yPoints.clear();
+				for(int i = bNodeIndex+1; i < walkNodePath.size(); i++){
+					xPoints.add(walkNodePath.get(i).getX());
+					yPoints.add(walkNodePath.get(i).getY());
+				}
+				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				pv.setCenterPoint(cNode);
+			} else if(index <= bNodeIndex && floor != cNodeFloor){
+				xPoints.clear();
+				yPoints.clear();
+				for(int i = 0; i < bNodeIndex; i++){
+					xPoints.add(walkNodePath.get(i).getX());
+					yPoints.add(walkNodePath.get(i).getY());
+				}
+				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				pv.setCenterPoint(cNode);
+			}
+		}
+		
+		return true;
+	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);

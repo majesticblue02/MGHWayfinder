@@ -41,6 +41,15 @@ public class Dijkstra {
 			P.add(0, P.get(0).getPreviousNode());						//reverse stacking of Nodes	
 		
 		calculatePathAngleDist(P);											//CALCULATES NODE ANGLES
+		
+		if(STARTNode.getNodeFloor() != END.getNodeFloor()){
+			for(int i = P.indexOf(STARTNode)+1; i <= P.indexOf(END); i++){
+				if(P.get(i).getNodeFloor() != P.get(i).getPreviousNode().getNodeFloor())
+					this.breakNode = P.get(i);
+			}
+		}
+		
+		
 		return P;
     }
     
@@ -75,7 +84,6 @@ public class Dijkstra {
 			if(!S.contains(o)) {												//only look at neighbors NOT in S
 				if(o.getNodeFloor() != v.getNodeFloor()){						//connections between floors are treated as the same node on different floors
 					dist = 0;
-					breakNode = o;
 				}
 				else
 					dist = cDistance(v, o);										//calculate distance between v and o
