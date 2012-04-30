@@ -71,7 +71,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		ArrayList<String> nodeList = new ArrayList<String>();
 		private ArrayAdapter<Node> adapt;
 		TabHost tabs;
-		ListView lvNum;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,9 +94,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		tvX = (TextView)findViewById(R.id.tvX);
 		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
-		next.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_next));
+		next.setBackgroundDrawable(res.getDrawable(R.drawable.smallright));
 		prev = (Button)findViewById(R.id.btnPrev);
-		prev.setBackgroundDrawable(res.getDrawable(R.drawable.ic_tab_prev));
+		prev.setBackgroundDrawable(res.getDrawable(R.drawable.smallleft));
 		//list = (Button)findViewById(R.id.btnList);
 		help = (Button)findViewById(R.id.btnHelp);
 		
@@ -189,21 +188,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         tabs.addTab(spec);
 		//LIST VIEW TAB------------------------------------------------------------
         
-        //list stuff
-        //rebuild the list into nodeList
-        for(int i=1; i <= walkNodePath.size(); i++){
-        	
-        	nodeList.add(Integer.toString(i) + ". ");
-        }
-        lvNum = (ListView)findViewById(R.id.listNum);
-        
-        lvNum.setAdapter(new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, nodeList));
         adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
         setListAdapter(adapt);
-        
-        
-        
-        
         
 	 }//end oncreate
 	

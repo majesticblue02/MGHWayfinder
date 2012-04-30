@@ -125,14 +125,13 @@
         android:layout_alignParentRight="true"
         android:text="Second Floor" />
     
-
-    
+		
 	    <ImageView
         android:id="@+id/mapView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
         android:layout_centerInParent="true"
+        android:layout_below="@id/btnMapSec"
         android:src="@drawable/mgh_logo"
          />
 

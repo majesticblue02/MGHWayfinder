@@ -107,7 +107,7 @@ public class Node {
 	}
 	
 	public String toString(){
-		return nodeID + " - " + nodeDep;
+		return "Floor " + nodeFloor + " - " + nodeDep;
 	}
 	
 	public double getStepDist() {

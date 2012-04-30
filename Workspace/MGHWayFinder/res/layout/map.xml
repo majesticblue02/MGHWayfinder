@@ -30,32 +30,19 @@
    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/buttons"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:layout_alignParentTop="true" >
-    <!--
-    <Button 
-        android:id="@+id/buttonCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Node 1" />
-           	     <Button
-        android:id="@+id/btnList"
-      	android:layout_width="60dp"
-       	android:layout_height="wrap_content"
-       	android:text="List" /> 
-    -->   
+    android:layout_alignParentBottom="true" >
+
      <Button
         android:id="@+id/btnPrev"
       	android:layout_width="60dp"
-       	android:layout_height="wrap_content"
-       	android:text="Prev" />    	     		    	    
+       	android:layout_height="wrap_content" />    	     		    	    
     	   	<Button
        android:id="@+id/btnNext"
       	android:layout_width="60dp"
       	android:layout_height="wrap_content"
-      	android:layout_toRightOf="@id/btnPrev"
-       	android:text="Next"
+      	android:layout_alignParentRight="true"
        	 />
         	
  	     <TextView
@@ -76,7 +63,7 @@
         android:id="@+id/btnHelp"
       	android:layout_width="60dp"
        	android:layout_height="wrap_content"
-       	android:layout_alignParentRight="true"
+       	android:layout_centerHorizontal="true"
        	android:text="Call For Help" />	
     </RelativeLayout>
      
@@ -109,20 +96,12 @@
        	android:text="Help" /> 
 		</RelativeLayout>
 
-    	       <ListView 
-   		android:id="@+id/listNum"
-        android:layout_width="25px" 
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"
-        android:layout_below="@id/buttons2"
-  		  />
        <ListView 
    		android:id="@android:id/list"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:drawSelectorOnTop="true"
         android:layout_below="@id/buttons2"
-        android:layout_toRightOf="@id/listNum"
   		  />
 
        </RelativeLayout>
