@@ -176,7 +176,9 @@ tabs.addTab(spec);
 		public void onClick(View v){
 			String selectedDept = (String)deptSpinner.getSelectedItem(); 										//get value of department from spinner
 			deptMembers = db.getAllDeptMembers(selectedDept);			 										//assign to deptMembers all of the members that are in that department
-			deptMemberAdapter.notifyDataSetChanged();
+			deptMemberAdapter.clear();
+			for(String it:deptMembers)
+				deptMemberAdapter.add(it);
 		}
 	});
 ///////////////////UI ELEMENTS////////////////////////
