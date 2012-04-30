@@ -67,9 +67,9 @@ public final class R {
         public static final int mapView=0x7f05001b;
         public static final int pathTab=0x7f050001;
         public static final int pathView=0x7f050002;
-        public static final int scanStart=0x7f050013;
+        public static final int scanStart=0x7f050012;
         public static final int startNodeLabel=0x7f050011;
-        public static final int startSpin=0x7f050012;
+        public static final int startSpin=0x7f050013;
         public static final int tabhost=0x7f050000;
         public static final int tvLVTitle=0x7f05000b;
         public static final int tvTitle=0x7f050010;

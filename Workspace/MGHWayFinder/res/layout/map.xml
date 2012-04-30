@@ -77,7 +77,7 @@
       	android:layout_width="60dp"
        	android:layout_height="wrap_content"
        	android:layout_alignParentRight="true"
-       	android:text="Help" />	
+       	android:text="Call For Help" />	
     </RelativeLayout>
      
 </RelativeLayout>

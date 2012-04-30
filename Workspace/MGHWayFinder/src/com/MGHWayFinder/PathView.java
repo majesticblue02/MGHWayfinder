@@ -204,8 +204,8 @@ public class PathView extends View{
 	public synchronized void setCenterPoint(Node n){
 		Point centerPoint;
 		float currentX, currentY;
-		int nodeX = -1*n.getX();
-		int nodeY = -1*n.getY();
+		int nodeX = (int)-1*n.getX();
+		int nodeY = (int)-1*n.getY();
 		savedMatrix.set(matrix);
 		
 		if(getCenterPoint() != null){
@@ -220,8 +220,8 @@ public class PathView extends View{
 			
 			
 			
-			transX = (nodeX - currentX) / (ANIMATIONTOTAL/ANIMATIONSTEP);						//SET EACH INTERMEDIATE X TRANSLATION
-			transY = (nodeY - currentY) / (ANIMATIONTOTAL/ANIMATIONSTEP);						//SET EACH INTERMEDIATE Y TRANSLATION
+			transX = ((nodeX - currentX)) / (ANIMATIONTOTAL/ANIMATIONSTEP);						//SET EACH INTERMEDIATE X TRANSLATION
+			transY = ((nodeY - currentY)) / (ANIMATIONTOTAL/ANIMATIONSTEP);						//SET EACH INTERMEDIATE Y TRANSLATION
 			Thread ani = new Thread(animate, "translation animation");
 			ani.start();
 		}	

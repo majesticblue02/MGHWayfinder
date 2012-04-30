@@ -5,12 +5,14 @@ import java.util.Hashtable;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -170,7 +172,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		help.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
-						
+						Uri uri = Uri.parse("tel:6177262000");
+						Intent call = new Intent(Intent.ACTION_CALL,uri);
+						startActivity(call);
 					}
 				}
 		);
