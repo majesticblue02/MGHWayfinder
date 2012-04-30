@@ -2,6 +2,8 @@ package com.MGHWayFinder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 
 import android.app.Activity;
@@ -30,35 +32,36 @@ import android.view.View.OnClickListener;
 
 public class MGHWayFinderActivity extends Activity {
 	
-	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();
-	Dijkstra dijkstra;
+	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();			//MASTER HASH TABLE CONTAINING ALL VALID NODES
 	
-	Spinner start, end;
-	TextView tvPath;
-	ImageView ivPath;
-	Button go, drawPath;
-	Button startQR;
-	Button endSet;
-	String startnID;
-	String endnID;
-	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};
-	String sPath;
-	ArrayAdapter<String> aAdapter;
-	DBHelper db;
-	ArrayList<String> validNodeIds;
+	private DBHelper db;
+	private Spinner start, end;
+	private Button go;
+	private Button startQR;
+	private Button endSet;
+	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};			//TODO REMOVE
+	
+	//START & END VARIABLES
+	private String startSelect, endSelect;
+	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA;
+	private ArrayList<String> allNodeIds;
+	private ArrayList<String> validDestinations;
+	private Hashtable<String, String> validDestinationsHT;
+	private boolean staffMode = false;
     
+	// FLOOR PLAN VIEWER UI ELEMENTS
     Button mapFirst;
     Button mapSec;
 	ImageView viewMap;
 	
-	// DR LISTVIEW VARIABLES
-		private TextView dirHeading;
-		private Spinner deptSpinner;
-		private ArrayList<String> departments;
-		private ArrayList<String> deptMembers;
-		private Button findButton;
-		private ArrayAdapter<String> deptMemberAdapter;
-		private ListView lv;
+	// DIRECTORY LISTVIEW VARIABLES & ELEMENTS
+	private TextView dirHeading;
+	private Spinner deptSpinner;
+	private ArrayList<String> departments;
+	private ArrayList<String> deptMembers;
+	private Button findButton;
+	private ArrayAdapter<String> deptMemberAdapter;
+	private ListView lv;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class MGHWayFinderActivity extends Activity {
         db = new DBHelper(this.getApplicationContext());
         initializeDB();
         
-        validNodeIds = db.getAllNids();
+        allNodeIds = db.getAllNids();
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -88,15 +91,22 @@ public class MGHWayFinderActivity extends Activity {
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
         go = (Button)findViewById(R.id.goButton);
+    
+        allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
+        start.setAdapter(allNodeIdsAA);
         
-        
-        //tvPath = (TextView)findViewById(R.id.tvNP);	//dont need
-        
-        //drawPath = (Button)findViewById(R.id.btnMakePath); //dont need
-        
-        aAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validNodeIds);
-        start.setAdapter(aAdapter);
-        end.setAdapter(aAdapter);
+        if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
+        	end.setAdapter(allNodeIdsAA);
+        } else {
+        	validDestinationsHT = db.getValidDestinations();
+        	validDestinations = new ArrayList<String>();
+        	for(String it:validDestinationsHT.keySet()){
+        		validDestinations.add(it);
+        	}
+        	Collections.sort(validDestinations);																				//SORT ALPHABETICALLY
+        	validDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validDestinations);
+        	end.setAdapter(validDestinationsAA);
+        }
         
         go.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
@@ -224,8 +234,8 @@ public boolean onContextItemSelected(MenuItem item) {
 	int itemId = item.getItemId();             //get menu item id
 	//Toast.makeText(this, title + " " + itemId, Toast.LENGTH_LONG).show();
 	
-	endnID = contextNID[itemId - 1];
-	Log.v("context", endnID + title);
+	endSelect = contextNID[itemId - 1];
+	Log.v("context", endSelect + title);
 	
     //set spinner
 	/*
@@ -250,8 +260,8 @@ public boolean onContextItemSelected(MenuItem item) {
                 
                 
                 //set spinner
-            	for(int i=0; i < validNodeIds.size(); i++){
-            		if(startnID.equals(validNodeIds.get(i))){
+            	for(int i=0; i < allNodeIds.size(); i++){
+            		if(startnID.equals(allNodeIds.get(i))){
             			start.setSelection(i);
             		}
             	} 
@@ -263,12 +273,22 @@ public boolean onContextItemSelected(MenuItem item) {
     
     //BUILDS THE NODE SET FROM THE SELECTED NODES, THEN STARTS THE PATHDRAWACTIVITY	
     protected void startPathDraw() {
-    	startnID = (String)start.getSelectedItem();
-    	endnID = (String)end.getSelectedItem();
+    	startSelect = (String)start.getSelectedItem();
+    	endSelect = (String)end.getSelectedItem();
     	
-    	int startFloor = db.getNodeFloor(startnID);
-    	int endFloor = db.getNodeFloor(endnID);
+    	String startNId, endNId;
+    	int startFloor, endFloor;
     	
+    	startNId = startSelect;
+    	startFloor = db.getNodeFloor(startNId);
+    	
+    	if(staffMode){																				//CHECK FOR USAGE MODE
+    		endNId = endSelect;
+    	} else {
+    		endNId = validDestinationsHT.get(endSelect);
+    	}
+
+		endFloor = db.getNodeFloor(endNId);
     	
     //BUILD NODE SET
     	if(startFloor != endFloor){																	//If start and end are on different floors, build master node set of both floors
@@ -282,10 +302,9 @@ public boolean onContextItemSelected(MenuItem item) {
 		
 	//START PATHDRAWACTIVITY
 		Intent drawPath = new Intent(this, PathDrawActivity.class);
-		drawPath.putExtra("StartnID", startnID);
-		drawPath.putExtra("EndnID", endnID);
-        startActivity(drawPath);
-    	
+		drawPath.putExtra("StartnID", startNId);
+		drawPath.putExtra("EndnID", endNId);
+        startActivity(drawPath);    	
 	}
     
     //INITIALIZE DB
@@ -311,7 +330,7 @@ public boolean onContextItemSelected(MenuItem item) {
     	Toast.makeText(this, "Context Menu", Toast.LENGTH_LONG).show();
     }
     
-    /*TODO 
+    /*TODO scale image in map
   //INITIALIZATION SCALE (FIT TO VIEWABLE AREA)
   	private void iniScale(){
   		if(((float)vWidth/(float)bounds.right) > ((float)vHeight/(float)bounds.bottom))

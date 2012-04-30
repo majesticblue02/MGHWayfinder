@@ -149,6 +149,10 @@ public class DBHelper extends SQLiteOpenHelper{
 								"AND (tblnNode.nFloor = " + floorA + " OR tblnNode.nFloor = " + floorB + ")", null);
 	}
 	
+	public Cursor selectValidDestinations(){
+		return db.rawQuery("SELECT nID, nFloor, nDep FROM tblNode WHERE nType = 'Navigable' ORDER BY nFloor", null);
+	}
+	
 	//KUNAL - RETURNS ALL DEPARTMENTS - DOESNT SEEM TO BE WORKING
 	public Cursor selectAllDepartments(){	
 		return db.rawQuery("SELECT dptName FROM tblDepartment", null);
@@ -160,6 +164,29 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	
 ////////////////////////////////PROGRAM METHODS////////////////////////////////////
+	
+	public Hashtable<String, String> getValidDestinations(){
+		Hashtable<String, String> out = new Hashtable<String, String>();
+		Cursor cursor;
+		String s;
+		
+		cursor = this.selectValidDestinations();
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast()){
+			s = "Floor ";
+			s += cursor.getString(1);
+			s += " - " + cursor.getString(2);
+			
+			out.put(s, cursor.getString(0));
+			
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		
+		return out;
+	}
 	
 	//RETURNS AN ARRAYLIST OF VALID NIDS
 	public ArrayList<String> getAllNids(){
