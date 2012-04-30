@@ -8,6 +8,7 @@ import java.util.Hashtable;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 
 public class MGHWayFinderActivity extends Activity {
 	
@@ -65,6 +67,10 @@ public class MGHWayFinderActivity extends Activity {
 	private ArrayAdapter<String> deptMemberAdapter;
 	private ListView lv;
 	
+	//OPTIONS MENU
+	final int MENU1 = Menu.FIRST + 1;
+	final int MENU2 = Menu.FIRST + 2;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,18 +103,10 @@ public class MGHWayFinderActivity extends Activity {
         allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
         start.setAdapter(allNodeIdsAA);
         
-        if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
-        	end.setAdapter(allNodeIdsAA);
-        } else {
-        	validDestinationsHT = db.getValidDestinations();
-        	validDestinations = new ArrayList<String>();
-        	for(String it:validDestinationsHT.keySet()){
-        		validDestinations.add(it);
-        	}
-        	Collections.sort(validDestinations);																				//SORT ALPHABETICALLY
-        	validDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validDestinations);
-        	end.setAdapter(validDestinationsAA);
-        }
+        //setup spinner from method
+        
+        setEndSpinner();
+       // setStartSpinner();
         
         go.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
@@ -124,11 +122,13 @@ public class MGHWayFinderActivity extends Activity {
     	        startActivityForResult(scanStart, 0);
     	    }});
 
+    	
+    	//TODO delete
     	//do we need an end button??
     	//no end scan, end context menu
     	//COMING SOON
-    	endSet = (Button)findViewById(R.id.setEnd);
-    	registerForContextMenu(endSet);	//how to make short press?
+    	//endSet = (Button)findViewById(R.id.setEnd);
+    	//registerForContextMenu(endSet);	//how to make short press?
     	
     	//auto set end point FOR TESTING
     	end.setSelection(12);
@@ -224,7 +224,7 @@ tabs.addTab(spec);
 
     }//end of oncreate
     
-    
+ /*TODO remove context menu?
     //context menu
 @Override
 public void onCreateContextMenu(ContextMenu menu, View v,
@@ -252,16 +252,78 @@ public boolean onContextItemSelected(MenuItem item) {
 	Log.v("context", endSelect + title);
 	
     //set spinner
-	/*
+	
 	for(int i=0; i < aFloor.size(); i++){
 		if(endnId.equals(aFloor.get(i).getNodeID())){
 			end.setSelection(i);
 		}}
-		*/
+		
+
 	return false;
 }
+*/    
     
     
+    //OPTIONS MENU////////////////
+	//options menu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU1, Menu.NONE, "Staff Mode");
+		menu.add(Menu.NONE, MENU2, Menu.NONE, "Patient Mode");
+
+		return (super.onCreateOptionsMenu(menu));
+	}
+	
+	//resolve menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case MENU1:
+			staffMode = true;
+			setEndSpinner();
+			//setStartSpinner();
+			return true;
+		case MENU2:
+			staffMode = false;
+			setEndSpinner();
+			//setStartSpinner();
+			return true;
+		}
+		return staffMode;	
+	}
+	
+	//end spinner set
+	public void setEndSpinner(){
+        if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
+        	end.setAdapter(allNodeIdsAA);
+        } else {
+        	validDestinationsHT = db.getValidDestinations();
+        	validDestinations = new ArrayList<String>();
+        	for(String it:validDestinationsHT.keySet()){
+        		validDestinations.add(it);
+        	}
+        	Collections.sort(validDestinations);																				//SORT ALPHABETICALLY
+        	validDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validDestinations);
+        	end.setAdapter(validDestinationsAA);
+        }
+	}
+	
+	//TODO delete
+	//start spinner set
+//	public void setStartSpinner(){
+//        if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
+//        	start.setAdapter(allNodeIdsAA);
+//        } else {
+//        	validDestinationsHT = db.getValidDestinations();
+//        	validDestinations = new ArrayList<String>();
+//        	for(String it:validDestinationsHT.keySet()){
+//        		validDestinations.add(it);
+//        	}
+//        	Collections.sort(validDestinations);																				//SORT ALPHABETICALLY
+//        	validDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validDestinations);
+//        	start.setAdapter(validDestinationsAA);
+//        }
+//	}
     
     //receive scan result back from scanner intent
     @Override

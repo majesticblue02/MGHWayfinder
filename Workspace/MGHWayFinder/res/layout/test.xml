@@ -47,7 +47,8 @@
         android:id="@+id/startNodeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Start Point" />
+        android:textSize="18sp"
+        android:text="Current Location:" />
 	    <Spinner
 	        android:id="@+id/startSpin"
 	        android:layout_width="wrap_content"
@@ -60,6 +61,7 @@
         	android:layout_below="@id/startNodeLabel"
         	android:layout_toRightOf="@id/startSpin"
         	android:text="Scan" />
+	    <!--
 	    <Button
       	    android:id="@+id/startAll"
         	android:layout_width="wrap_content"
@@ -67,6 +69,7 @@
         	android:layout_below="@id/startNodeLabel"
         	android:layout_toRightOf="@id/scanStart"
         	android:text="All" />
+	    -->
 	 </RelativeLayout>
 	 
 
@@ -79,19 +82,14 @@
         android:id="@+id/endNodeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose End Point:" />
+        android:textSize="18sp"
+        android:text="Destination:" />
  		 <Spinner
     	    android:id="@+id/endSpin"
     	    android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_below="@id/endNodeLabel" />
-	     <Button
-        	android:id="@+id/setEnd"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_below="@id/endNodeLabel"
-        	android:layout_toRightOf="@id/endSpin"
-        	android:text=" Set " />
+ 		 <!-- 
 	       <Button
         	android:id="@+id/endAll"
         	android:layout_width="wrap_content"
@@ -99,7 +97,8 @@
         	android:layout_below="@id/endNodeLabel"
         	android:layout_toRightOf="@id/setEnd"
         	android:text="All" />
-	 </RelativeLayout>
+        	 -->
+         </RelativeLayout>
     <Button
         android:id="@+id/goButton"
         android:layout_width="200dp"
