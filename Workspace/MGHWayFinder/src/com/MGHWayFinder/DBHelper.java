@@ -300,6 +300,21 @@ public class DBHelper extends SQLiteOpenHelper{
   		return out;
   	}
     
+  	
+	// RETURNS THE PHONE NUMBER OF A GIVEN DOCTOR -- KUNAL
+	public String getMemberPhoneNo(String fName, String lName){
+		String phoneNumber = "";
+		Cursor cursor;
+		
+		cursor = this.selectMemberPhoneNo(fName, lName);
+		cursor.moveToFirst();
+		phoneNumber = cursor.getString(0);
+		cursor.close();
+		
+		return phoneNumber;
+		
+	}
+  	
 ////////////INTERNAL METHODS//////////////////////////
     
     //CONSTRUCTS RELATIONSHIPS GIVEN A TABLE OF NODES AND AN ARRAYLIST OF THEIR NEIGHBOR NIDS

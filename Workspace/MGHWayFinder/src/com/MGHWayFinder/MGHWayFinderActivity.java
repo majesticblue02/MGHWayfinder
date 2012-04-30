@@ -32,7 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MGHWayFinderActivity extends ListActivity {
+public class MGHWayFinderActivity extends Activity {
 	
 	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();			//MASTER HASH TABLE CONTAINING ALL VALID NODES
 	
