@@ -168,7 +168,7 @@
          />
 
 </RelativeLayout>
-<!-- DIRECTORY TAB -->
+<!-- DIRECTORY TAB MODIFIED BY KUNAL-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dirTab"
     android:layout_width="wrap_content"
@@ -176,13 +176,46 @@
     android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/dirLabel"
+        android:id="@+id/dirHeading" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="MGH Directory"
+        />
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+    
+    <Spinner 
+        android:id="@+id/deptSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dir" />
+        android:layout_weight="4"
+        />
+    
+    <Button 
+        android:id="@+id/findButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Find"
+        />
+    </LinearLayout>
+    
+    
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false"
+        />
     
 
 </LinearLayout>
+    
+
 
 <!-- HELP TAB -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

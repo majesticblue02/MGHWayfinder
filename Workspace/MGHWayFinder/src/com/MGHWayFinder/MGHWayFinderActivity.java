@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -49,6 +50,15 @@ public class MGHWayFinderActivity extends Activity {
     Button mapFirst;
     Button mapSec;
 	ImageView viewMap;
+	
+	// DR LISTVIEW VARIABLES
+		private TextView dirHeading;
+		private Spinner deptSpinner;
+		private ArrayList<String> departments;
+		private ArrayList<String> deptMembers;
+		private Button findButton;
+		private ArrayAdapter<String> deptMemberAdapter;
+		private ListView lv;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,12 +148,37 @@ public class MGHWayFinderActivity extends Activity {
         
 
 
-//////////////////DIRECTORY TAB//////////////////////
+//////////////////DIRECTORY TAB////////////////////// ------KUNAL 
 //tab setup
 spec=tabs.newTabSpec("directory");
 spec.setContent(R.id.dirTab);
 spec.setIndicator("Directory", res.getDrawable(R.drawable.ic_tab_directory));
 tabs.addTab(spec);
+
+//inflate widgets
+	dirHeading = (TextView)findViewById(R.id.dirHeading);
+	deptSpinner = (Spinner)findViewById(R.id.deptSpinner);
+	findButton = (Button)findViewById(R.id.findButton);
+	lv = (ListView)findViewById(R.id.list);
+
+	departments = db.getAllDepartments();
+	deptMembers = db.getAllDeptMembers(departments.get(0));
+
+	ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departments); //for department spinner
+	aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	deptSpinner.setAdapter(aa);
+
+	deptMemberAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, deptMembers); 		// for ListItems
+	lv.setAdapter(deptMemberAdapter); //doesnt work 
+
+
+	findButton.setOnClickListener(new OnClickListener(){
+		public void onClick(View v){
+			String selectedDept = (String)deptSpinner.getSelectedItem(); 										//get value of department from spinner
+			deptMembers = db.getAllDeptMembers(selectedDept);			 										//assign to deptMembers all of the members that are in that department
+			deptMemberAdapter.notifyDataSetChanged();
+		}
+	});
 ///////////////////UI ELEMENTS////////////////////////
 //stuff for directory tab
 

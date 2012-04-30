@@ -149,6 +149,16 @@ public class DBHelper extends SQLiteOpenHelper{
 								"AND (tblnNode.nFloor = " + floorA + " OR tblnNode.nFloor = " + floorB + ")", null);
 	}
 	
+	//KUNAL - RETURNS ALL DEPARTMENTS - DOESNT SEEM TO BE WORKING
+	public Cursor selectAllDepartments(){	
+		return db.rawQuery("SELECT dptName FROM tblDepartment", null);
+	}
+
+	//KUNAL - RETURNS A RECORDSET CONTAINING ALL MEMBERS OF A DEPARTMENT
+	public Cursor selectDeptMembers(String department){
+		return db.rawQuery("SELECT DRLname || ', ' || drFname FROM tblDoctors WHERE drDeptName = '" + department + "'", null);
+	}
+	
 ////////////////////////////////PROGRAM METHODS////////////////////////////////////
 	
 	//RETURNS AN ARRAYLIST OF VALID NIDS
@@ -220,6 +230,41 @@ public class DBHelper extends SQLiteOpenHelper{
     	cursor.close();
     }
 
+  //KUNAL - RETURNS AN ARRAYLIST OF ALL DEPARTMENTS - FOR USE WITH SPINNER
+  	public ArrayList<String> getAllDepartments(){
+  		ArrayList<String> out = new ArrayList<String>();
+  		Cursor cursor;
+  		
+  		cursor = this.selectAllDepartments();
+  		cursor.moveToFirst();
+  		
+  		while(!cursor.isAfterLast()){
+  			out.add(cursor.getString(0));
+  			cursor.moveToNext();
+  		}
+  		
+  		cursor.close();
+  		
+  		return out;
+  	}
+  	
+  //KUNAL - RETURNS AN ARRAYLIST OF ALL MEMBERS WITHIN A DEPARTMENT - FOR USE WITH LISTVIEW
+  	public ArrayList<String> getAllDeptMembers(String department){
+  		ArrayList<String> out = new ArrayList<String>();
+  		Cursor cursor;
+  		
+  		cursor = this.selectDeptMembers(department);
+  		cursor.moveToFirst();
+  		
+  		while(!cursor.isAfterLast()){
+  			out.add(cursor.getString(0));
+  			cursor.moveToNext();
+  		}
+  		
+  		cursor.close();
+  		
+  		return out;
+  	}
     
 ////////////INTERNAL METHODS//////////////////////////
     
