@@ -163,6 +163,13 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.rawQuery("SELECT DRLname || ', ' || drFname FROM tblDoctors WHERE drDeptName = '" + department + "'", null);
 	}
 	
+	// KUNAL - RETURNS A CURSOR OBJECT WITH THE DOCTOR'S PHONE NUMBER 
+	public Cursor selectMemberPhoneNo(String firstName, String lastName){
+		return db.rawQuery("SELECT drPhoneNumber FROM tblDoctors WHERE drFname = '" + firstName + "' AND DRLname = '" + lastName + "'", null);
+	}
+	
+	//CALUM - FOR MAIN UI
+	
 ////////////////////////////////PROGRAM METHODS////////////////////////////////////
 	
 	public Hashtable<String, String> getValidDestinations(){

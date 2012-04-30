@@ -7,12 +7,14 @@ import java.util.Collections;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,7 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MGHWayFinderActivity extends Activity {
+public class MGHWayFinderActivity extends ListActivity {
 	
 	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();			//MASTER HASH TABLE CONTAINING ALL VALID NODES
 	
@@ -180,7 +182,19 @@ tabs.addTab(spec);
 
 	deptMemberAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, deptMembers); 		// for ListItems
 	lv.setAdapter(deptMemberAdapter); //doesnt work 
+	
+	lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+		//@Override
+		public void onItemClick(AdapterView<?> a, View v, int i, long l){
+			//super.onItemClick(a, v, i,l);
+			String itemClicked = (String)lv.getItemAtPosition(i);
+			String lastName = itemClicked.substring(0, itemClicked.indexOf(","));
+			String firstName = itemClicked.substring(itemClicked.indexOf(",") + 2);
+			String phoneNumber = db.getMemberPhoneNo(firstName, lastName);
+			Toast.makeText(MGHWayFinderActivity.this, phoneNumber, Toast.LENGTH_LONG).show();
 
+		}
+	});
 
 	findButton.setOnClickListener(new OnClickListener(){
 		public void onClick(View v){
