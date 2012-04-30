@@ -34,6 +34,8 @@ public class PathView extends View{
 	private AssetManager am;													//ASSETMANAGER FOR GRABBING ASSETS
 	
 	private Paint p = new Paint();												//PAINT USED TO STROKE PATH
+	private Paint s = new Paint();												//PAINT USED FOR START CIRCLE
+	private Paint e = new Paint();												//PAINT USED FOR END CIRCLE
 	private Path path = new Path();												//DISPLAY PATH
 	
 	private BitmapDrawable dMap;												//BACKGROUND BITMAP DRAWN TO THE CANVAS
@@ -85,6 +87,12 @@ public class PathView extends View{
 		p.setColor(Color.BLACK);																//PAINT USED TO STROKE PATHWAY
 		p.setStrokeWidth(4);
 		p.setStyle(Style.STROKE);
+		
+		s.setColor(Color.GREEN);
+		s.setStyle(Style.FILL);
+		
+		e.setColor(Color.RED);
+		e.setStyle(Style.FILL);
 		
 		op.inPreferredConfig = Bitmap.Config.RGB_565;											//BITMAP FACTORY OPTIONS FOR PULLING IN FLOOR PLAN
 		op.inDensity = 0;
