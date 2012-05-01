@@ -203,13 +203,18 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setContent(R.id.listTab);
         spec.setIndicator("List View", res.getDrawable(R.drawable.ic_tab_list));
         tabs.addTab(spec);
-		//LIST VIEW TAB------------------------------------------------------------
+//////////////////////////LIST VIEW TAB------------------------------------------------------------
         
         //create array list
         
+        //PICTURE SHIT
       //TODO move this somewhere else (clutter)- create picture list
         pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
         pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
+        
+        
+        
+        
         
         
        //populate
@@ -226,17 +231,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
        SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext});
         setListAdapter(custAdapter);
         
-        //set pictures
-        
-        //TODO CLEANUP
-        
-        //overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.f1_c1_0));
-        
-        //mainFrame.addView(overlay);
-        
-        //some shit
-        //icon = (ImageView)findViewById(R.id.icon);
-	    //Button viewBtn = (Button)findViewById(R.id.btnPic);
+
 	    mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
 	    ListView lv = getListView();
 	    overlay = (ImageView)findViewById(R.id.overlayPic);
@@ -252,20 +247,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
                 return false;
             }
        });
-        
-        
-        //more pictures go here
-        
-        
-        
-        //resolve pictures
-//        for(int i=0; i < dirList.size(); i++){
-//        	HashMap<String, String> hashNodes = dirList.get(i);
-//        	String picnId = hashNodes.get("nID");
-//        	int thePic = pictures.get(picnId);
-//        	
-//        	//icon.setImageDrawable(thePic);
-//        }
+             
         
         //long click list
         lv.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener 
@@ -277,29 +259,14 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         		        } 
         		}); 
         
-        //longclick handler
-        
-         
-        	
-        //the button
-//    		viewBtn.setOnClickListener(
-//    				new OnClickListener(){
-//    					public void onClick(View v){
-//    						Toast.makeText(PathDrawActivity.this, "button clicked", Toast.LENGTH_LONG).show();
-//    					}
-//    				}
-//    		);
-//        			
-        
-        
-        
-        
+                
         //old list shit
 //        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
 //        setListAdapter(adapt);
         
 	 }//end oncreate
 	
+	//longclick handler
 	protected void onLongListItemClick(View v, int pos, long id) { 
         Log.i("list", "onLongListItemClick id=" + id);
         Log.i("list", "pos" + pos);
@@ -316,21 +283,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	
         	mainFrame.removeAllViews();
         	mainFrame.addView(overlay);
-        }
-        
-        
-        //do i need?
-        for(int i=0; i < dirList.size(); i++){
-        	HashMap<String, String> hashNodes = dirList.get(i);
-        	String picnId = hashNodes.get("nID");
-        	
-        	//int thePic = pictures.get(picnId);
-        	
-        	
-        	//icon.setImageDrawable(thePic);
-        }
-        
-        
+        }        
   }
 
 	//CALCULATE ALL PATHS FROM START NODE
@@ -453,13 +406,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		tabs.setCurrentTab(0);
 	}
 	
-//	@Override
-//	protected void onItemLongCLick(AdapterView<Node> av, View v, int pos, long id){
-//		onLongListItemClick(v, pos, id);
-//		
-//		
-//		return false;
-//	}
 	
 
 ///////////METHOD TO CENTER VIEW ON LOAD///////////////
