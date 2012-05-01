@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -77,13 +78,23 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		ArrayList<String> nodeList = new ArrayList<String>();
 		private ArrayAdapter<Node> adapt;
 		TabHost tabs;
-
+		ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
+		ImageView icon;
+	    FrameLayout mainFrame;
+	    ListView lv;
+	    ImageView overlay;
+        HashMap<String, Drawable> pictures = new HashMap<String, Drawable>();
+        Resources res;
+        String[] validPics;   
+	        	
+		
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		
-		Resources res = getResources();
+		res = getResources();
 		
         //tabs
         tabs=(TabHost)findViewById(R.id.tabhost);
@@ -195,8 +206,10 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		//LIST VIEW TAB------------------------------------------------------------
         
         //create array list
-        ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
         
+      //TODO move this somewhere else (clutter)- create picture list
+        pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
+        pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
         
         
        //populate
@@ -214,32 +227,61 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         setListAdapter(custAdapter);
         
         //set pictures
-        //TODO move this somewhere else (clutter)- create picture list
-        ImageView icon = (ImageView)findViewById(R.id.icon);
-        Button viewBtn = (Button)findViewById(R.id.btnPic);
-        FrameLayout mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
         
-        ImageView overlay = (ImageView)findViewById(R.id.overlayPic);
+        //TODO CLEANUP
+        
         //overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.f1_c1_0));
         
         //mainFrame.addView(overlay);
         
-        HashMap<String, Drawable> pictures = new HashMap<String,Drawable>();
-        pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
-        pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
+        //some shit
+        icon = (ImageView)findViewById(R.id.icon);
+	    //Button viewBtn = (Button)findViewById(R.id.btnPic);
+	    mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
+	    ListView lv = getListView();
+	    overlay = (ImageView)findViewById(R.id.overlayPic);
+        
+
+        
+        
+        
         //more pictures go here
         
         
         
         //resolve pictures
-        for(int i=0; i < dirList.size(); i++){
-        	HashMap<String, String> hashNodes = dirList.get(i);
-        	String picnId = hashNodes.get("nID");
-        	Drawable thePic = pictures.get(picnId);
+//        for(int i=0; i < dirList.size(); i++){
+//        	HashMap<String, String> hashNodes = dirList.get(i);
+//        	String picnId = hashNodes.get("nID");
+//        	int thePic = pictures.get(picnId);
+//        	
+//        	//icon.setImageDrawable(thePic);
+//        }
+        
+        //long click list
+        lv.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener 
+        		(){ 
+        		                public boolean onItemLongClick(AdapterView<?> av, View v, int 
+        		pos, long id) { 
+        		                        onLongListItemClick(v,pos,id); 
+        		                        return true; 
+        		        } 
+        		}); 
+        
+        //longclick handler
+        
+         
         	
-        	//icon.setImageDrawable(thePic);
-        			
-        }
+        //the button
+//    		viewBtn.setOnClickListener(
+//    				new OnClickListener(){
+//    					public void onClick(View v){
+//    						Toast.makeText(PathDrawActivity.this, "button clicked", Toast.LENGTH_LONG).show();
+//    					}
+//    				}
+//    		);
+//        			
+        
         
         
         
@@ -249,7 +291,37 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         
 	 }//end oncreate
 	
-
+	protected void onLongListItemClick(View v, int pos, long id) { 
+        Log.i("list", "onLongListItemClick id=" + id);
+        Log.i("list", "pos" + pos);
+        
+        //resolve the image
+        HashMap<String, String> n = dirList.get(pos);
+        String thenid = n.get("nID");
+        if(pictures.containsKey(thenid)){
+        	Log.i("pic", "in if: " + pos);
+        	Drawable thePic = pictures.get(thenid);
+        	//overlay the image
+        	//overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.mgh_logo));
+        	overlay.setImageDrawable(thePic);
+        	//mainFrame.removeAllViews();
+        	//mainFrame.addView(overlay);
+        }
+        
+        
+        //do i need?
+        for(int i=0; i < dirList.size(); i++){
+        	HashMap<String, String> hashNodes = dirList.get(i);
+        	String picnId = hashNodes.get("nID");
+        	
+        	//int thePic = pictures.get(picnId);
+        	
+        	
+        	//icon.setImageDrawable(thePic);
+        }
+        
+        
+  }
 
 	//CALCULATE ALL PATHS FROM START NODE
 	protected void calcPath(Node start){
@@ -370,6 +442,14 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		step();
 		tabs.setCurrentTab(0);
 	}
+	
+//	@Override
+//	protected void onItemLongCLick(AdapterView<Node> av, View v, int pos, long id){
+//		onLongListItemClick(v, pos, id);
+//		
+//		
+//		return false;
+//	}
 	
 
 ///////////METHOD TO CENTER VIEW ON LOAD///////////////

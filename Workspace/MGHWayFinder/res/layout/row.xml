@@ -46,9 +46,5 @@
 			android:textColor="#C0C0C0"
         />
     </LinearLayout>
-         <Button
-        android:id="@+id/btnPic"
-      	android:layout_width="wrap_content"
-       	android:layout_height="wrap_content" 
-       	android:text="View Picture" />   
+
 </LinearLayout>
