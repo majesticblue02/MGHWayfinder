@@ -130,8 +130,9 @@ public class MGHWayFinderActivity extends Activity {
     	//endSet = (Button)findViewById(R.id.setEnd);
     	//registerForContextMenu(endSet);	//how to make short press?
     	
-    	//auto set end point FOR TESTING
-    	end.setSelection(12);
+    	//TODO delete - auto set end point FOR TESTING
+    	start.setSelection(14);
+    	end.setSelection(14);
 
         
 //////////////////MAP TAB//////////////////////
@@ -374,8 +375,7 @@ public boolean onContextItemSelected(MenuItem item) {
     		db.buildInterFloor(startFloor, endFloor, masterHash);									//Create interconnections between these two floors only
     	} else {
     		masterHash.putAll(db.buildFloorNodes(startFloor));
-    	}
-		
+    	}		
 	//START PATHDRAWACTIVITY
 		Intent drawPath = new Intent(this, PathDrawActivity.class);
 		drawPath.putExtra("StartnID", startNId);
@@ -415,7 +415,6 @@ public boolean onContextItemSelected(MenuItem item) {
   			matrix.postScale(((float)vWidth/(float)bounds.right), ((float)vWidth/(float)bounds.right));		
   	}
     */
-    
     
     
 }//end of class

@@ -15,6 +15,9 @@
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:layout_above="@android:id/tabs">
 			
+	
+			
+			
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pathTab"
     android:layout_width="fill_parent"
@@ -73,6 +76,14 @@
      
 </RelativeLayout>
 <!-- tab2 list view -->
+		    <!-- OVERLAY ATTEMPT -->
+		   <FrameLayout android:id="@+id/mainFrame"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    <ImageView
+        android:id="@+id/overlayPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listTab"
     android:layout_width="fill_parent"
@@ -110,8 +121,9 @@
 
        </RelativeLayout>
    
-
+</FrameLayout>
 <!-- closers -->
+
 		</FrameLayout>
 	</RelativeLayout>
 </TabHost>

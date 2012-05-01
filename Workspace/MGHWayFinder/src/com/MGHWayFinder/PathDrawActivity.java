@@ -9,10 +9,12 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,8 @@ import android.view.View.OnTouchListener;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
@@ -192,6 +196,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         
         //create array list
         ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
+        
+        
+        
        //populate
         for(int i = 0; i < walkNodePath.size(); i++){
         	Node tempNode = walkNodePath.get(i);
@@ -207,7 +214,32 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         setListAdapter(custAdapter);
         
         //set pictures
+        //TODO move this somewhere else (clutter)- create picture list
+        ImageView icon = (ImageView)findViewById(R.id.icon);
+        Button viewBtn = (Button)findViewById(R.id.btnPic);
+        FrameLayout mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
         
+        ImageView overlay = (ImageView)findViewById(R.id.overlayPic);
+        //overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.f1_c1_0));
+        
+        //mainFrame.addView(overlay);
+        
+        HashMap<String, Drawable> pictures = new HashMap<String,Drawable>();
+        pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
+        pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
+        //more pictures go here
+        
+        
+        
+        //resolve pictures
+        for(int i=0; i < dirList.size(); i++){
+        	HashMap<String, String> hashNodes = dirList.get(i);
+        	String picnId = hashNodes.get("nID");
+        	Drawable thePic = pictures.get(picnId);
+        	
+        	//icon.setImageDrawable(thePic);
+        			
+        }
         
         
         
