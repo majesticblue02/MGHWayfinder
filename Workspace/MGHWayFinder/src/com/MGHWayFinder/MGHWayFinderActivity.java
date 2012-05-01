@@ -44,7 +44,7 @@ public class MGHWayFinderActivity extends Activity {
 	private Button startQR;
 	private Button endSet;
 	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};			//TODO REMOVE
-	
+	//HELLO GITHUB
 	//START & END VARIABLES
 	private String startSelect, endSelect;
 	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA;
