@@ -74,6 +74,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		Button prev;
 		Button list;
 		Button help;
+		Button view;
 		int index = 0;
 		ArrayList<String> nodeList = new ArrayList<String>();
 		private ArrayAdapter<Node> adapt;
@@ -107,16 +108,17 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setIndicator("Map Path", res.getDrawable(R.drawable.ic_tab_map));
         tabs.addTab(spec);
         
+        //TODO delte this commented test shit, prob wont need again
 		//center = (Button)findViewById(R.id.buttonCenter);
-		tvX = (TextView)findViewById(R.id.tvX);
-		tvY = (TextView)findViewById(R.id.tvY);
+//		tvX = (TextView)findViewById(R.id.tvX);
+//		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
 		next.setBackgroundDrawable(res.getDrawable(R.drawable.smallright));
 		prev = (Button)findViewById(R.id.btnPrev);
 		prev.setBackgroundDrawable(res.getDrawable(R.drawable.smallleft));
 		//list = (Button)findViewById(R.id.btnList);
 		help = (Button)findViewById(R.id.btnHelp);
-		
+		view = (Button)findViewById(R.id.btnView);
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
       
@@ -183,14 +185,34 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					}
 				}
 		);	
-		
-		
+				
 		help.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
 						Uri uri = Uri.parse("tel:6177262000");
 						Intent call = new Intent(Intent.ACTION_CALL,uri);
 						startActivity(call);
+					}
+				}
+		);
+		
+		view.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+						
+						
+				        //resolve the image
+				        HashMap<String, String> n = dirList.get(index);
+				        String thenid = n.get("nID");
+				        if(pictures.containsKey(thenid)){
+				        	Log.i("pic", "in if: " + index);
+				        	Drawable thePic = pictures.get(thenid);
+				        	//overlay the image
+				        	overlay.setImageDrawable(thePic);
+				        	
+				        	mainFrame.removeAllViews();
+				        	mainFrame.addView(overlay);
+				        }       
 					}
 				}
 		);
@@ -236,14 +258,16 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	    ListView lv = getListView();
 	    overlay = (ImageView)findViewById(R.id.overlayPic);
         final View listView = (View)findViewById(R.id.listTab);
-
+        
+        //ON IMAGE TOUCH
 	    overlay.setOnTouchListener(new OnTouchListener()
         {
 
             public boolean onTouch(View v, MotionEvent event)
             {
+            	//TODO how to compensate for the mapview or the listview in picture display
                 mainFrame.removeAllViews();
-                mainFrame.addView(listView);
+                //mainFrame.addView(listView);
                 return false;
             }
        });
