@@ -4,12 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="6dip">
     <!--  android:layout_height="?android:attr/listPreferredItemHeight" -->
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="6dip"
-        android:src="@drawable/mgh_logo" />
+    
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dip"
@@ -20,7 +15,6 @@
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:gravity="center_vertical"
             android:textSize="18sp"
 			android:textColor="#ffffff"
         />

@@ -235,14 +235,23 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         //mainFrame.addView(overlay);
         
         //some shit
-        icon = (ImageView)findViewById(R.id.icon);
+        //icon = (ImageView)findViewById(R.id.icon);
 	    //Button viewBtn = (Button)findViewById(R.id.btnPic);
 	    mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
 	    ListView lv = getListView();
 	    overlay = (ImageView)findViewById(R.id.overlayPic);
-        
+        final View listView = (View)findViewById(R.id.listTab);
 
-        
+	    overlay.setOnTouchListener(new OnTouchListener()
+        {
+
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                mainFrame.removeAllViews();
+                mainFrame.addView(listView);
+                return false;
+            }
+       });
         
         
         //more pictures go here
@@ -304,8 +313,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	//overlay the image
         	//overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.mgh_logo));
         	overlay.setImageDrawable(thePic);
-        	//mainFrame.removeAllViews();
-        	//mainFrame.addView(overlay);
+        	
+        	mainFrame.removeAllViews();
+        	mainFrame.addView(overlay);
         }
         
         
