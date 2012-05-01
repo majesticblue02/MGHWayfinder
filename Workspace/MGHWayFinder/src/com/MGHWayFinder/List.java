@@ -3,39 +3,37 @@ package com.MGHWayFinder;
 
 import java.util.ArrayList;
 
-import android.app.ListActivity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
-public class List extends ListActivity {
-	ArrayList<String> nodeList = new ArrayList<String>();
-	private ArrayAdapter<String> adapt;
+public class List extends ArrayAdapter<Node> {
 	
+	ArrayList<Node> nodes;
+	ArrayList<String> nodeList;
+	//private ArrayAdapter<String> adapt;
 	
-	
-	
-	 @Override
-	    public void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.listview);
-	        
-	        //nuts and bolts
-	        adapt = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, nodeList);
-	        setListAdapter(adapt);
-	        
-	        
-	               
-	    }
-	    
-	    	//start activity based on list item selected
-	        @Override
-	    	protected void onListItemClick(ListView l, View v, int position, long id) {
-	    		super.onListItemClick(l, v, position, id);
-	    		
+	public List(Context context, int textViewResourceId, ArrayList<Node> nodes) {
+        super(context, textViewResourceId, nodes);
+        this.nodes = nodes;
+}
 
-	    	}
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater vi = LayoutInflater.from(getContext());
+            v = vi.inflate(R.layout.row, null);
+        }
+        
+
+                
+        
+        return v;
+}
+	
+
 }

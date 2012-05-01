@@ -1,6 +1,7 @@
 package com.MGHWayFinder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -188,8 +190,30 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         tabs.addTab(spec);
 		//LIST VIEW TAB------------------------------------------------------------
         
-        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
-        setListAdapter(adapt);
+        //create array list
+        ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
+       //populate
+        for(int i = 0; i < walkNodePath.size(); i++){
+        	Node tempNode = walkNodePath.get(i);
+        	HashMap<String, String> temp = new HashMap<String, String>();
+        	temp.put("title",tempNode.getNodeDepartment());
+        	temp.put("floor", "Floor " + Integer.toString(tempNode.getNodeFloor()));
+        	temp.put("nID", tempNode.getNodeID());
+        	dirList.add(temp);
+        }
+       
+        //the actual adapter
+       SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext});
+        setListAdapter(custAdapter);
+        
+        //set pictures
+        
+        
+        
+        
+        //old list shit
+//        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
+//        setListAdapter(adapt);
         
 	 }//end oncreate
 	
