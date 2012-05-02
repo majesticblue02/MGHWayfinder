@@ -234,7 +234,15 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
       //TODO move this somewhere else (clutter)- create picture list
         pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
         pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
-        
+        pictures.put("F1-108_0", res.getDrawable(R.drawable.f1_108_0));
+        pictures.put("F1-108R", res.getDrawable(R.drawable.f1_108r));
+        pictures.put("F1-C1_1", res.getDrawable(R.drawable.f1_c1_1));
+        pictures.put("F1-C2_0", res.getDrawable(R.drawable.f1_c2_0));
+        pictures.put("F1-EL", res.getDrawable(R.drawable.f1_el));
+        pictures.put("F1-S2", res.getDrawable(R.drawable.f1_s2));
+        pictures.put("F2-C1_1", res.getDrawable(R.drawable.f2_c1_1));
+        pictures.put("F2-EL", res.getDrawable(R.drawable.f2_el));
+        pictures.put("F2-XR", res.getDrawable(R.drawable.f2_xr));
         
         
         
