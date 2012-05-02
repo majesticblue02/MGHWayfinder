@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.graphics.PorterDuff;
 
 public class MGHWayFinderActivity extends Activity {
 	
@@ -113,6 +115,9 @@ public class MGHWayFinderActivity extends Activity {
         		startPathDraw();
         	}}); 
         
+        //go.setBackgroundDrawable(res.getDrawable(R.drawable.btngo));
+        go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
+        
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
     	startQR.setOnClickListener(new OnClickListener(){
@@ -121,7 +126,11 @@ public class MGHWayFinderActivity extends Activity {
     	        scanStart.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
     	        startActivityForResult(scanStart, 0);
     	    }});
-
+    	
+        
+        //UI SETUP STUFF
+        View dirLayout = findViewById(R.id.directionsTab);
+        dirLayout.setBackgroundColor(Color.argb(255, 194, 207, 211));
     	
     	//TODO delete
     	//do we need an end button??
@@ -141,7 +150,10 @@ public class MGHWayFinderActivity extends Activity {
     spec.setContent(R.id.mapTab);
     spec.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_map));
     tabs.addTab(spec);
-
+    
+    View mapLayout = findViewById(R.id.mapTab);
+    mapLayout.setBackgroundColor(Color.argb(255, 255, 255, 255));
+    
     //stuff for map tab
 	viewMap = (ImageView)findViewById(R.id.mapView);
 	mapFirst = (Button)findViewById(R.id.btnMapFirst);
@@ -167,6 +179,7 @@ spec=tabs.newTabSpec("directory");
 spec.setContent(R.id.dirTab);
 spec.setIndicator("Directory", res.getDrawable(R.drawable.ic_tab_directory));
 tabs.addTab(spec);
+
 
 //inflate widgets
 	dirHeading = (TextView)findViewById(R.id.dirHeading);
@@ -219,7 +232,8 @@ spec.setIndicator("Help", res.getDrawable(R.drawable.ic_tab_help));
 tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
 //help tab stuff
-
+View helpLayout = findViewById(R.id.helpTab);
+helpLayout.setBackgroundColor(Color.argb(255, 0, 0, 0));
 
 
 

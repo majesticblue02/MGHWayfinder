@@ -78,27 +78,24 @@
        android:layout_toRightOf="@id/tvX"
        android:textColor="#000000" />
  	 -->
-    	   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/helpView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal"
-    android:layout_alignParentBottom="true" >
-    	 <Button
+ 	 
+ 	 <Button
         android:id="@+id/btnHelp"
        	android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
-       	android:layout_centerHorizontal="true"
-       	android:layout_alignParentBottom="true"
+       	android:layout_alignParentRight="true"
+       	android:layout_alignParentTop="true"
        	android:text="Call For Help" />	
+       	
+    	 
        	<Button
         android:id="@+id/btnView"
         android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
        	android:layout_centerHorizontal="true"
-       	android:layout_above="@id/btnHelp"
+       	android:layout_alignParentBottom="true"
        	android:text="View Picture" />	
-       	</RelativeLayout>
+       	
        	
     </RelativeLayout>
      
@@ -124,12 +121,7 @@
        android:textSize="30sp"
        android:text="Directions List:" />
     	    	
-       	<Button
-        android:id="@+id/btnHelpList"
-      	android:layout_width="60dp"
-       	android:layout_height="wrap_content"
-       	android:layout_alignParentRight="true"
-       	android:text="Help" /> 
+
 		</RelativeLayout>
 
        <ListView 

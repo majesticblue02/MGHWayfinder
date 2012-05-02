@@ -2,25 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="6dip">
+    android:padding="6dip"
+    android:orientation="horizontal">
     <!--  android:layout_height="?android:attr/listPreferredItemHeight" -->
+    <TextView 
+        android:id="@+id/listNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="42sp"
+            android:paddingRight="10dp"
+        />
     
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dip"
         android:layout_weight="1"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/toptext"
             android:layout_width="fill_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
 			android:textColor="#ffffff"
         />
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="1" 
             android:id="@+id/bottomtext"
             android:singleLine="true"
@@ -31,7 +39,7 @@
         />
                 <TextView
             android:layout_width="fill_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="1" 
             android:id="@+id/nIDtext"
             android:singleLine="true"

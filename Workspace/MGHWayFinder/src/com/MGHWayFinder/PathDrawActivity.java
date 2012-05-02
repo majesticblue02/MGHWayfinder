@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -107,6 +108,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setContent(R.id.pathTab);
         spec.setIndicator("Map Path", res.getDrawable(R.drawable.ic_tab_map));
         tabs.addTab(spec);
+
         
         //TODO delte this commented test shit, prob wont need again
 		//center = (Button)findViewById(R.id.buttonCenter);
@@ -174,6 +176,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index++;
 						step();
+						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_LONG).show();
 					}
 				}
 		);	
@@ -183,6 +186,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index--;
 						step();
+						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_LONG).show();
 					}
 				}
 		);	
@@ -191,7 +195,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				new OnClickListener(){
 					public void onClick(View v){
 						Uri uri = Uri.parse("tel:6177262000");
-						Intent call = new Intent(Intent.ACTION_CALL,uri);
+						Intent call = new Intent(Intent.ACTION_DIAL,uri);
 						startActivity(call);
 					}
 				}
@@ -221,6 +225,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					}
 				}
 		);
+		
+		view.getBackground().setColorFilter(0xFF6685D1, PorterDuff.Mode.MULTIPLY);
 	
 		Thread c1 = new Thread(centerOnLoad, "onCreate Centering Thread");
 		c1.start();
@@ -230,7 +236,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setContent(R.id.listTab);
         spec.setIndicator("List View", res.getDrawable(R.drawable.ic_tab_list));
         tabs.addTab(spec);
-//////////////////////////LIST VIEW TAB------------------------------------------------------------
+//////////////////////////LIST VIEW TAB//////////////////////////////////////////////////////////////
         
         //create array list
         
@@ -256,11 +262,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	temp.put("title",tempNode.getNodeDepartment());
         	temp.put("floor", "Floor " + Integer.toString(tempNode.getNodeFloor()));
         	temp.put("nID", tempNode.getNodeID());
+        	temp.put("num", Integer.toString(i+1));
         	dirList.add(temp);
         }
        
         //the actual adapter
-       SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext});
+       SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID", "num"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext,R.id.listNumber});
         setListAdapter(custAdapter);
         
 
@@ -466,7 +473,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	Runnable centerOnLoad = new Runnable(){
    	public void run(){
    		try {
-   				Thread.sleep(100);
+   				Thread.sleep(500);
    				handler.sendEmptyMessage(0);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
