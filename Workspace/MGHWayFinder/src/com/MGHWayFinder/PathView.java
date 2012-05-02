@@ -40,8 +40,8 @@ public class PathView extends View{
 	private Paint c = new Paint();												//PAINT USED FOR CURRENT MARKER
 	private Paint e = new Paint();												//PAINT USED FOR END CIRCLE
 	private Path path = new Path();												//DISPLAY PATH
-	
-	private Path currentLocation = new Path();
+	private int curX = 0;
+	private int curY = 0;
 	
 	private BitmapDrawable dMap;												//BACKGROUND BITMAP DRAWN TO THE CANVAS
 	private Bitmap bMap;														//BACKGROUND BITMAP
@@ -98,6 +98,10 @@ public class PathView extends View{
 		
 		e.setColor(Color.RED);
 		e.setStyle(Style.FILL);
+		
+		c.setColor(Color.BLUE);
+		c.setStrokeWidth(5);
+		c.setStyle(Style.STROKE);
 		
 		op.inPreferredConfig = Bitmap.Config.RGB_565;											//BITMAP FACTORY OPTIONS FOR PULLING IN FLOOR PLAN
 		op.inDensity = 0;
@@ -168,6 +172,7 @@ public class PathView extends View{
 			canvas.drawCircle(xArray.get(0), yArray.get(0), 10, s);
 		if(ENDMAP)
 			canvas.drawCircle(xArray.get(xArray.size()-1), yArray.get(yArray.size()-1), 10, e);
+		canvas.drawCircle(curX, curY, 15, c);
 		
 	}
 	
@@ -222,7 +227,6 @@ public class PathView extends View{
 		float currentX, currentY;
 		int nodeX = (int)-1*n.getX();
 		int nodeY = (int)-1*n.getY();
-		savedMatrix.set(matrix);
 		
 		if(getCenterPoint() != null){
 			centerPoint= getCenterPoint();
@@ -242,7 +246,8 @@ public class PathView extends View{
 			ani.start();
 		}	
 		
-		currentLocation.addCircle(nodeX, nodeY, 15, Direction.CW);
+		curX = -nodeX;
+		curY = -nodeY;
 		
 		
 	}
