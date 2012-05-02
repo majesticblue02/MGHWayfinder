@@ -2,6 +2,16 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	
+			    <!-- OVERLAY ATTEMPT -->
+		   <FrameLayout android:id="@+id/mainFrame"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    <ImageView
+        android:id="@+id/overlayPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+			    
 	<RelativeLayout 
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent">
@@ -50,7 +60,7 @@
       	android:layout_alignParentRight="true"
       	android:layout_alignParentBottom="true"
        	 />
-        	
+        <!-- prob dont need these 	
  	     <TextView
        android:id="@+id/tvX"
        android:layout_width="wrap_content"
@@ -64,26 +74,34 @@
        android:layout_height="wrap_content"
        android:layout_toRightOf="@id/tvX"
        android:textColor="#000000" />
- 	
+ 	 -->
+    	   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/helpView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true" >
     	 <Button
         android:id="@+id/btnHelp"
-      	android:layout_width="60dp"
+       	android:layout_width="wrap_content"
        	android:layout_height="wrap_content"
        	android:layout_centerHorizontal="true"
        	android:layout_alignParentBottom="true"
        	android:text="Call For Help" />	
+       	<Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	android:layout_centerHorizontal="true"
+       	android:layout_above="@id/btnHelp"
+       	android:text="View Picture" />	
+       	</RelativeLayout>
+       	
     </RelativeLayout>
      
 </RelativeLayout>
 <!-- tab2 list view -->
-		    <!-- OVERLAY ATTEMPT -->
-		   <FrameLayout android:id="@+id/mainFrame"
-			android:layout_width="fill_parent" android:layout_height="fill_parent">
-			    <ImageView
-        android:id="@+id/overlayPic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listTab"
     android:layout_width="fill_parent"
@@ -121,9 +139,10 @@
 
        </RelativeLayout>
    
-</FrameLayout>
+
 <!-- closers -->
 
 		</FrameLayout>
 	</RelativeLayout>
+	</FrameLayout>
 </TabHost>

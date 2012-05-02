@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -73,17 +74,28 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		Button prev;
 		Button list;
 		Button help;
+		Button view;
 		int index = 0;
 		ArrayList<String> nodeList = new ArrayList<String>();
 		private ArrayAdapter<Node> adapt;
 		TabHost tabs;
-
+		ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
+		ImageView icon;
+	    FrameLayout mainFrame;
+	    ListView lv;
+	    ImageView overlay;
+        HashMap<String, Drawable> pictures = new HashMap<String, Drawable>();
+        Resources res;
+        String[] validPics;   
+	        	
+		
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		
-		Resources res = getResources();
+		res = getResources();
 		
         //tabs
         tabs=(TabHost)findViewById(R.id.tabhost);
@@ -96,16 +108,17 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setIndicator("Map Path", res.getDrawable(R.drawable.ic_tab_map));
         tabs.addTab(spec);
         
+        //TODO delte this commented test shit, prob wont need again
 		//center = (Button)findViewById(R.id.buttonCenter);
-		tvX = (TextView)findViewById(R.id.tvX);
-		tvY = (TextView)findViewById(R.id.tvY);
+//		tvX = (TextView)findViewById(R.id.tvX);
+//		tvY = (TextView)findViewById(R.id.tvY);
 		next = (Button)findViewById(R.id.btnNext);
 		next.setBackgroundDrawable(res.getDrawable(R.drawable.smallright));
 		prev = (Button)findViewById(R.id.btnPrev);
 		prev.setBackgroundDrawable(res.getDrawable(R.drawable.smallleft));
 		//list = (Button)findViewById(R.id.btnList);
 		help = (Button)findViewById(R.id.btnHelp);
-		
+		view = (Button)findViewById(R.id.btnView);
         pv = (PathView)findViewById(R.id.pathView);
         am = getAssets();
       
@@ -173,14 +186,34 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					}
 				}
 		);	
-		
-		
+				
 		help.setOnClickListener(
 				new OnClickListener(){
 					public void onClick(View v){
 						Uri uri = Uri.parse("tel:6177262000");
 						Intent call = new Intent(Intent.ACTION_CALL,uri);
 						startActivity(call);
+					}
+				}
+		);
+		
+		view.setOnClickListener(
+				new OnClickListener(){
+					public void onClick(View v){
+						
+						
+				        //resolve the image
+				        HashMap<String, String> n = dirList.get(index);
+				        String thenid = n.get("nID");
+				        if(pictures.containsKey(thenid)){
+				        	Log.i("pic", "in if: " + index);
+				        	Drawable thePic = pictures.get(thenid);
+				        	//overlay the image
+				        	overlay.setImageDrawable(thePic);
+				        	
+				        	mainFrame.removeAllViews();
+				        	mainFrame.addView(overlay);
+				        }       
 					}
 				}
 		);
@@ -193,10 +226,17 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         spec.setContent(R.id.listTab);
         spec.setIndicator("List View", res.getDrawable(R.drawable.ic_tab_list));
         tabs.addTab(spec);
-		//LIST VIEW TAB------------------------------------------------------------
+//////////////////////////LIST VIEW TAB------------------------------------------------------------
         
         //create array list
-        ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
+        
+        //PICTURE SHIT
+      //TODO move this somewhere else (clutter)- create picture list
+        pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
+        pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
+        
+        
+        
         
         
         
@@ -214,43 +254,62 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
        SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext});
         setListAdapter(custAdapter);
         
-        //set pictures
-        //TODO move this somewhere else (clutter)- create picture list
-        ImageView icon = (ImageView)findViewById(R.id.icon);
-        Button viewBtn = (Button)findViewById(R.id.btnPic);
-        FrameLayout mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
+
+	    mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
+	    ListView lv = getListView();
+	    overlay = (ImageView)findViewById(R.id.overlayPic);
+        final View listView = (View)findViewById(R.id.listTab);
         
-        ImageView overlay = (ImageView)findViewById(R.id.overlayPic);
-        //overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.f1_c1_0));
+        //ON IMAGE TOUCH
+	    overlay.setOnTouchListener(new OnTouchListener()
+        {
+
+            public boolean onTouch(View v, MotionEvent event)
+            {
+            	//TODO how to compensate for the mapview or the listview in picture display
+                mainFrame.removeAllViews();
+                //mainFrame.addView(listView);
+                return false;
+            }
+       });
+             
         
-        //mainFrame.addView(overlay);
+        //long click list
+        lv.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener 
+        		(){ 
+        		                public boolean onItemLongClick(AdapterView<?> av, View v, int 
+        		pos, long id) { 
+        		                        onLongListItemClick(v,pos,id); 
+        		                        return true; 
+        		        } 
+        		}); 
         
-        HashMap<String, Drawable> pictures = new HashMap<String,Drawable>();
-        pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
-        pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
-        //more pictures go here
-        
-        
-        
-        //resolve pictures
-        for(int i=0; i < dirList.size(); i++){
-        	HashMap<String, String> hashNodes = dirList.get(i);
-        	String picnId = hashNodes.get("nID");
-        	Drawable thePic = pictures.get(picnId);
-        	
-        	//icon.setImageDrawable(thePic);
-        			
-        }
-        
-        
-        
+                
         //old list shit
 //        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
 //        setListAdapter(adapt);
         
 	 }//end oncreate
 	
-
+	//longclick handler
+	protected void onLongListItemClick(View v, int pos, long id) { 
+        Log.i("list", "onLongListItemClick id=" + id);
+        Log.i("list", "pos" + pos);
+        
+        //resolve the image
+        HashMap<String, String> n = dirList.get(pos);
+        String thenid = n.get("nID");
+        if(pictures.containsKey(thenid)){
+        	Log.i("pic", "in if: " + pos);
+        	Drawable thePic = pictures.get(thenid);
+        	//overlay the image
+        	//overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.mgh_logo));
+        	overlay.setImageDrawable(thePic);
+        	
+        	mainFrame.removeAllViews();
+        	mainFrame.addView(overlay);
+        }        
+  }
 
 	//CALCULATE ALL PATHS FROM START NODE
 	protected void calcPath(Node start){
@@ -371,6 +430,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		step();
 		tabs.setCurrentTab(0);
 	}
+	
 	
 
 ///////////METHOD TO CENTER VIEW ON LOAD///////////////
