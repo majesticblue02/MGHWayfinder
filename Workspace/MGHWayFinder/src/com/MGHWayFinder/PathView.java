@@ -14,6 +14,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,13 +31,17 @@ import android.widget.Toast;
 public class PathView extends View{
 	
 	private ArrayList<Integer> xArray, yArray;									//ARRAYLISTS WHICH HOLD X AND Y COORDINATES FOR PLOTTING THE PATH
+	private boolean STARTMAP, ENDMAP;
 	private int vWidth, vHeight;												//SCREEN HEIGHT AND WIDTH, AS MEASURED BY ONMEASURE
 	private AssetManager am;													//ASSETMANAGER FOR GRABBING ASSETS
 	
 	private Paint p = new Paint();												//PAINT USED TO STROKE PATH
 	private Paint s = new Paint();												//PAINT USED FOR START CIRCLE
+	private Paint c = new Paint();												//PAINT USED FOR CURRENT MARKER
 	private Paint e = new Paint();												//PAINT USED FOR END CIRCLE
 	private Path path = new Path();												//DISPLAY PATH
+	
+	private Path currentLocation = new Path();
 	
 	private BitmapDrawable dMap;												//BACKGROUND BITMAP DRAWN TO THE CANVAS
 	private Bitmap bMap;														//BACKGROUND BITMAP
@@ -103,23 +108,28 @@ public class PathView extends View{
 	}
 	
 	//SETS INSTANCE ARRAYS, ASSET MANAGER, AND DRAWS THE VIEW
-	public void makePathView(ArrayList<Integer> xArray, ArrayList<Integer> yArray, int floor, AssetManager am) {
+	public void makePathView(ArrayList<Integer> xArray, ArrayList<Integer> yArray, int floor, AssetManager am, int startFloor, int endFloor) {
 
 		this.xArray = xArray;																	
 		this.yArray = yArray;
 		this.am = am;
+		this.STARTMAP = (floor == startFloor);
+		this.ENDMAP = (floor == endFloor);
 		
 		loadFloorMap(floor);
 		invalidate();																			//CALLED TO TELL VM TO REDRAW
 	}
 	
 	//CLEARS THE CURRENT PATH AND UPDATES IT
-	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor){			
-		xArray = null;																			//nulled to attempt to have gc remove old array objects
-		yArray = null;
-		path.reset();
-		xArray = x;
-		yArray = y;
+	public void updatePath(ArrayList<Integer> x, ArrayList<Integer> y, int floor, int startFloor, int endFloor){			
+		this.xArray = null;																			//nulled to attempt to have gc remove old array objects
+		this.yArray = null;
+		this.path.reset();
+		this.xArray = x;
+		this.yArray = y;
+		this.STARTMAP = (floor == startFloor);
+		this.ENDMAP = (floor == endFloor);
+		
 		loadFloorMap(floor);
 		invalidate();																			//CALLED TO TELL VM TO REDRAW
 	}
@@ -152,7 +162,13 @@ public class PathView extends View{
 		dMap.draw(canvas);																	//DRAW THE FLOOR PLAN TO THE CANVAS
 		path.reset();																		//RESET THE WALKING PATH
 		makePath();																			//REMAKE THE WALKING PATH
+
 		canvas.drawPath(path, p);															//DRAW THE PATH TO THE CANVAS
+		if(STARTMAP)
+			canvas.drawCircle(xArray.get(0), yArray.get(0), 10, s);
+		if(ENDMAP)
+			canvas.drawCircle(xArray.get(xArray.size()-1), yArray.get(yArray.size()-1), 10, e);
+		
 	}
 	
 	//DRAW PATH USING COORDINATES
@@ -225,6 +241,10 @@ public class PathView extends View{
 			Thread ani = new Thread(animate, "translation animation");
 			ani.start();
 		}	
+		
+		currentLocation.addCircle(nodeX, nodeY, 15, Direction.CW);
+		
+		
 	}
 	
 	//USED TO ANIMATE TRANSLATION

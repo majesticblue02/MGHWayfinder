@@ -41,7 +41,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	Bundle bundle;
 	ArrayList<Integer> xPoints = new ArrayList<Integer>();
 	ArrayList<Integer> yPoints = new ArrayList<Integer>();
-	int sWidth, sHeight, floor;
+	int sWidth, sHeight, floor, sFloor, eFloor;
 	AssetManager am;
 	Button center;
 	
@@ -119,6 +119,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		eNode = localHash.get(endnID);
         
 		floor = sNode.getNodeFloor();
+		sFloor = floor;
+		eFloor = eNode.getNodeFloor();
 		
 		calcPath(sNode);
 		
@@ -126,13 +128,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		walkNodePath = stripIntermediateSteps(fullNodePath);
 		
 	//WHEN CALCULATING AN INTERFLOOR PATH, WE NEED TO BREAK IT UP INTO INDIVIDUAL FLOORS
-        if(sNode.getNodeFloor() != eNode.getNodeFloor()){							
+        if(sFloor != eFloor){							
 
         	bNode = dijkstra.getBreakNode();										//SET BNODE TO THE FIRST NODE ON THE SECOND FLOOR OF TRAVEL (WE CAN GET AT IT'S PREDECESSOR VIA .getPreviousNode()
         	bNodeIndex = walkNodePath.indexOf(bNode.getPreviousNode());
         	
         	multifloor = true;
-        	floor = sNode.getNodeFloor();
         	
         	for(int i = 0; i <= bNodeIndex; i++){
         		xPoints.add(walkNodePath.get(i).getX());
@@ -150,7 +151,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         }
      
      //SETUP PATHVIEW OBJECT AND DISPLAY
-		pv.makePathView(xPoints, yPoints, floor, am);
+		pv.makePathView(xPoints, yPoints, floor, am, sFloor, eFloor);
 		pv.setBackgroundColor(Color.WHITE);
 		pv.setOnTouchListener(this);
 
@@ -340,7 +341,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					xPoints.add(walkNodePath.get(i).getX());
 					yPoints.add(walkNodePath.get(i).getY());
 				}
-				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				pv.updatePath(xPoints, yPoints, cNodeFloor, sFloor, eFloor);
 				floor = cNodeFloor;
 				pv.setCenterPoint(cNode);			
 			} else if(index > bNodeIndex && floor != cNodeFloor){
@@ -350,7 +351,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					xPoints.add(walkNodePath.get(i).getX());
 					yPoints.add(walkNodePath.get(i).getY());
 				}
-				pv.updatePath(xPoints, yPoints, cNodeFloor);
+				pv.updatePath(xPoints, yPoints, cNodeFloor, sFloor, eFloor);
 				floor = cNodeFloor;
 				pv.setCenterPoint(cNode);
 			} else if(floor == cNodeFloor){
