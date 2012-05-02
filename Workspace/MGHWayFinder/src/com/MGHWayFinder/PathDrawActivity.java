@@ -347,10 +347,10 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				break;
 		}
 		
-	//TESTING PURPOSES
-		m.getValues(mValues);
-		tvX.setText("X: " + Float.toString(mValues[Matrix.MTRANS_X]) + " ");
-		tvY.setText("Y: " + Float.toString(mValues[Matrix.MTRANS_Y]));
+	//TESTING PURPOSES  TODO delete this
+//		m.getValues(mValues);
+//		tvX.setText("X: " + Float.toString(mValues[Matrix.MTRANS_X]) + " ");
+//		tvY.setText("Y: " + Float.toString(mValues[Matrix.MTRANS_Y]));
 		
 		return true;
 	}
