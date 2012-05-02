@@ -341,16 +341,16 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
              
   }
 	
-	   //the back key navigates back to map or to listview
-	   @Override
-		public boolean onKeyDown(int keyCode, KeyEvent event) {
-		   if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-		        mainFrame.removeAllViews();
-		        mainFrame.addView(tabs);
-		        return true;
-		    }
-		    return super.onKeyDown(keyCode, event);
-		}
+	   //the back key navigates back to map or to listview - needs fixing
+//	   @Override
+//		public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		   if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//		        mainFrame.removeAllViews();
+//		        mainFrame.addView(tabs);
+//		        return true;
+//		    }
+//		    return super.onKeyDown(keyCode, event);
+//		}
 
 	//CALCULATE ALL PATHS FROM START NODE
 	protected void calcPath(Node start){

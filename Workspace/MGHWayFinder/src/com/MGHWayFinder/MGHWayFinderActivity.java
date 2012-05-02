@@ -89,7 +89,7 @@ public class MGHWayFinderActivity extends Activity {
         initializeDB();
         
         allNodeIds = db.getAllNids();
-        
+        Collections.sort(allNodeIds);	
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -155,8 +155,8 @@ public class MGHWayFinderActivity extends Activity {
     	//registerForContextMenu(endSet);	//how to make short press?
     	
     	//TODO delete - auto set end point FOR TESTING
-    	start.setSelection(14);
-    	end.setSelection(14);
+    	//start.setSelection(14);
+    	//end.setSelection(14);
 
         
 //////////////////MAP TAB//////////////////////
@@ -377,6 +377,7 @@ public boolean onContextItemSelected(MenuItem item) {
                 Log.v("QR", startnID);
                 
                 
+                //start.setSelection(startHash.get(startnID));
                 //set spinner
             	for(int i=0; i < allNodeIds.size(); i++){
             		if(startnID.equals(allNodeIds.get(i))){
