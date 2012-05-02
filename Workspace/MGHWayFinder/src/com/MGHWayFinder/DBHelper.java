@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.content.Context;
@@ -110,6 +111,11 @@ public class DBHelper extends SQLiteOpenHelper{
 		return db.rawQuery("SELECT nID FROM tblNode", null);
 	}
 	
+	//RETURNS ALL NIDS + DEP IN THE DB FOR HASH
+	public Cursor selectAllHash(){	
+		return db.rawQuery("SELECT nID, nDep FROM tblNode", null);
+	}
+	
 	//RETURNS A RECORDSET CONTAINING ALL NODES ON A GIVEN FLOOR
 	public Cursor selectFloorNodes(int floor){
 		return db.rawQuery("SELECT * FROM tblNode WHERE nFloor = " + floor, null);
@@ -205,10 +211,29 @@ public class DBHelper extends SQLiteOpenHelper{
 		cursor.moveToFirst();
 		
 		while(!cursor.isAfterLast()){
-			//s = cursor.getString(0);
-			//s += " - ";
-			//s += cursor.getString(1);
 			out.add(cursor.getString(0));
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		
+		return out;
+	}
+	
+	//RETURNS A HASHMAP OF VALID NIDS with DISCRPTION
+	public Hashtable<String, String> getAllSpins(){
+		Hashtable<String, String> out = new Hashtable<String, String>();
+		Cursor cursor;
+		String s;
+		
+		cursor = this.selectAllHash();
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast()){
+			s = cursor.getString(0);
+			s += " - ";
+			s += cursor.getString(1);
+			out.put(s, cursor.getString(0));
 			cursor.moveToNext();
 		}
 		

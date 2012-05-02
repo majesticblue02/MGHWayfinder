@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -52,8 +54,10 @@ public class MGHWayFinderActivity extends Activity {
 	private String startSelect, endSelect;
 	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA;
 	private ArrayList<String> allNodeIds;
+	private Set<String> hashNodeIds;
 	private ArrayList<String> validDestinations;
 	private Hashtable<String, String> validDestinationsHT;
+	private Hashtable<String, String> startHash;
 	private boolean staffMode = false;
     
 	// FLOOR PLAN VIEWER UI ELEMENTS
@@ -85,6 +89,7 @@ public class MGHWayFinderActivity extends Activity {
         initializeDB();
         
         allNodeIds = db.getAllNids();
+        startHash = db.getAllSpins();
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -105,6 +110,12 @@ public class MGHWayFinderActivity extends Activity {
         end = (Spinner)findViewById(R.id.endSpin);
         go = (Button)findViewById(R.id.goButton);
         
+//        for(String it:startHash.keySet()){
+//    		hashNodeIds.add(it);
+//    	}
+        
+        //hashNodeIds = startHash.keySet();
+       // String[] hashy = hashNodeIds.toArray(String);
         
         allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
         start.setAdapter(allNodeIdsAA);
@@ -380,6 +391,7 @@ public boolean onContextItemSelected(MenuItem item) {
     	if(staffMode){																				//CHECK FOR USAGE MODE
     		endNId = endSelect;
     	} else {
+    		//TODO add start here
     		endNId = validDestinationsHT.get(endSelect);
     	}
 
