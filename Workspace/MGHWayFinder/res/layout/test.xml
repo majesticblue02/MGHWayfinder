@@ -22,6 +22,7 @@
     android:id="@+id/directionsTab"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#ff024f63"
     android:orientation="vertical" >
 
     	        <TextView
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity = "center"
         android:textSize="20sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:text="DELFIN WAYFINDER" />
     	        
 	    <ImageView
@@ -54,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:layout_centerHorizontal="true"
         android:text="Location:" />
   		  
@@ -86,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:layout_centerHorizontal="true"
         android:text="Destination:" />
  		 <Spinner

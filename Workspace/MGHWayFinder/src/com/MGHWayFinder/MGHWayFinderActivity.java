@@ -38,6 +38,7 @@ import android.graphics.PorterDuff;
 
 public class MGHWayFinderActivity extends Activity {
 	
+	
 	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();			//MASTER HASH TABLE CONTAINING ALL VALID NODES
 	
 	private DBHelper db;
@@ -78,6 +79,8 @@ public class MGHWayFinderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         
+        //setTitle("Delfin Wayfinder");
+        
         db = new DBHelper(this.getApplicationContext());
         initializeDB();
         
@@ -95,7 +98,7 @@ public class MGHWayFinderActivity extends Activity {
         //tab setup
         spec=tabs.newTabSpec("directions");
         spec.setContent(R.id.directionsTab);
-        spec.setIndicator("Navigation", res.getDrawable(R.drawable.ic_tab_navigate));
+        spec.setIndicator("Navigate", res.getDrawable(R.drawable.ic_tab_navigate));
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
@@ -117,7 +120,7 @@ public class MGHWayFinderActivity extends Activity {
         	}}); 
         
         //go.setBackgroundDrawable(res.getDrawable(R.drawable.btngo));
-        go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
+       // go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
         
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
@@ -131,7 +134,7 @@ public class MGHWayFinderActivity extends Activity {
         
         //UI SETUP STUFF
         View dirLayout = findViewById(R.id.directionsTab);
-        dirLayout.setBackgroundColor(Color.argb(255, 194, 207, 211));
+        //dirLayout.setBackgroundColor(Color.argb(255, 2, 99, 99));
     	
     	//TODO delete
     	//do we need an end button??

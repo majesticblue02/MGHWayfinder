@@ -107,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	//RETURNS ALL NIDS IN THE DB
 	public Cursor selectAllNids(){	
-		return db.rawQuery("SELECT nID, nDep FROM tblNode", null);
+		return db.rawQuery("SELECT nID FROM tblNode", null);
 	}
 	
 	//RETURNS A RECORDSET CONTAINING ALL NODES ON A GIVEN FLOOR
@@ -205,10 +205,10 @@ public class DBHelper extends SQLiteOpenHelper{
 		cursor.moveToFirst();
 		
 		while(!cursor.isAfterLast()){
-			s = cursor.getString(0);
-			s += " - ";
-			s += cursor.getString(1);
-			out.add(s);
+			//s = cursor.getString(0);
+			//s += " - ";
+			//s += cursor.getString(1);
+			out.add(cursor.getString(0));
 			cursor.moveToNext();
 		}
 		

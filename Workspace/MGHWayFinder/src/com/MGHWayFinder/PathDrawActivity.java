@@ -215,7 +215,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				        	Log.i("pic", "in if: " + index);
 				        	thePic = pictures.get(thenid);
 				        }else{
-				        	thePic = res.getDrawable(R.drawable.no_img);
+				        	thePic = res.getDrawable(R.drawable.delfinerror);
 				        }   
 				      //overlay the image
 			        	overlay.setImageDrawable(thePic);
@@ -329,7 +329,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	Log.i("pic", "in if: " + pos);
         	thePic = pictures.get(thenid);
         }else{
-        	thePic = res.getDrawable(R.drawable.no_img);
+        	thePic = res.getDrawable(R.drawable.delfinerror);
         }  
         
       //overlay the image
