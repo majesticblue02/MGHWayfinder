@@ -24,7 +24,7 @@
     android:layout_height="fill_parent"
     android:background="#ff024f63"
     android:orientation="vertical" >
-
+<!-- Can be removed
     	        <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -33,12 +33,12 @@
         android:textSize="20sp"
         android:textColor="#ffffffff"
         android:text="DELFIN WAYFINDER" />
-    	        
+    	        -->
 	    <ImageView
         android:id="@+id/logoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:src="@drawable/mgh_logo" 
+        android:src="@drawable/delfin_logo_small" 
         android:layout_gravity = "center"/>
 	    
 

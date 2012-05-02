@@ -52,8 +52,8 @@ public class MGHWayFinderActivity extends Activity {
 	//HELLO GITHUB
 	//START & END VARIABLES
 	private String startSelect, endSelect;
-	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA;
-	private ArrayList<String> allNodeIds;
+	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA, startDestinationsAA;
+	private ArrayList<String> allNodeIds, startDestinations;
 	private Set<String> hashNodeIds;
 	private ArrayList<String> validDestinations;
 	private Hashtable<String, String> validDestinationsHT;
@@ -89,7 +89,7 @@ public class MGHWayFinderActivity extends Activity {
         initializeDB();
         
         allNodeIds = db.getAllNids();
-        startHash = db.getAllSpins();
+        
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -116,12 +116,12 @@ public class MGHWayFinderActivity extends Activity {
         
         //hashNodeIds = startHash.keySet();
        // String[] hashy = hashNodeIds.toArray(String);
-        
-        allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
-        start.setAdapter(allNodeIdsAA);
+        //NEED these if i fail
+       // allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
+        //start.setAdapter(allNodeIdsAA);
         
         //setup spinner from method
-        
+        setStartSpinner();
         setEndSpinner();
        // setStartSpinner();
         
@@ -322,10 +322,22 @@ public boolean onContextItemSelected(MenuItem item) {
 		return staffMode;	
 	}
 	
+	//end start set
+	public void setStartSpinner(){
+        	startHash = db.getAllSpins();
+        	startDestinations = new ArrayList<String>();
+        	for(String it:startHash.keySet()){
+        		startDestinations.add(it);
+        	}
+        	Collections.sort(startDestinations);																				//SORT ALPHABETICALLY
+        	startDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, startDestinations);
+        	start.setAdapter(startDestinationsAA);
+	}
+	
 	//end spinner set
 	public void setEndSpinner(){
         if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
-        	end.setAdapter(allNodeIdsAA);
+        	end.setAdapter(startDestinationsAA);
         } else {
         	validDestinationsHT = db.getValidDestinations();
         	validDestinations = new ArrayList<String>();
@@ -385,13 +397,14 @@ public boolean onContextItemSelected(MenuItem item) {
     	String startNId, endNId;
     	int startFloor, endFloor;
     	
-    	startNId = startSelect;
+    	startNId = startHash.get(startSelect);
     	startFloor = db.getNodeFloor(startNId);
     	
     	if(staffMode){																				//CHECK FOR USAGE MODE
     		endNId = endSelect;
     	} else {
     		//TODO add start here
+    		startNId = startHash.get(startSelect);
     		endNId = validDestinationsHT.get(endSelect);
     	}
 
