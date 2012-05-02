@@ -74,7 +74,7 @@ public final class R {
         public static final int findButton=0x7f050022;
         public static final int goButton=0x7f050019;
         public static final int helpLabel=0x7f050026;
-        public static final int helpTab=0x7f050025;
+        public static final int helpTab=0x7f050024;
         public static final int list=0x7f050023;
         public static final int listNumber=0x7f05000d;
         public static final int listTab=0x7f05000a;
@@ -88,7 +88,7 @@ public final class R {
         public static final int pathTab=0x7f050003;
         public static final int pathView=0x7f050004;
         public static final int scanStart=0x7f050015;
-        public static final int scroller=0x7f050024;
+        public static final int scroller=0x7f050025;
         public static final int startNodeLabel=0x7f050014;
         public static final int startSpin=0x7f050016;
         public static final int tabhost=0x7f050002;

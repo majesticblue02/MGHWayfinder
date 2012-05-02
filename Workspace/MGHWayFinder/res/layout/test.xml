@@ -11,7 +11,7 @@
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" />
 	    
-		<FrameLayout android:id="@android:id/tabcontent"
+			<FrameLayout android:id="@android:id/tabcontent"
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:layout_above="@android:id/tabs">
 
@@ -197,11 +197,20 @@
 
 
 <!-- HELP TAB -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/helpTab"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+  
+    
+<!-- causes entire rest of UI to break. What is the issue?? FIXED: need its own outter layout for tabs-->
+<ScrollView 
     android:id="@+id/scroller"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true" >
+    
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/helpTab"
     android:layout_width="fill_parent"
@@ -212,12 +221,108 @@
         android:id="@+id/helpLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp"
+        android:textColor="#ffc1c1c1"
         android:text="USER MANUAL" />
+    
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="About MGH Wayfinder" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="MGH Wayfinder gives you directions to and from points within the walk-in clinic in the Wang Ambulatory Care Center at Mass General Hospital. 
+        Choose or scan a barcode of your starting location. Choose your ending location. Use the generated map and list of directions to navigate to your location." />
+    
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="To use MGH Wayfinder, you need an Android mobile phone. To download the application for the first time, the phone must have either Wi-Fi or 3G/4G Internet connection." />
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="Navigation" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="1.	First, start by choosing your starting location by selecting from the “Current Location” menu.
+a.	You can also select scan to bring up your phone’s barcode scanner to scan a QR code at the hospital.
+2.	Now,  touch “Go!” This will bring you to a map screen with a path drawn on it.
+        " />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="Doctor Mode" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="By default the selection menus will be in “Patient Mode” and have limited choices (since patients cannot freely walk into an exam room without being escorted back. 
+        To choose “Doctor Mode” (full menu of all points on the map), chose the options button on your Android phone and select “Doctor Mode” " />
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="Map View" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="1. Touch the “Map” button on the bottom bar." />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="2. At the map screen, touch “First Floor” or “Second Floor” depending on which floor you want to view." />
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="Doctor Directory" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="1. Start by touching the drop down menu at the top of the page." />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="2. Choose the department you’d like to see." />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="3. Touch the “Find” button." />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="4. Touch the doctor’s name to view the doctor’s phone number" />
 
     
 </LinearLayout>
 </ScrollView>
-
+</LinearLayout>
 <!-- closers -->
 		</FrameLayout>
 	</RelativeLayout>
