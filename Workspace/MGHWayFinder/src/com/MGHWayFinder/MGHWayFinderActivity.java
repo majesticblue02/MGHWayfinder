@@ -101,7 +101,8 @@ public class MGHWayFinderActivity extends Activity {
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
         go = (Button)findViewById(R.id.goButton);
-    
+        
+        
         allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
         start.setAdapter(allNodeIdsAA);
         
