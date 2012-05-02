@@ -87,7 +87,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         HashMap<String, Drawable> pictures = new HashMap<String, Drawable>();
         Resources res;
         String[] validPics;   
-	        	
+	    boolean fromMap;    	
 		
 		
 	@Override
@@ -201,19 +201,23 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				new OnClickListener(){
 					public void onClick(View v){
 						
-						
+					fromMap = true;
+					Drawable thePic = res.getDrawable(R.drawable.mgh_logo);
+					
 				        //resolve the image
 				        HashMap<String, String> n = dirList.get(index);
 				        String thenid = n.get("nID");
 				        if(pictures.containsKey(thenid)){
 				        	Log.i("pic", "in if: " + index);
-				        	Drawable thePic = pictures.get(thenid);
-				        	//overlay the image
-				        	overlay.setImageDrawable(thePic);
-				        	
-				        	mainFrame.removeAllViews();
-				        	mainFrame.addView(overlay);
-				        }       
+				        	thePic = pictures.get(thenid);
+				        }else{
+				        	thePic = res.getDrawable(R.drawable.no_img);
+				        }   
+				      //overlay the image
+			        	overlay.setImageDrawable(thePic);
+			        	
+			        	mainFrame.removeAllViews();
+			        	mainFrame.addView(overlay);
 					}
 				}
 		);
@@ -245,9 +249,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         pictures.put("F2-XR", res.getDrawable(R.drawable.f2_xr));
         
         
-        
-        
-        
        //populate
         for(int i = 0; i < walkNodePath.size(); i++){
         	Node tempNode = walkNodePath.get(i);
@@ -275,8 +276,14 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
             public boolean onTouch(View v, MotionEvent event)
             {
             	//TODO how to compensate for the mapview or the listview in picture display
-                mainFrame.removeAllViews();
-                //mainFrame.addView(listView);
+            	if(fromMap){
+            		
+            	}else{
+            		mainFrame.removeView(overlay);
+            		mainFrame.removeAllViews();
+            		mainFrame.addView(listView);
+            	}
+            	
                 return false;
             }
        });
@@ -304,19 +311,25 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         Log.i("list", "onLongListItemClick id=" + id);
         Log.i("list", "pos" + pos);
         
+        fromMap = false;
+        Drawable thePic = res.getDrawable(R.drawable.mgh_logo);
+	
         //resolve the image
         HashMap<String, String> n = dirList.get(pos);
         String thenid = n.get("nID");
         if(pictures.containsKey(thenid)){
         	Log.i("pic", "in if: " + pos);
-        	Drawable thePic = pictures.get(thenid);
-        	//overlay the image
-        	//overlay.setImageBitmap(BitmapFactory.decodeResource(res, R.drawable.mgh_logo));
-        	overlay.setImageDrawable(thePic);
-        	
-        	mainFrame.removeAllViews();
-        	mainFrame.addView(overlay);
-        }        
+        	thePic = pictures.get(thenid);
+        }else{
+        	thePic = res.getDrawable(R.drawable.no_img);
+        }  
+        
+      //overlay the image
+    	overlay.setImageDrawable(thePic);
+    	
+    	mainFrame.removeAllViews();
+    	mainFrame.addView(overlay);
+             
   }
 
 	//CALCULATE ALL PATHS FROM START NODE

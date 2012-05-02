@@ -49,8 +49,9 @@ public final class R {
         public static final int ic_tab_prev_selected=0x7f020023;
         public static final int ic_tab_prev_unselected=0x7f020024;
         public static final int mgh_logo=0x7f020025;
-        public static final int smallleft=0x7f020026;
-        public static final int smallright=0x7f020027;
+        public static final int no_img=0x7f020026;
+        public static final int smallleft=0x7f020027;
+        public static final int smallright=0x7f020028;
     }
     public static final class id {
         public static final int bottomtext=0x7f050010;
