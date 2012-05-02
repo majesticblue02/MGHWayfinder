@@ -277,11 +277,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
             {
             	//TODO how to compensate for the mapview or the listview in picture display
             	if(fromMap){
-            		
-            	}else{
-            		mainFrame.removeView(overlay);
             		mainFrame.removeAllViews();
-            		mainFrame.addView(listView);
+            		mainFrame.addView(tabs);
+            	}else{
+            		//mainFrame.removeView(overlay);
+            		mainFrame.removeAllViews();
+            		mainFrame.addView(tabs);
             	}
             	
                 return false;
