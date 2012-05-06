@@ -90,7 +90,7 @@ public class PathView extends View{
 		setFocusable(true);
 		
 		p.setColor(Color.BLACK);																//PAINT USED TO STROKE PATHWAY
-		p.setStrokeWidth(4);
+		p.setStrokeWidth(8);
 		p.setStyle(Style.STROKE);
 		
 		s.setColor(Color.GREEN);
@@ -100,7 +100,7 @@ public class PathView extends View{
 		e.setStyle(Style.FILL);
 		
 		c.setColor(Color.BLUE);
-		c.setStrokeWidth(5);
+		c.setStrokeWidth(10);
 		c.setStyle(Style.STROKE);
 		
 		op.inPreferredConfig = Bitmap.Config.RGB_565;											//BITMAP FACTORY OPTIONS FOR PULLING IN FLOOR PLAN
