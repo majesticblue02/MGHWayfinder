@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -38,6 +40,7 @@ import android.graphics.PorterDuff;
 
 public class MGHWayFinderActivity extends Activity {
 	
+	
 	public static Hashtable<String, Node> masterHash = new Hashtable<String,Node>();			//MASTER HASH TABLE CONTAINING ALL VALID NODES
 	
 	private DBHelper db;
@@ -49,10 +52,12 @@ public class MGHWayFinderActivity extends Activity {
 	//HELLO GITHUB
 	//START & END VARIABLES
 	private String startSelect, endSelect;
-	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA;
-	private ArrayList<String> allNodeIds;
+	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA, startDestinationsAA;
+	private ArrayList<String> allNodeIds, startDestinations;
+	private Set<String> hashNodeIds;
 	private ArrayList<String> validDestinations;
 	private Hashtable<String, String> validDestinationsHT;
+	private Hashtable<String, String> startHash;
 	private boolean staffMode = false;
     
 	// FLOOR PLAN VIEWER UI ELEMENTS
@@ -78,10 +83,13 @@ public class MGHWayFinderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         
+        //setTitle("Delfin Wayfinder");
+        
         db = new DBHelper(this.getApplicationContext());
         initializeDB();
         
         allNodeIds = db.getAllNids();
+        Collections.sort(allNodeIds);	
         
         //tabs
         TabHost tabs=(TabHost)findViewById(R.id.tabhost);
@@ -95,18 +103,25 @@ public class MGHWayFinderActivity extends Activity {
         //tab setup
         spec=tabs.newTabSpec("directions");
         spec.setContent(R.id.directionsTab);
-        spec.setIndicator("Navigation", res.getDrawable(R.drawable.ic_tab_navigate));
+        spec.setIndicator("Navigate", res.getDrawable(R.drawable.ic_tab_navigate));
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
         end = (Spinner)findViewById(R.id.endSpin);
         go = (Button)findViewById(R.id.goButton);
-    
-        allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
-        start.setAdapter(allNodeIdsAA);
+        
+//        for(String it:startHash.keySet()){
+//    		hashNodeIds.add(it);
+//    	}
+        
+        //hashNodeIds = startHash.keySet();
+       // String[] hashy = hashNodeIds.toArray(String);
+        //NEED these if i fail
+       // allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
+        //start.setAdapter(allNodeIdsAA);
         
         //setup spinner from method
-        
+        setStartSpinner();
         setEndSpinner();
        // setStartSpinner();
         
@@ -116,7 +131,7 @@ public class MGHWayFinderActivity extends Activity {
         	}}); 
         
         //go.setBackgroundDrawable(res.getDrawable(R.drawable.btngo));
-        go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
+       // go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
         
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
@@ -130,7 +145,7 @@ public class MGHWayFinderActivity extends Activity {
         
         //UI SETUP STUFF
         View dirLayout = findViewById(R.id.directionsTab);
-        dirLayout.setBackgroundColor(Color.argb(255, 194, 207, 211));
+        //dirLayout.setBackgroundColor(Color.argb(255, 2, 99, 99));
     	
     	//TODO delete
     	//do we need an end button??
@@ -140,8 +155,8 @@ public class MGHWayFinderActivity extends Activity {
     	//registerForContextMenu(endSet);	//how to make short press?
     	
     	//TODO delete - auto set end point FOR TESTING
-    	start.setSelection(14);
-    	end.setSelection(14);
+    	//start.setSelection(14);
+    	//end.setSelection(14);
 
         
 //////////////////MAP TAB//////////////////////
@@ -307,10 +322,22 @@ public boolean onContextItemSelected(MenuItem item) {
 		return staffMode;	
 	}
 	
+	//end start set
+	public void setStartSpinner(){
+        	startHash = db.getAllSpins();
+        	startDestinations = new ArrayList<String>();
+        	for(String it:startHash.keySet()){
+        		startDestinations.add(it);
+        	}
+        	Collections.sort(startDestinations);																				//SORT ALPHABETICALLY
+        	startDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, startDestinations);
+        	start.setAdapter(startDestinationsAA);
+	}
+	
 	//end spinner set
 	public void setEndSpinner(){
         if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
-        	end.setAdapter(allNodeIdsAA);
+        	end.setAdapter(startDestinationsAA);
         } else {
         	validDestinationsHT = db.getValidDestinations();
         	validDestinations = new ArrayList<String>();
@@ -350,6 +377,7 @@ public boolean onContextItemSelected(MenuItem item) {
                 Log.v("QR", startnID);
                 
                 
+                //start.setSelection(startHash.get(startnID));
                 //set spinner
             	for(int i=0; i < allNodeIds.size(); i++){
             		if(startnID.equals(allNodeIds.get(i))){
@@ -370,12 +398,14 @@ public boolean onContextItemSelected(MenuItem item) {
     	String startNId, endNId;
     	int startFloor, endFloor;
     	
-    	startNId = startSelect;
+    	startNId = startHash.get(startSelect);
     	startFloor = db.getNodeFloor(startNId);
     	
     	if(staffMode){																				//CHECK FOR USAGE MODE
     		endNId = endSelect;
     	} else {
+    		//TODO add start here
+    		startNId = startHash.get(startSelect);
     		endNId = validDestinationsHT.get(endSelect);
     	}
 

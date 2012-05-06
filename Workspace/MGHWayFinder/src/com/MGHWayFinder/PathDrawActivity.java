@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -215,7 +216,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				        	Log.i("pic", "in if: " + index);
 				        	thePic = pictures.get(thenid);
 				        }else{
-				        	thePic = res.getDrawable(R.drawable.no_img);
+				        	thePic = res.getDrawable(R.drawable.delfinerror);
 				        }   
 				      //overlay the image
 			        	overlay.setImageDrawable(thePic);
@@ -329,7 +330,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	Log.i("pic", "in if: " + pos);
         	thePic = pictures.get(thenid);
         }else{
-        	thePic = res.getDrawable(R.drawable.no_img);
+        	thePic = res.getDrawable(R.drawable.delfinerror);
         }  
         
       //overlay the image
@@ -339,6 +340,17 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
     	mainFrame.addView(overlay);
              
   }
+	
+	   //the back key navigates back to map or to listview - needs fixing
+//	   @Override
+//		public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		   if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//		        mainFrame.removeAllViews();
+//		        mainFrame.addView(tabs);
+//		        return true;
+//		    }
+//		    return super.onKeyDown(keyCode, event);
+//		}
 
 	//CALCULATE ALL PATHS FROM START NODE
 	protected void calcPath(Node start){

@@ -22,22 +22,24 @@
     android:id="@+id/directionsTab"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#ff024f63"
     android:orientation="vertical" >
-
+<!-- Can be removed
     	        <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity = "center"
         android:textSize="20sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:text="DELFIN WAYFINDER" />
-    	        
+    	        -->
 	    <ImageView
         android:id="@+id/logoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:src="@drawable/mgh_logo" 
+        android:src="@drawable/delfin_logo_small" 
+        android:paddingTop="5dp"
         android:layout_gravity = "center"/>
 	    
 
@@ -47,6 +49,7 @@
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
    		 android:layout_width="fill_parent"
   		  android:layout_height="wrap_content"
+  		  android:paddingTop="10dp"
   		  android:paddingBottom="15dp"
   		   >
   		  <TextView
@@ -54,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:layout_centerHorizontal="true"
         android:text="Location:" />
   		  
@@ -86,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textColor="#ff000000"
+        android:textColor="#ffffffff"
         android:layout_centerHorizontal="true"
         android:text="Destination:" />
  		 <Spinner
