@@ -1,6 +1,7 @@
 package com.MGHWayFinder;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,13 +13,20 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,21 +55,27 @@ public class MGHWayFinderActivity extends Activity {
 	private Spinner start, end;
 	private Button go;
 	private Button startQR;
-	private Button endSet;
+	
 	//START & END VARIABLES
 	private String startSelect, endSelect;
-	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA, startDestinationsAA;
+	private ArrayAdapter<String> validDestinationsAA, startDestinationsAA;
 	private ArrayList<String> allNodeIds, startDestinations;
-	private Set<String> hashNodeIds;
 	private ArrayList<String> validDestinations;
 	private Hashtable<String, String> validDestinationsHT;
 	private Hashtable<String, String> startHash;
 	private boolean staffMode = false;
     
 	// FLOOR PLAN VIEWER UI ELEMENTS
-    Button mapFirst;
-    Button mapSec;
-	ImageView viewMap;
+    private Spinner mapSpin;
+	private ImageView viewMap;
+	private String[] floors = {"Floor 1", "Floor 2"};
+	private ArrayAdapter floorsAA;
+	private String[] mapPath = {"floor1color.png", "floor2color.png"};
+	private InputStream is;
+	private BitmapFactory.Options op = new BitmapFactory.Options();
+	private Bitmap mapBM;
+	private AssetManager am;
+	
 	
 	// DIRECTORY LISTVIEW VARIABLES & ELEMENTS
 	private TextView dirHeading;
@@ -127,7 +141,6 @@ public class MGHWayFinderActivity extends Activity {
     	
         
         //UI SETUP STUFF
-        View dirLayout = findViewById(R.id.directionsTab);
         
 //////////////////MAP TAB//////////////////////
 //tab setup
@@ -141,20 +154,34 @@ public class MGHWayFinderActivity extends Activity {
     
     //stuff for map tab
 	viewMap = (ImageView)findViewById(R.id.mapView);
-	mapFirst = (Button)findViewById(R.id.btnMapFirst);
-	mapSec = (Button)findViewById(R.id.btnMapSec);
+	mapSpin = (Spinner)findViewById(R.id.mapSpinner);
 	
-	mapFirst.setOnClickListener(new OnClickListener(){
-        public void onClick(View v){
-        	viewMap.setImageResource(R.drawable.floor1color);
-        	//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
-        	}});
-        
-        mapSec.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		viewMap.setImageResource(R.drawable.floor2color);
-        		//viewMap.setImageDrawable(Drawable.createFromPath("floor2color.png"));
-        	}});
+	floorsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, floors);
+	mapSpin.setAdapter(floorsAA);
+	
+	am = getAssets();
+	op.inPurgeable= true;
+	
+	mapSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
+		//TODO
+	    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+	    	try{
+				is = am.open(mapPath[position]);											//A BITMAP FACTORY IS USED IN CONJUNCTION WITH AN INPUTSTREAM TO HELP CONTROL THE SIZE OF THE IMAGE
+				mapBM = BitmapFactory.decodeStream(is, null, op);									//THE BMF OPTIONS HELP CONTROL THE RESULTING IMAGE SIZE IN ANDROID
+				is.close();
+				
+				viewMap.setImageBitmap(mapBM);
+			} catch(IOException e){
+				
+			}
+	    }
+
+	    public void onNothingSelected(AdapterView<?> parentView) {
+	        //do nothing
+	    }
+
+	});
+
         
 
 

@@ -24,16 +24,7 @@
     android:layout_height="fill_parent"
     android:background="#ff024f63"
     android:orientation="vertical" >
-<!-- Can be removed
-    	        <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity = "center"
-        android:textSize="20sp"
-        android:textColor="#ffffffff"
-        android:text="DELFIN WAYFINDER" />
-    	        -->
+
 	    <ImageView
         android:id="@+id/logoView"
         android:layout_width="wrap_content"
@@ -123,21 +114,12 @@
         android:layout_centerHorizontal="true"
         android:text="Select a floor" />
     
-        <Button
-        android:id="@+id/btnMapFirst"
-        android:layout_width="wrap_content"
+        <Spinner
+        android:id="@+id/mapSpinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/mapLabel"
-        android:text="First Floor" />
-        
-            <Button
-        android:id="@+id/btnMapSec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mapLabel"
-        android:layout_alignParentRight="true"
-        android:text="Second Floor" />
+        android:layout_below="@id/mapLabel" />
     
 		
 	    <ImageView
@@ -145,7 +127,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
         android:layout_centerInParent="true"
-        android:layout_below="@id/btnMapSec"
+        android:layout_below="@id/mapSpinner"
         
          />
 
