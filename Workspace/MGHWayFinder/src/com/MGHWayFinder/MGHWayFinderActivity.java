@@ -48,8 +48,6 @@ public class MGHWayFinderActivity extends Activity {
 	private Button go;
 	private Button startQR;
 	private Button endSet;
-	String contextNID[] = {"f1-sel", "f1-100s2", "f1-108_0", "f1-nr", "f1-100C1_3"};			//TODO REMOVE
-	//HELLO GITHUB
 	//START & END VARIABLES
 	private String startSelect, endSelect;
 	private ArrayAdapter<String> allNodeIdsAA, validDestinationsAA, startDestinationsAA;
@@ -107,31 +105,16 @@ public class MGHWayFinderActivity extends Activity {
         tabs.addTab(spec);
 ///////////////////UI ELEMENTS////////////////////////
         start = (Spinner)findViewById(R.id.startSpin);
-        end = (Spinner)findViewById(R.id.endSpin);
-        go = (Button)findViewById(R.id.goButton);
-        
-//        for(String it:startHash.keySet()){
-//    		hashNodeIds.add(it);
-//    	}
-        
-        //hashNodeIds = startHash.keySet();
-       // String[] hashy = hashNodeIds.toArray(String);
-        //NEED these if i fail
-       // allNodeIdsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allNodeIds);
-        //start.setAdapter(allNodeIdsAA);
-        
-        //setup spinner from method
         setStartSpinner();
+        end = (Spinner)findViewById(R.id.endSpin);
         setEndSpinner();
-       // setStartSpinner();
+        go = (Button)findViewById(R.id.goButton);
+   
         
         go.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		startPathDraw();
         	}}); 
-        
-        //go.setBackgroundDrawable(res.getDrawable(R.drawable.btngo));
-       // go.getBackground().setColorFilter(0xFF208CA8, PorterDuff.Mode.MULTIPLY);
         
         //scan buttons
     	startQR = (Button)findViewById(R.id.scanStart);
@@ -145,19 +128,6 @@ public class MGHWayFinderActivity extends Activity {
         
         //UI SETUP STUFF
         View dirLayout = findViewById(R.id.directionsTab);
-        //dirLayout.setBackgroundColor(Color.argb(255, 2, 99, 99));
-    	
-    	//TODO delete
-    	//do we need an end button??
-    	//no end scan, end context menu
-    	//COMING SOON
-    	//endSet = (Button)findViewById(R.id.setEnd);
-    	//registerForContextMenu(endSet);	//how to make short press?
-    	
-    	//TODO delete - auto set end point FOR TESTING
-    	//start.setSelection(14);
-    	//end.setSelection(14);
-
         
 //////////////////MAP TAB//////////////////////
 //tab setup
@@ -177,7 +147,7 @@ public class MGHWayFinderActivity extends Activity {
 	mapFirst.setOnClickListener(new OnClickListener(){
         public void onClick(View v){
         	viewMap.setImageResource(R.drawable.floor1color);
-        		//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
+        	//viewMap.setImageDrawable(Drawable.createFromPath("floor1color.png"));
         	}});
         
         mapSec.setOnClickListener(new OnClickListener(){
@@ -252,47 +222,7 @@ helpLayout.setBackgroundColor(Color.argb(255, 0, 0, 0));
 
 
 
-    }//end of oncreate
-    
- /*TODO remove context menu?
-    //context menu
-@Override
-public void onCreateContextMenu(ContextMenu menu, View v,
-		ContextMenuInfo menuInfo) {		
-	super.onCreateContextMenu(menu, v, menuInfo);
-	//add a couple of options to the context menu
-	menu.setHeaderTitle("Patient Destinations");
-	menu.add(0, 1, Menu.NONE, "Elevator");
-	menu.add(0, 2, Menu.NONE, "Stairs");
-	menu.add(0, 3, Menu.NONE, "Clinic Lobby");
-	menu.add(0, 4, Menu.NONE, "Bathroom");
-	menu.add(0, 5, Menu.NONE, "Hospital Exit");
-	
-}
-
-
-@Override
-public boolean onContextItemSelected(MenuItem item) {
-	super.onContextItemSelected(item);
-	String title = item.getTitle().toString(); //get menu item title
-	int itemId = item.getItemId();             //get menu item id
-	//Toast.makeText(this, title + " " + itemId, Toast.LENGTH_LONG).show();
-	
-	endSelect = contextNID[itemId - 1];
-	Log.v("context", endSelect + title);
-	
-    //set spinner
-	
-	for(int i=0; i < aFloor.size(); i++){
-		if(endnId.equals(aFloor.get(i).getNodeID())){
-			end.setSelection(i);
-		}}
-		
-
-	return false;
-}
-*/    
-    
+    }//end of oncreate    
     
     //OPTIONS MENU////////////////
 	//options menu
@@ -349,23 +279,7 @@ public boolean onContextItemSelected(MenuItem item) {
         	end.setAdapter(validDestinationsAA);
         }
 	}
-	
-	//TODO delete
-	//start spinner set
-//	public void setStartSpinner(){
-//        if(staffMode){																											//CHECKS FOR PROGRAM MODE, SETS AVAILABLE DESTINATIONS ACCORDINGLY
-//        	start.setAdapter(allNodeIdsAA);
-//        } else {
-//        	validDestinationsHT = db.getValidDestinations();
-//        	validDestinations = new ArrayList<String>();
-//        	for(String it:validDestinationsHT.keySet()){
-//        		validDestinations.add(it);
-//        	}
-//        	Collections.sort(validDestinations);																				//SORT ALPHABETICALLY
-//        	validDestinationsAA = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, validDestinations);
-//        	start.setAdapter(validDestinationsAA);
-//        }
-//	}
+
     
     //receive scan result back from scanner intent
     @Override
@@ -449,16 +363,5 @@ public boolean onContextItemSelected(MenuItem item) {
     	//end destinations
     	Toast.makeText(this, "Context Menu", Toast.LENGTH_LONG).show();
     }
-    
-    /*TODO scale image in map
-  //INITIALIZATION SCALE (FIT TO VIEWABLE AREA)
-  	private void iniScale(){
-  		if(((float)vWidth/(float)bounds.right) > ((float)vHeight/(float)bounds.bottom))
-  			matrix.postScale(((float)vHeight/(float)bounds.bottom), ((float)vHeight/(float)bounds.bottom));
-  		else
-  			matrix.postScale(((float)vWidth/(float)bounds.right), ((float)vWidth/(float)bounds.right));		
-  	}
-    */
-    
     
 }//end of class

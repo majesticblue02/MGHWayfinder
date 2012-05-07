@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -20,14 +18,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -79,7 +74,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		Button view;
 		int index = 0;
 		ArrayList<String> nodeList = new ArrayList<String>();
-		private ArrayAdapter<Node> adapt;
 		TabHost tabs;
 		ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
 		ImageView icon;
@@ -111,15 +105,11 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         tabs.addTab(spec);
 
         
-        //TODO delte this commented test shit, prob wont need again
-		//center = (Button)findViewById(R.id.buttonCenter);
-//		tvX = (TextView)findViewById(R.id.tvX);
-//		tvY = (TextView)findViewById(R.id.tvY);
+
 		next = (Button)findViewById(R.id.btnNext);
 		next.setBackgroundDrawable(res.getDrawable(R.drawable.smallright));
 		prev = (Button)findViewById(R.id.btnPrev);
 		prev.setBackgroundDrawable(res.getDrawable(R.drawable.smallleft));
-		//list = (Button)findViewById(R.id.btnList);
 		help = (Button)findViewById(R.id.btnHelp);
 		view = (Button)findViewById(R.id.btnView);
         pv = (PathView)findViewById(R.id.pathView);
@@ -241,7 +231,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         
         //create array list
         
-        //PICTURE SHIT
+        //PICTURES
       //TODO move this somewhere else (clutter)- create picture list
         pictures.put("F2-LAB", res.getDrawable(R.drawable.f2_lab));
         pictures.put("F1-C1_0", res.getDrawable(R.drawable.f1_c1_0));
@@ -308,12 +298,19 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         		        } 
         		}); 
         
-                
-        //old list shit
-//        adapt = new ArrayAdapter<Node> (this, android.R.layout.simple_list_item_1, walkNodePath);
-//        setListAdapter(adapt);
-        
 	 }//end oncreate
+	
+
+	public void onPause(){
+		super.onPause();
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	//longclick handler
 	protected void onLongListItemClick(View v, int pos, long id) { 
@@ -340,6 +337,8 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
     	mainFrame.addView(overlay);
              
   }
+	
+	
 	
 	   //the back key navigates back to map or to listview - needs fixing
 //	   @Override
@@ -387,11 +386,6 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				}
 				break;
 		}
-		
-	//TESTING PURPOSES  TODO delete this
-//		m.getValues(mValues);
-//		tvX.setText("X: " + Float.toString(mValues[Matrix.MTRANS_X]) + " ");
-//		tvY.setText("Y: " + Float.toString(mValues[Matrix.MTRANS_Y]));
 		
 		return true;
 	}
