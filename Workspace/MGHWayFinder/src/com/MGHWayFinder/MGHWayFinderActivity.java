@@ -391,4 +391,7 @@ helpLayout.setBackgroundColor(Color.argb(255, 0, 0, 0));
     	Toast.makeText(this, "Context Menu", Toast.LENGTH_LONG).show();
     }
     
+    
+    //hello from calum - testing git
+    
 }//end of class
