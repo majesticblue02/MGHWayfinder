@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		ArrayList<HashMap<String, String>> dirList = new ArrayList<HashMap<String, String>>();
 		ImageView icon;
 	    FrameLayout mainFrame;
+	    RelativeLayout overlayout;
 	    ListView lv;
 	    ImageView overlay;
         HashMap<String, Drawable> pictures = new HashMap<String, Drawable>();
@@ -167,7 +169,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index++;
 						step();
-						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_LONG).show();
+						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
 					}
 				}
 		);	
@@ -177,7 +179,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index--;
 						step();
-						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_LONG).show();
+						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
 					}
 				}
 		);	
@@ -206,13 +208,13 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 				        	Log.i("pic", "in if: " + index);
 				        	thePic = pictures.get(thenid);
 				        }else{
-				        	thePic = res.getDrawable(R.drawable.delfinerror);
+				        	thePic = res.getDrawable(R.drawable.no_img);
 				        }   
 				      //overlay the image
 			        	overlay.setImageDrawable(thePic);
 			        	
 			        	mainFrame.removeAllViews();
-			        	mainFrame.addView(overlay);
+			        	mainFrame.addView(overlayout);
 					}
 				}
 		);
@@ -263,6 +265,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         
 
 	    mainFrame =(FrameLayout)findViewById(R.id.mainFrame);
+	    overlayout =(RelativeLayout)findViewById(R.id.overLayout);
 	    ListView lv = getListView();
 	    overlay = (ImageView)findViewById(R.id.overlayPic);
         final View listView = (View)findViewById(R.id.listTab);
@@ -273,15 +276,18 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 
             public boolean onTouch(View v, MotionEvent event)
             {
+            	
+            	mainFrame.removeAllViews();
+        		mainFrame.addView(tabs);
             	//TODO how to compensate for the mapview or the listview in picture display
-            	if(fromMap){
-            		mainFrame.removeAllViews();
-            		mainFrame.addView(tabs);
-            	}else{
-            		//mainFrame.removeView(overlay);
-            		mainFrame.removeAllViews();
-            		mainFrame.addView(tabs);
-            	}
+//            	if(fromMap){
+//            		mainFrame.removeAllViews();
+//            		mainFrame.addView(tabs);
+//            	}else{
+//            		//mainFrame.removeView(overlay);
+//            		mainFrame.removeAllViews();
+//            		mainFrame.addView(tabs);
+//            	}
             	
                 return false;
             }
@@ -327,14 +333,14 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         	Log.i("pic", "in if: " + pos);
         	thePic = pictures.get(thenid);
         }else{
-        	thePic = res.getDrawable(R.drawable.delfinerror);
+        	thePic = res.getDrawable(R.drawable.no_img);
         }  
         
       //overlay the image
     	overlay.setImageDrawable(thePic);
     	
     	mainFrame.removeAllViews();
-    	mainFrame.addView(overlay);
+    	mainFrame.addView(overlayout);
              
   }
 	
@@ -469,17 +475,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 	
 
 ///////////METHOD TO CENTER VIEW ON LOAD///////////////
-	protected Handler handler = new Handler() {
-		 @Override
-		 public void handleMessage(Message msg) {
-		     step();
-		 }
-	};
+
 	
 	Runnable centerOnLoad = new Runnable(){
    	public void run(){
    		try {
-   				Thread.sleep(500);
+   				Thread.sleep(1000);
    				handler.sendEmptyMessage(0);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -487,6 +488,12 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
    	}
    };
 	
+	protected Handler handler = new Handler() {
+		 @Override
+		 public void handleMessage(Message msg) {
+		     step();
+		 }
+	};
 	
 	
 }

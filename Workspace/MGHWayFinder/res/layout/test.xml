@@ -222,9 +222,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="MGH Wayfinder gives you directions to and from points within the walk-in clinic in the Wang Ambulatory Care Center at Mass General Hospital. 
-        Choose or scan a barcode of your starting location. Choose your ending location. Use the generated map and list of directions to navigate to your location." />
-    
+        android:text="MGH Wayfinder gives you directions to and from points within the Walk-In clinic in the Wang Ambulatory Care Center at Mass General Hospital. " />
+    	
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="Choose a point or scan a barcode of your starting location. Choose your ending location. Use the generated map and list of directions to navigate to your location.  " />
+			  
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -240,24 +245,89 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
-        android:text="1.	First, start by choosing your starting location by selecting from the “Current Location” menu.
-a.	You can also select scan to bring up your phone’s barcode scanner to scan a QR code at the hospital.
-2.	Now,  touch “Go!” This will bring you to a map screen with a path drawn on it.
-        " />
-    
-    <TextView
+        android:paddingBottom="5dp"
+        android:text="1.	Begin by selecting a start location from the dropdown or click the 'Scan' button."
+         />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="2.	Select your end destinations from the list of common destinations."
+         />
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="3.	Press Go!"
+         />
+              <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="0dp"
+        android:text="4.	You should get something like this:" />
+              
+        <ImageView
+        android:id="@+id/dirScreenshot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/directions_small" 
+        />
+       	    
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#ff208ca8"
-        android:text="Doctor Mode" />
-    <TextView
+        android:text="Using the Directions" />
+            <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="1.	Use Next '--&gt;' and Previous '&lt;--' arrows to follow directions step by step."
+         />
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="2.	Tap on 'View Picture' or the current toast to view landmark photo."
+         />
+        
+       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:text="By default the selection menus will be in “Patient Mode” and have limited choices (since patients cannot freely walk into an exam room without being escorted back. 
-        To choose “Doctor Mode” (full menu of all points on the map), chose the options button on your Android phone and select “Doctor Mode” " />
+        android:text="3.	If you get lost, the 'Call for Help' button will open the dialer to call MGH."
+         />
+       
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="List View" />
+       
+            <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="1.	You can open the List View by click 'List View'."
+         />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="2.	Clicking a list item will take you to that point on the map."
+         />
+                <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="3.	Long pressing a list item will display its picture."
+         />
+        
+  
     
      <TextView
         android:layout_width="wrap_content"
@@ -269,13 +339,13 @@ a.	You can also select scan to bring up your phone’s barcode scanner to scan a
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="1. Touch the “Map” button on the bottom bar." />
+        android:text="1.	Touch the 'Map' button on the bottom tab bar." />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:text="2. At the map screen, touch “First Floor” or “Second Floor” depending on which floor you want to view." />
+        android:text="2.	At the map screen, select “First Floor” or “Second Floor” from dropdown. This will display the map." />
     
      <TextView
         android:layout_width="wrap_content"
@@ -287,22 +357,47 @@ a.	You can also select scan to bring up your phone’s barcode scanner to scan a
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="1. Start by touching the drop down menu at the top of the page." />
+        android:text="1.	Start by touching the drop down menu at the top of the page." />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="2. Choose the department you’d like to see." />
+        android:text="2.	Choose the department you’d like to see." />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="3. Touch the “Find” button." />
+        android:text="3.	Touch the 'Find' button." />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:text="4.	Touch the doctor’s name to view the doctor’s phone number." />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff208ca8"
+        android:text="Staff Mode" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
-        android:text="4. Touch the doctor’s name to view the doctor’s phone number" />
+        android:text="By default the selection menus will be in 'Patient Mode' and have limited choices.
+        To see all the possible choices on the map, MGH staff can activate 'Staff Mode'. " />
+    
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="To see all the possible choices on the map, MGH staff can activate 'Staff Mode'. " />
+      
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="To enable 'Staff Mode' click the options menu while on the Homescreen and select 'Staff Mode'. " />
 
     
 </LinearLayout>

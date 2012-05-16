@@ -3,12 +3,17 @@
   <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/mainFrame"
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
-   <ImageView
+<RelativeLayout 
+    	android:id="@+id/overLayout"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+      <ImageView
         android:id="@+id/overlayPic"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+       android:layout_height="wrap_content" 
+       android:layout_centerHorizontal="true"
         />
-   
+</RelativeLayout>
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
