@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -14,6 +15,10 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.hardware.SensorManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,6 +92,9 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         String[] validPics;   
 	    boolean fromMap;    	
 		
+	    
+	    //test shit
+	    SensorManager sman;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -169,7 +177,25 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index++;
 						step();
-						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
+						Node stepNode = walkNodePath.get(index);
+			        	double dAngle = stepNode.getNNodeAngle();
+			        	String cardDir  = "Go to ";
+			        	//cardinal directions
+						if(dAngle == 180){
+							Log.v("cardinal", "north");
+							cardDir = "Go North at ";
+						}else if(dAngle == 0){
+							Log.v("cardinal", "south");
+							cardDir = "Go South at ";
+						}else if(dAngle == -90){
+							Log.v("cardinal", "east");
+							cardDir = "Go East at ";
+						}else if(dAngle == 90){
+							Log.v("cardinal", "west");
+							cardDir = "Go West at ";
+						}
+						//the toast
+						Toast.makeText(PathDrawActivity.this, cardDir + walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
 					}
 				}
 		);	
@@ -179,7 +205,25 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 					public void onClick(View v){
 						index--;
 						step();
-						Toast.makeText(PathDrawActivity.this, walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
+						Node stepNode = walkNodePath.get(index);
+			        	double dAngle = stepNode.getNNodeAngle();
+			        	String cardDir  = "Go to ";
+			        	//cardinal directions
+						if(dAngle == 180){
+							Log.v("cardinal", "north");
+							cardDir = "Go North at ";
+						}else if(dAngle == 0){
+							Log.v("cardinal", "south");
+							cardDir = "Go South at ";
+						}else if(dAngle == -90){
+							Log.v("cardinal", "east");
+							cardDir = "Go East at ";
+						}else if(dAngle == 90){
+							Log.v("cardinal", "west");
+							cardDir = "Go West at ";
+						}
+						//the toast
+						Toast.makeText(PathDrawActivity.this, cardDir + walkNodePath.get(index).getNodeDepartment(), Toast.LENGTH_SHORT).show();
 					}
 				}
 		);	
@@ -251,16 +295,33 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
        //populate
         for(int i = 0; i < walkNodePath.size(); i++){
         	Node tempNode = walkNodePath.get(i);
+        	double dAngle = tempNode.getNNodeAngle();
+        	String cardDir  = "Go to ";
+        	//cardinal directions
+			if(dAngle == 180){
+				Log.v("cardinal", "north");
+				cardDir = "Go North at ";
+			}else if(dAngle == 0){
+				Log.v("cardinal", "south");
+				cardDir = "Go South at ";
+			}else if(dAngle == -90){
+				Log.v("cardinal", "east");
+				cardDir = "Go East at ";
+			}else if(dAngle == 90){
+				Log.v("cardinal", "west");
+				cardDir = "Go West at ";
+			}
         	HashMap<String, String> temp = new HashMap<String, String>();
         	temp.put("title",tempNode.getNodeDepartment());
         	temp.put("floor", "Floor " + Integer.toString(tempNode.getNodeFloor()));
         	temp.put("nID", tempNode.getNodeID());
         	temp.put("num", Integer.toString(i+1));
+        	temp.put("card", cardDir);
         	dirList.add(temp);
         }
        
         //the actual adapter
-       SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID", "num"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext,R.id.listNumber});
+       SimpleAdapter custAdapter = new SimpleAdapter(this, dirList,R.layout.row,new String[] {"title", "floor", "nID", "num", "card"}, new int[] {R.id.toptext,R.id.bottomtext,R.id.nIDtext,R.id.listNumber, R.id.cardinalDirection});
         setListAdapter(custAdapter);
         
 
@@ -303,6 +364,52 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
         		                        return true; 
         		        } 
         		}); 
+        
+        //TODO delete this cardinal direction testing stuff
+  ///////////////////////DOING TEST STUFF FOR DIRECTIONS///////////////////////////////////////////////
+    	
+//		for(int i=0; i < (walkNodePath.size() - 1); i++){
+//			Node dNode = walkNodePath.get(i);
+//			Node eNode = walkNodePath.get(i+1);
+//			String dnId = dNode.getNodeID();
+//			double dAngle = dNode.getNNodeAngle();
+//			Log.v("node 0", "Node: " + dnId + "  a: " + Double.toString(dAngle));
+//			
+//			//another node needed?
+//			//String enId = eNode.getNodeID();
+//			//double eAngle = eNode.getNNodeAngle();
+//			//Log.v("node", "stuff");
+//			//Log.v("node 1", "Node: " + enId + "  a: " + Double.toString(eAngle));
+//			
+//			//double nDegs = eAngle + dAngle;
+//			//double nDiff = dAngle - eAngle;
+//			//Log.v("degress", Double.toString(nDegs));
+//			//int dInt = Integer.parseInt(Double.toString(dNode.getNNodeAngle()));
+//		
+//			//cardinals
+//			
+//			//try with if
+//			if(dAngle == 180){
+//				Log.v("cardinal", "north");
+//			}else if(dAngle == 0){
+//				Log.v("cardinal", "south");
+//			}else if(dAngle == -90){
+//				Log.v("cardinal", "east");
+//			}else if(dAngle == 90){
+//				Log.v("cardinal", "west");
+//			}
+//			
+//		}
+		
+        
+        //#######################COMPASS TESTING##################################
+        //MyLocationOverlay compass = new MyLocationOverlay(this, pathView);
+       // sman = Context.getSystemService(Context.SENSOR_SERVICE);
+        
+
+        
+/////////////////////////////END TEST STUFF//////////////////////////////////////////////////////////////////
+		
         
 	 }//end oncreate
 	
@@ -396,22 +503,7 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		return true;
 	}
 	
-	///////////////////////DOING TEST STUFF FOR DIRECTIONS///////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-/////////////////////////////END TEST STUFF//////////////////////////////////////////////////////////////////
 	
 	
 	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
