@@ -396,6 +396,24 @@ public class PathDrawActivity extends ListActivity implements OnTouchListener{
 		return true;
 	}
 	
+	///////////////////////DOING TEST STUFF FOR DIRECTIONS///////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+/////////////////////////////END TEST STUFF//////////////////////////////////////////////////////////////////
+	
+	
 	//STRIPS INTERMEDIATE NODES FROM A GIVEN ARRAYLIST WHERE Node(n) ANGLE == Node(n+1) ANGLE
 	protected ArrayList<Node> stripIntermediateSteps(ArrayList<Node> listIn){
 		ArrayList<Node> out = new ArrayList<Node>();
