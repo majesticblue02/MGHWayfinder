@@ -106,7 +106,15 @@
        	android:layout_centerHorizontal="true"
        	android:layout_alignParentBottom="true"
        	android:textColor="#ffffffff"
-       	android:text="View Picture" />	
+       	android:text="View Picture" />
+       	
+       	<ImageView 
+       	    android:id="@+id/compassImage"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_alignParentLeft="true"
+       	    android:layout_alignParentTop="true"
+       	    android:src="@drawable/compass_edited_small"/>	
        	
        	
     </RelativeLayout>
